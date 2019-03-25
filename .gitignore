@@ -1,0 +1,8 @@
+# OSX trash
+.DS_Store
+
+# Chart dependencies
+**/charts/*.tgz
+
+# Vscode files
+.vscode
