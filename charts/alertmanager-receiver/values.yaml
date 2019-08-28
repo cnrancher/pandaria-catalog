@@ -1,0 +1,16 @@
+image:
+  repository: docker.io/n1ce37/receiver
+  tag: 0.1
+
+port: 9094
+replicas: 1
+namespaces: kube-system
+
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

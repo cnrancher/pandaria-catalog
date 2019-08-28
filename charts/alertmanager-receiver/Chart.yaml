@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: 1.11.0
+description: prometheus alertmanager webhook receiver,now backend support ali-cloud sms and dingTalk
+name: alertmanager-receiver
+version: 0.1.0
+keywords:
+  - prometheus
+  - alertmanager
+  - webhook
+  - receiver

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager-receiver
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: alertmanager-receiver
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: alertmanager-receiver
+  template:
+    metadata:
+      labels:
+        app: alertmanager-receiver
+    spec:
+      containers:
+      - name: alertmanager-receiver
+        image: "{{ .Values.images.repository }}:{{ .Values.images.tag }}"
+        command:
+          - /receiver
+        ports:
+          - containerPort: 9094
+        volumeMounts:
+          - name: config
+          - mountPath: /etc/alertmanager/config
+{{- if .Values.affinity }}
+         affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+{{- end }}
+{{- if .Values.nodeSelector }}
+         nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.tolerations }}
+         tolerations:
+{{- toYaml .Values.tolerations | indent 8 }}
+{{- end }}
+{{- if .Values.resouces }}
+         resources:
+{{ toYaml .Values.resources | indent 8 }}
+{{- end }}
+      volumes:
+        - name: config
+          secret:
+            name: alertmanager-receiver
