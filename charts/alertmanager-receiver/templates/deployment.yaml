@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: alertmanager-receiver
-  namespace: {{ .Values.namespace }}
   labels:
     app: alertmanager-receiver
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
