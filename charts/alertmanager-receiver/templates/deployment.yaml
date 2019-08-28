@@ -23,21 +23,21 @@ spec:
         ports:
           - containerPort: 9094
         volumeMounts:
-          - name: config
-            mountPath: /etc/receiver
+        - name: config
+          mountPath: /etc/receiver
 {{- if .Values.affinity }}
-         affinity:
+        affinity:
 {{ toYaml .Values.affinity | indent 10 }}
 {{- end }}
 {{- if .Values.nodeSelector }}
-         nodeSelector:
+        nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 10 }}
 {{- end }}
 {{- if .Values.tolerations }}
-         tolerations:
+        tolerations:
 {{ toYaml .Values.tolerations | indent 10 }}
 {{- end }}
-         resources:
+        resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
       - name: config
