@@ -42,6 +42,6 @@ spec:
 {{ toYaml .Values.resources | indent 8 }}
 {{- end }}
       volumes:
-        - name: config
-          secret:
-            name: alertmanager-receiver
+      - name: config
+        secret:
+          name: alertmanager-receiver
