@@ -1,11 +1,18 @@
-#alertmanager-receiver
+# alertmanager-receiver
+
 it's a prometheus alertmanager webhook reciver
-#quick start
+
+## quick start
+
 you can change the config before install, or you can install it, then update the secret, NOTE:secret is base64 encoded, then it will automatic upgrade the config, you don't need restart it
-#support vendor
+
+## support vendor
+
 - ali cloud sms(阿里云短信服务)
 - ding talk(钉钉机器人)
-#配置示例
+
+## 配置示例
+
 ```yaml
 ##厂商目前支持阿里云短信服务(alibaba),钉钉机器人通知(dingTalk)
 providers:
