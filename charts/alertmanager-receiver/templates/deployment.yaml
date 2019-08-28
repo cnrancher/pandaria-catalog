@@ -38,7 +38,7 @@ spec:
 {{ toYaml .Values.tolerations | indent 10 }}
 {{- end }}
          resources:
-{{ toYaml .Values.resources | indent 10 }}
+{{ toYaml .Values.resources | indent 12 }}
       volumes:
       - name: config
         secret:
