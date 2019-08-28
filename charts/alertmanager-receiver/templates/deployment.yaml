@@ -44,4 +44,4 @@ spec:
       volumes:
       - name: config
         secret:
-          name: alertmanager-receiver
+          secretName: alertmanager-receiver
