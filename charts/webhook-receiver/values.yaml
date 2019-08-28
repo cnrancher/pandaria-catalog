@@ -1,0 +1,28 @@
+image:
+  repository: "docker.io/cnrancher/webhook-receiver"
+  tag: v0.1.1
+
+port: 9094
+replicas: 1
+
+service:
+  type: ClusterIP
+  #仅当type为NodePort模式的时候，允许指定nodePort
+  nodePort:
+
+#程序配置，详情见readme的示例配置
+config:
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: {}
+
+affinity: {}
