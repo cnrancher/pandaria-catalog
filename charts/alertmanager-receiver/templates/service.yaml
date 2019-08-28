@@ -7,5 +7,5 @@ spec:
     app: alertmanager-receiver
   ports:
     - protocol: TCP
-      port: {{ .Values.Port }}
+      port: {{ .Values.port }}
       targetPort: 9094
