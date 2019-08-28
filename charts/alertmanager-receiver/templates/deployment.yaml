@@ -39,7 +39,7 @@ spec:
 {{- end }}
 {{- if .Values.resouces }}
          resources:
-{{ toYaml .Values.resources | indent 8 }}
+{{- toYaml .Values.resources | indent 8 }}
 {{- end }}
       volumes:
       - name: config
