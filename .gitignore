@@ -6,3 +6,6 @@
 
 # Vscode files
 .vscode
+
+# goland files
+.idea

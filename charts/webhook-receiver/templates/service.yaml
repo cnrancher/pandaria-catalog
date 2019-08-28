@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook-receiver
+spec:
+  selector:
+    app: webhook-receiver
+  type: {{ .Values.service.type }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.port }}
+    targetPort: 9094
+{{ if .Values.service.nodePort }}
+    nodePort: {{ .Values.service.nodePort }}
+{{ end }}
