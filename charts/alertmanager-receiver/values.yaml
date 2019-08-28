@@ -18,6 +18,6 @@ resources:
 
 nodeSelector: {}
 
-tolerations: []
+tolerations: {}
 
 affinity: {}
