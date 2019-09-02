@@ -4,7 +4,7 @@ it's a prometheus alertmanager webhook reciver
 
 ## quick start
 
-you can change the config before install, or you can install it, then update the secret, NOTE:secret is base64 encoded, then it will automatic upgrade the config, you don't need restart it
+you must set config before start, NOTE:secret is base64 encoded, u can update config by update corresponding secret.then it will automatic upgrade the config, you don't need restart it
 
 ## support vendor
 
@@ -28,14 +28,15 @@ providers:
 #************************************************************#
 #接收者支持多个，多个接受者可以配置一个云厂商
 receivers:
-  - name: test1
+  #name
+  test1:
     provider: dingTalk
-  - name: test2
+  test2:
     provider: alibaba
     to:
       - 110
       - 119
-  - name: test3
+  test3:
     provider: alibaba
     to:
       - 120
