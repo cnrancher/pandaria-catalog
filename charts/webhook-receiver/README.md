@@ -1,4 +1,4 @@
-# alertmanager-receiver
+# webhook-receiver
 
 it's a prometheus alertmanager webhook reciver
 
