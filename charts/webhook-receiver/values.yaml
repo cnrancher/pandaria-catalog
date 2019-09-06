@@ -1,6 +1,6 @@
 image:
   repository: "docker.io/cnrancher/webhook-receiver"
-  tag: v0.1.1
+  tag: v0.1.5
 
 port: 9094
 replicas: 1

@@ -55,6 +55,8 @@ config:
       to:
       - 120
       - 134 
+  #Info,Error
+  logLevel: Error
 ```
 不同的服务类型下通知者webhook的url的填写方式：
 - ClusterIP：http://{svc-name}.{namesapce}:{port:9094}/{receiver-name}
