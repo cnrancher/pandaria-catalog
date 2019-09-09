@@ -10,6 +10,6 @@ spec:
   - protocol: TCP
     port: {{ .Values.port }}
     targetPort: 9094
-{{ if .Values.service.nodePort }}
+{{ if eq .Values.service.type "NodePort" }}
     nodePort: {{ .Values.service.nodePort }}
 {{ end }}
