@@ -1,0 +1,14 @@
+image:
+  nvidiadeviceplugin:
+    repository: nvidia/k8s-device-plugin
+    tag: "1.0.0-beta4"
+  sharedeviceplugin:
+    repository: cnrancher/gpu-device-plugin
+    tag: "v0.1.0"
+  schedulerextender:
+    repository: cnrancher/gpu-scheduler-extender
+    tag: "v0.1.0"
+schedulerextender:
+  ports:
+    targetport: 9100
+    nodeport: 32666
