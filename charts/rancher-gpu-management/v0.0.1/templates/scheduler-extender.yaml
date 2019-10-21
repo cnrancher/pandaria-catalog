@@ -1,0 +1,36 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: gpushare-schd-extender
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gpushare
+        component: gpushare-schd-extender
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      hostNetwork: true
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+        key: node-role.kubernetes.io/master
+      - effect: NoSchedule
+        operator: Exists
+        key: node.cloudprovider.kubernetes.io/uninitialized
+      nodeSelector:
+        node-role.kubernetes.io/controlplane: "true"
+      serviceAccount: gpushare-schd-extender
+      containers:
+        - name: gpushare-schd-extender
+          image: "{{ .Values.image.schedulerextender.repository }}:{{ .Values.image.schedulerextender.tag }}"
+          env:
+          - name: LOG_LEVEL
+            value: debug
+          - name: PORT
+            value: "{{ .Values.schedulerextender.ports.targetport }}"
