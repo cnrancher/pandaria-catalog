@@ -23,6 +23,12 @@ spec:
       - effect: NoSchedule
         operator: Exists
         key: node.cloudprovider.kubernetes.io/uninitialized
+      - effect: NoSchedule
+        operator: Exists
+        key: node-role.kubernetes.io/controlplane
+      - effect: NoExecute
+        operator: Exists
+        key: node-role.kubernetes.io/etcd
       nodeSelector:
         node-role.kubernetes.io/controlplane: "true"
       serviceAccount: gpushare-schd-extender
