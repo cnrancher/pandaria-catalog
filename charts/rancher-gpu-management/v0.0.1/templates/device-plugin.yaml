@@ -25,7 +25,7 @@ spec:
           - gpu-device-plugin
           - -logtostderr
           - --v=5
-          - --memory-unit=GiB
+          - --memory-unit={{ .Values.memoryunit }}
         resources:
           limits:
             memory: "300Mi"

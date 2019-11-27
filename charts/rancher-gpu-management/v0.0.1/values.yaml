@@ -12,3 +12,5 @@ schedulerextender:
   ports:
     targetport: 9100
     nodeport: 32666
+# GPU Sharing Memory unit: GiB or MiB    
+memoryunit: GiB
