@@ -1,0 +1,10 @@
+image:
+  nodeexporter:
+    repository: rancher/prom-node-exporter
+    tag: v0.17.0
+  dcgmexporter:
+    repository: nvidia/dcgm-exporter
+    tag: "1.4.6"
+ports:
+  metrics:
+    port: 9101
