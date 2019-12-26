@@ -4,6 +4,10 @@ apiVersion: apps/v1
 metadata:
   name: gpushare-schd-extender
 spec:
+  selector:
+    matchLabels:
+      app: gpushare
+      component: gpushare-schd-extender
   replicas: 1
   strategy:
     type: Recreate

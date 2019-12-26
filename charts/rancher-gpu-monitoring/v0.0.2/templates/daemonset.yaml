@@ -4,6 +4,9 @@ metadata:
   name: gpu-dcgm-exporter
   namespace: cattle-prometheus
 spec:
+  selector:
+    matchLabels:
+      app: gpu-dcgm-exporter
   template:
     metadata:
       labels:

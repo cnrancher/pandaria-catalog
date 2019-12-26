@@ -1,16 +1,21 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: nvidia-device-plugin-daemonset
+  name: nvidia-gpu-device-plugin
 spec:
+  selector:
+    matchLabels:
+      component: nvidia-gpu-device-plugin
+      app: nvidia
   template:
     metadata:
       labels:
-        name: nvidia-device-plugin-ds
+        component: nvidia-gpu-device-plugin
+        app: nvidia
     spec:
       containers:
       - image: "{{ .Values.image.nvidiadeviceplugin.repository }}:{{ .Values.image.nvidiadeviceplugin.tag }}"
-        name: nvidia-device-plugin
+        name: nvidia-gpu-device-plugin
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
