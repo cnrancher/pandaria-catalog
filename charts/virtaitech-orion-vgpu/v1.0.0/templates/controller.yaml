@@ -48,8 +48,6 @@ spec:
         - name: ADMIN_PASSWD 
           # TODO: use secret?
           value: '{{ .Values.controller.password }}'
-        - name: ORION_LICENSE
-          value: '{{ .Values.license.key }}'
         - name: ENABLE_QUOTA
         {{- if eq .Values.controller.enableQuota true }}
           value: "1"

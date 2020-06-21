@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: orion-scheduler-policy
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
 data:
  policy.cfg : |
   {
