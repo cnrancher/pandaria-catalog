@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  namespace: kube-system
+  namespace: {{ .Release.Namespace }}
   name: orion-helper
   labels:
     k8s-app: virtaitech
