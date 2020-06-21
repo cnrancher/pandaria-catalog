@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: orion-scheduler
-  namespace: kube-system
+  Namespace: {{ .Release.Namespace }}
   labels:
     app: orion-scheduler
 spec:
