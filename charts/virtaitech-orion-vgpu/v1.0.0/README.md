@@ -13,7 +13,7 @@ VirtAI Orion Platform can virtualize GPUs and create GPU resource pool to:
   * Request more virtual GPU resources on the fly!
   * Change Orion virtual GPU settings without reboot!
 
-## Prerequsitions
+## Prerequisites
 
 Please visit [VirtAI Tech](https://www.virtaitech.com/) for more information.
 
@@ -54,10 +54,12 @@ If not, it's users' responsibility to add this label, where the address should b
 kubectl label nodes [nodeName] ORION_BIND_ADDR=10.10.50.100
 ```
 
+It is also possible to use Rancher to label nodes, please visit [VirtAI Tech](https://www.virtaitech.com/development/index) for more information.
+
 ## Use Orion VGPU
 
 Here is an example yaml file to deploy Orion client and use Orion vgpu.
-Please visit [VirtAI Tech](https://www.virtaitech.com/) to get detailed docs on how to deploy Orion client and run GPU workload.
+Please visit [VirtAI Tech](https://www.virtaitech.com/development/index) to get detailed docs on how to deploy Orion client and run GPU workload.
 
 ```yaml
 # orion-client.yaml
@@ -71,7 +73,7 @@ spec:
   containers:
   - name: test
     image: virtaitech/orion-client-2.2:cuda10.1-tf1.14-py3.6-hvd
-    command: ["sleep infinity"]
+    command: ["sh", "-c", "sleep infinity"]
     # Please make sure these values are properly set
     env:
     - name: ORION_VGPU
@@ -80,6 +82,13 @@ spec:
       value: "4096"
     - name: ORION_RATIO
       value: "100"
+    # whether the orion resources are revered or will be released after 30s idle.
+    # If the value is not set, the resources are reserved by default.
+    # Any value other than "1" will NOT reserve the resource.
+    - name: ORION_RESERVED
+      value: "0"
+    - name: ORION_CROSS_NODE
+      value: "0"
     - name : ORION_GROUP_ID
       valueFrom:
         fieldRef:

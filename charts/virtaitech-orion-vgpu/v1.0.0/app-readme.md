@@ -29,8 +29,8 @@ Please check **Detailed Descriptions** for further instructions.
 ## Useful links
 
 * [VirtAI Tech](https://www.virtaitech.com)
-* [User Guide](https://github.com/virtaitech/orion-docs/blob/master/Orion-User-Guide.md)
+* [Rancher + Orion User Guide](https://www.virtaitech.com/development/index)
 
 ## Activate Your Orion
 
-Don't have a license? Please visit [VirtAI Tech](https://www.virtaitech.com) to get one. FREE trail is also available!
+Don't have a license? Please visit [VirtAI Tech](https://www.virtaitech.com) to get one. FREE trial is also available!
