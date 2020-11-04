@@ -1,0 +1,17 @@
+apiVersion: v1
+appVersion: "0.1.2"
+description: Deploy the F5 Networks CIS Ingress for Kubernetes (f5-cis-ingress).
+name: f5-cis-ingress
+version: 0.1.2
+
+home: https://clouddocs.f5.com/
+icon: file://../f5.logo.png
+keywords:
+- f5
+- ingress
+- cis
+- rancher
+
+maintainers:
+  - name: xuefeng.yin
+    email: xuefeng@rancher.com
