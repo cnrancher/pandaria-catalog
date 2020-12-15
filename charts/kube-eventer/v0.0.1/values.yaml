@@ -10,6 +10,8 @@ sink:
     namespaces: "" # Namespaces to filter (defualt: all namespaces,use commas to separate multi namespaces)
     kinds: "" # Kinds to filter (default: all kinds,use commas to separate multi kinds. Options: Node,Pod and so on.)
     msg_type: "" # Type of message (default: text. Options: text and markdown)
+    cluster_id: ""
+    region: ""
   sls:
     sls_endpoint: ""
     project: "" # Project of SLS instance.
