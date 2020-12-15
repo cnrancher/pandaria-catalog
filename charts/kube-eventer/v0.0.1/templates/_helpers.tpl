@@ -18,6 +18,12 @@ generate dingtalk options
   {{- if .Values.sink.dingtalk.msg_type -}}
     {{ $options = printf "%s&msg_type=%s" $options (toString .Values.sink.dingtalk.msg_type)}}
   {{- end -}}
+  {{- if .Values.sink.dingtalk.cluster_id -}}
+    {{ $options = printf "%s&cluster_id=%s" $options (toString .Values.sink.dingtalk.cluster_id)}}
+  {{- end -}}
+  {{- if .Values.sink.dingtalk.region -}}
+    {{ $options = printf "%s&region=%s" $options (toString .Values.sink.dingtalk.region)}}
+  {{- end -}}
 
   {{- $options = (trimPrefix "&" $options) -}}
 
@@ -222,7 +228,11 @@ generate wechat options
     {{ $options = printf "%s&corp_secret=%s" $options (toString .Values.sink.wechat.corp_secret)}}
   {{- end -}}
   {{- if .Values.sink.wechat.agent_id -}}
-    {{ $options = printf "%s&agent_id=%s" $options (toString .Values.sink.wechat.agent_id)}}
+    {{- if (typeIs "float64" .Values.sink.wechat.agent_id) -}}
+      {{ $options = printf "%s&agent_id=%s" $options (printf "%.0f" .Values.sink.wechat.agent_id )}}
+    {{- else -}}
+      {{ $options = printf "%s&agent_id=%s" $options (toString .Values.sink.wechat.agent_id )}}
+    {{- end -}}
   {{- end -}}
   {{- if .Values.sink.wechat.to_user -}}
     {{ $options = printf "%s&to_user=%s" $options (toString .Values.sink.wechat.to_user)}}
