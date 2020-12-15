@@ -65,7 +65,7 @@ questions:
 - variable: sink.dingtalk.msg_type
   default: ""
   type: enum
-  description: "Type of message (default: text. Options: text and markdown)"
+  description: "Type of message (default: text. Options: text and markdown. markdown ONLY SUPPORT ALIYUN PLATFORM)"
   label: Message Type
   group: "Sink Options"
   required: false
@@ -73,6 +73,22 @@ questions:
   options:
     - "text"
     - "markdown"
+- variable: sink.dingtalk.cluster_id
+  default: ""
+  type: string
+  description: "Cluster ID"
+  label: Cluster ID
+  group: "Sink Options"
+  required: true
+  show_if: "sink.dingtalk.msg_type=markdown"
+- variable: sink.dingtalk.region
+  default: ""
+  type: string
+  description: "Region"
+  label: Region
+  group: "Sink Options"
+  required: true
+  show_if: "sink.dingtalk.msg_type=markdown"
 # sls
 - variable: sink.sls.sls_endpoint
   default: ""
@@ -88,7 +104,7 @@ questions:
   description: "Project of SLS instance."
   label: Project
   group: "Sink Options"
-  required: false
+  required: true
   show_if: "sinktarget=sls"
 - variable: sink.sls.logStore
   default: ""
@@ -96,7 +112,7 @@ questions:
   description: "logStore of SLS instance project"
   label: LogStore
   group: "Sink Options"
-  required: false
+  required: true
   show_if: "sinktarget=sls"
 - variable: sink.sls.topic
   default: ""
@@ -218,7 +234,7 @@ questions:
   description: "Honeycomb Write Key for your account"
   label: Writekey
   group: "Sink Options"
-  required: false
+  required: true
   show_if: "sinktarget=honeycomb"
 - variable: sink.honeycomb.apihost
   default: ""
@@ -390,7 +406,7 @@ questions:
   description: "Your wechat AgentID"
   label: Agent Id
   group: "Sink Options"
-  required: false
+  required: true
   show_if: "sinktarget=wechat"
 - variable: sink.wechat.to_user
   default: ""
