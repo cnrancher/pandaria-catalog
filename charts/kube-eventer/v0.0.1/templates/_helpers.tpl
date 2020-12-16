@@ -279,7 +279,8 @@ generate webhook options
     {{ $options = printf "%s&header=%s" $options (toString .Values.sink.webhook.header)}}
   {{- end -}}
   {{- if .Values.sink.webhook.use_custom_body -}}
-    {{ $options = printf "%s&custom_body_configmap=%s" $options (toString .Values.sink.webhook.custom_body_configmap_name)}}
+    {{- $options = printf "%s&custom_body_configmap=%s" $options (toString .Values.sink.webhook.custom_body_configmap_name) -}}
+    {{- $options = printf "%s&custom_body_configmap_namespace=%s" $options (toString .Release.Namespace) -}}
   {{- end -}}
 
   {{ $options = (trimPrefix "&" $options) }}
