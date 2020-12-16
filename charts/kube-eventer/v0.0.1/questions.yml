@@ -527,5 +527,5 @@ questions:
     type: string
     description: "The configmap name of request body template. Modify the configmap data after deployed."
     label: Configmap Name
-    required: false
+    required: true
     show_if: "sinktarget=webhook"
