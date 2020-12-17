@@ -80,7 +80,7 @@ questions:
   label: Cluster ID
   group: "Sink Options"
   required: true
-  show_if: "sink.dingtalk.msg_type=markdown"
+  show_if: "sinktarget=dingtalk&&sink.dingtalk.msg_type=markdown"
 - variable: sink.dingtalk.region
   default: ""
   type: string
@@ -88,7 +88,7 @@ questions:
   label: Region
   group: "Sink Options"
   required: true
-  show_if: "sink.dingtalk.msg_type=markdown"
+  show_if: "sinktarget=dingtalk&&sink.dingtalk.msg_type=markdown"
 # sls
 - variable: sink.sls.sls_endpoint
   default: ""
