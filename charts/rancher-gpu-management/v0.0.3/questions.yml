@@ -1,3 +1,4 @@
+rancher_min_version: 2.4.11-rc1
 categories:
 - GPU Management
 questions:
