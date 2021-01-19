@@ -1,0 +1,16 @@
+rancher_min_version: 2.4.8-rc1
+categories:
+- Networking
+namespace: kube-system
+questions:
+- variable: plugin
+  default: "Canal+Macvlan"
+  type: enum
+  label: "Networking Plugin"
+  options:
+  - "Canal+Macvlan"
+  - "Flannel+Macvlan"
+- variable: iface
+  default: ""
+  type: string
+  label: "Networking IFace"

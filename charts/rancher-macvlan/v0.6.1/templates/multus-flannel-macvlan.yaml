@@ -1,0 +1,579 @@
+{{ if eq .Values.plugin "Flannel+Macvlan" }}
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: network-attachment-definitions.k8s.cni.cncf.io
+spec:
+  group: k8s.cni.cncf.io
+  version: v1
+  scope: Namespaced
+  names:
+    plural: network-attachment-definitions
+    singular: network-attachment-definition
+    kind: NetworkAttachmentDefinition
+    shortNames:
+    - net-attach-def
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            config:
+                 type: string
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: multus
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - '*'
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: multus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: multus
+subjects:
+- kind: ServiceAccount
+  name: multus
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: multus
+  namespace: kube-system
+---
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: multus-cni-config
+  namespace: kube-system
+  labels:
+    tier: node
+    app: multus
+data:
+  cni-conf.json: |
+    {
+      "name": "multus-cni-network",
+      "cniVersion": "0.3.1",
+      "type": "multus",
+      "capabilities": {
+        "portMappings": true
+      },
+      "delegates": [
+        {
+          "cniVersion": "0.3.1",
+          "name": "default-cni-network",
+          "plugins": [
+            {
+              "type": "flannel",
+              "name": "flannel.1",
+                "delegate": {
+                  "isDefaultGateway": true,
+                  "hairpinMode": true
+                }
+              },
+              {
+                "type": "portmap",
+                "capabilities": {
+                  "portMappings": true
+                }
+              }
+          ]
+        }
+      ],
+      "logFile": "/var/log/multus.log",
+      "kubeconfig": "/etc/cni/net.d/multus.d/multus.kubeconfig"
+    }
+# -------------- for openshift.
+# "delegates": [{
+#   "type": "openshift-sdn",
+#   "name:" "openshift.1",
+#   "masterplugin": true
+# }],
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-multus-ds
+  namespace: kube-system
+  labels:
+    tier: node
+    app: multus
+    name: multus
+spec:
+  selector:
+    matchLabels:
+      name: multus
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: multus
+        name: multus
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+      serviceAccountName: multus
+      containers:
+      - name: kube-multus
+        image: nfvpe/multus:v3.4.2
+        command: ["/entrypoint.sh"]
+        args:
+        - "--multus-conf-file=/tmp/multus-conf/70-multus.conf"
+        - "--cni-version=0.3.1"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: cni
+          mountPath: /host/etc/cni/net.d
+        - name: cnibin
+          mountPath: /host/opt/cni/bin
+        - name: multus-cfg
+          mountPath: /tmp/multus-conf
+      volumes:
+        - name: cni
+          hostPath:
+            path: /etc/cni/net.d
+        - name: cnibin
+          hostPath:
+            path: /opt/cni/bin
+        - name: multus-cfg
+          configMap:
+            name: multus-cni-config
+            items:
+            - key: cni-conf.json
+              path: 70-multus.conf
+---
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: network-cni-ds
+  namespace: kube-system
+  labels:
+    tier: node
+    app: multus
+    name: network-cni-ds
+spec:
+  selector:
+    matchLabels:
+      name: network-cni-ds
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: multus
+        name: network-cni-ds
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+      serviceAccountName: multus
+      containers:
+      - name: kube-macvlan-cni
+        image: cnrancher/static-macvlan-cni:v0.3.5
+        command: ["/entrypoint.sh"]
+        args:
+        - ""
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: cni
+          mountPath: /host/etc/cni/net.d
+        - name: cnibin
+          mountPath: /host/opt/cni/bin
+      volumes:
+        - name: cni
+          hostPath:
+            path: /etc/cni/net.d
+        - name: cnibin
+          hostPath:
+            path: /opt/cni/bin
+---
+# This is a modified Flannel daemonset.
+# it is based on: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# Notably, it removes the creation of an configuration file in/etc/cni/net.d/ 
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: flannel
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/status
+    verbs:
+      - patch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: flannel
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flannel
+subjects:
+- kind: ServiceAccount
+  name: flannel
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flannel
+  namespace: kube-system
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kube-flannel-cfg
+  namespace: kube-system
+  labels:
+    tier: node
+    app: flannel
+data:
+  # ------------------------------- Intentionally removed, Multus daemonset configures /etc/cni/net.d
+  #cni-conf.json: |
+  #  {
+  #    "name": "cbr0",
+  #    "plugins": [
+  #      {
+  #        "type": "flannel",
+  #        "delegate": {
+  #          "hairpinMode": true,
+  #          "isDefaultGateway": true
+  #        }
+  #      },
+  #      {
+  #        "type": "portmap",
+  #        "capabilities": {
+  #          "portMappings": true
+  #        }
+  #      }
+  #    ]
+  #  }
+  net-conf.json: |
+    {
+      "Network": "10.42.0.0/16",
+      "Backend": {
+        "Type": "vxlan"
+      }
+    }
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-flannel-ds
+  namespace: kube-system
+  labels:
+    tier: node
+    app: flannel
+    name: flannel
+spec:
+  selector:
+    matchLabels:
+      name: flannel
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: flannel
+        name: flannel
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+      serviceAccountName: flannel
+      containers:
+      - name: kube-flannel
+        image: rancher/coreos-flannel:v0.12.0
+        command:
+        - /opt/bin/flanneld
+        args:
+        - --ip-masq
+        - --kube-subnet-mgr
+        {{- if .Values.iface }}
+        - --iface={{ .Values.iface }}
+        {{- end }}
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+        securityContext:
+          privileged: true
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        volumeMounts:
+        - name: run
+          mountPath: /run
+        - name: flannel-cfg
+          mountPath: /etc/kube-flannel/
+      volumes:
+        - name: run
+          hostPath:
+            path: /run
+        - name: cni
+          hostPath:
+            path: /etc/cni/net.d
+        - name: flannel-cfg
+          configMap:
+            name: kube-flannel-cfg
+---
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: macvlanips.macvlan.cluster.cattle.io
+spec:
+  group: macvlan.cluster.cattle.io
+  version: v1
+  scope: Namespaced
+  names:
+    plural: macvlanips
+    singular: macvlanip
+    kind: MacvlanIP
+    shortNames:
+    - macvlanip
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            subnet:
+                 type: string
+            podId:
+                 type: string
+            cidr:
+                 type: string
+            mac:
+                 type: string
+
+  additionalPrinterColumns:
+  - name: Subnet
+    type: string
+    JSONPath: .spec.subnet
+  - name: PodId
+    type: string
+    JSONPath: .spec.podId
+  - name: CIDR
+    type: string
+    JSONPath: .spec.cidr
+  - name: MAC
+    type: string
+    JSONPath: .spec.mac
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: macvlansubnets.macvlan.cluster.cattle.io
+spec:
+  group: macvlan.cluster.cattle.io
+  version: v1
+  names:
+    kind: MacvlanSubnet
+    plural: macvlansubnets
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            master:
+                 type: string
+            vlan:
+                 type: integer
+            cidr:
+                 type: string
+            mode:
+                 type: string
+            gateway:
+                  type: string
+            ranges:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rangeStart:
+                      type: string
+                    rangeEnd:
+                      type: string
+            routes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dst:
+                      type: string
+                    gw:
+                      type: string
+                    iface:
+                      type: string
+            podDefaultGateway:
+              type: object
+              properties:
+                enable:
+                  type: boolean
+                serviceCidr:
+                  type: string
+            ipDelayReuse:
+              type: integer
+  additionalPrinterColumns:
+  - name: Master
+    type: string
+    JSONPath: .spec.master
+  - name: VLAN
+    type: integer
+    JSONPath: .spec.vlan
+  - name: CIDR
+    type: string
+    JSONPath: .spec.cidr
+  - name: Mode
+    type: string
+    JSONPath: .spec.mode
+  - name: Gateway
+    type: string
+    JSONPath: .spec.gateway
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-admission-deploy
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: network-admission-deploy
+  template:
+    metadata:
+      labels:
+        app: network-admission-deploy
+    spec:
+      containers:
+      - image: cnrancher/network-admission-deploy:v0.6.1
+        name: network-admission-deploy
+      serviceAccountName: multus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-controller
+  namespace: kube-system
+  labels:
+    app: network-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: network-controller
+  template:
+    metadata:
+      namespace: kube-system
+      labels:
+        app: network-controller
+    spec:
+      serviceAccountName: multus
+      containers:
+      - image: cnrancher/network-controller:v0.6.1
+        name: network-controller
+        resources:
+          limits:
+            memory: "256Mi"
+        volumeMounts:
+          - name: webhook-certs
+            mountPath: /etc/webhook/certs
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: network-controller-webhook-certs
+---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-net-attach-def-controller
+  namespace: kube-system
+  labels:
+    app: kube-net-attach-def-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-net-attach-def-controller
+  template:
+    metadata:
+      namespace: kube-system
+      labels:
+        app: kube-net-attach-def-controller
+    spec:
+      serviceAccountName: multus
+      containers:
+      - image: cnrancher/k8s-net-attach-def-controller:v0.1.2
+        name: kube-net-attach-def-controller
+        imagePullPolicy: IfNotPresent
+        command: [ "/bin/sh", "-c", "--" ]
+        args: [ "k8s-net-attach-def-controller --logtostderr 10;" ]
+---
+{{ end }}
