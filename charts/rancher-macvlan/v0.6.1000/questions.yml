@@ -1,0 +1,38 @@
+rancher_min_version: 2.4.8-rc1
+rancher_max_version: 2.4.99-rc1
+categories:
+- Networking
+namespace: kube-system
+questions:
+- variable: systemDefaultRegistry
+  description: "Use public images by default if no input"
+  default: ""
+  type: string
+  label: "Image Registry"
+  group: "Container Images"
+- variable: plugin
+  default: "Canal+Macvlan"
+  type: enum
+  label: "Networking Plugin"
+  show_subquestion_if: "Canal+Macvlan"
+  group: "Network Plugin"
+  options:
+  - "Canal+Macvlan"
+  - "Flannel+Macvlan"
+  subquestions:
+  - variable: canal.vethmtu
+    default: "1450"
+    type: string
+    label: "Canal Veth MTU"
+- variable: iface
+  description: "Automatic detection by default"
+  default: ""
+  type: string
+  label: "Networking Iface"
+  group: "Network Plugin"
+- variable: podCIDR
+  default: "10.42.0.0/16"
+  description: "Same value with the Kubernetes config"
+  type: string
+  label: "Pod Networking CIDR"
+  group: "Network Plugin"
