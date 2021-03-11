@@ -135,6 +135,8 @@ spec:
         tier: node
         app: multus
         name: multus
+      annotations:
+        release/revision: "{{ .Release.Revision }}"
     spec:
       hostNetwork: true
       tolerations:
@@ -529,6 +531,7 @@ spec:
         # priority scheduling and that its resources are reserved
         # if it ever gets evicted.
         scheduler.alpha.kubernetes.io/critical-pod: ''
+        release/revision: "{{ .Release.Revision }}"
     spec:
       hostNetwork: true
       tolerations:
