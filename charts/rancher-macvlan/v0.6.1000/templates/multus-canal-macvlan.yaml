@@ -770,6 +770,8 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  annotations:
+    macvlan.pandaria.io/plugin: multus-canal-macvlan
   name: canal
   namespace: kube-system
 ---
