@@ -272,6 +272,8 @@ subjects:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  annotations:
+    macvlan.pandaria.io/plugin: multus-flannel-macvlan
   name: flannel
   namespace: kube-system
 ---
