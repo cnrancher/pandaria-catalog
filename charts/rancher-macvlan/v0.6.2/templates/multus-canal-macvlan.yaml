@@ -27,30 +27,16 @@ spec:
                 config:
                   type: string
 ---
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: multus
-rules:
-- apiGroups:
-  - '*'
-  resources:
-  - '*'
-  verbs:
-  - '*'
-- nonResourceURLs:
-  - '*'
-  verbs:
-  - '*'
----
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: multus
+  annotations:
+    "helm.sh/resource-policy": keep
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: multus
+  name: cluster-admin
 subjects:
 - kind: ServiceAccount
   name: multus
@@ -61,6 +47,8 @@ kind: ServiceAccount
 metadata:
   name: multus
   namespace: kube-system
+  annotations:
+    "helm.sh/resource-policy": keep
 ---
 ---
 kind: ConfigMap
@@ -4147,7 +4135,7 @@ spec:
         app: network-admission-deploy
     spec:
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.2-rc4
+      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.2-rc6
         name: network-admission-deploy
         lifecycle:
           preStop:
@@ -4175,7 +4163,7 @@ spec:
     spec:
       serviceAccountName: multus
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.2-rc4
+      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.2-rc6
         name: network-controller
         resources:
           limits:
