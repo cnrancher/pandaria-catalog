@@ -4135,7 +4135,7 @@ spec:
         app: network-admission-deploy
     spec:
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.2-rc6
+      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.2
         name: network-admission-deploy
         lifecycle:
           preStop:
@@ -4163,7 +4163,7 @@ spec:
     spec:
       serviceAccountName: multus
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.2-rc6
+      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.2
         name: network-controller
         resources:
           limits:
