@@ -1123,7 +1123,7 @@ spec:
         name: network-controller
         resources:
           limits:
-            memory: "256Mi"
+            memory: "512Mi"
         volumeMounts:
           - name: webhook-certs
             mountPath: /etc/webhook/certs
