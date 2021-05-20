@@ -1,0 +1,34 @@
+# Default values for qfusion-installer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+# singleNode or multiNode
+deployType: multiNode
+
+global:
+  registry: registry.cn-hangzhou.aliyuncs.com
+  repository: tomc
+#  imagePullSecret: imagepullsecret
+#  imagePullSecretJson: 
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+baseProfiles:
+  - common.profile
+  - logs.profile
+  - mysql.profile
+  - mgr.profile
+  - mssql.profile
+  - redis.profile
+  - release-v3.12.profile
+
+ext: 
+  cmName: 
+  profiles: []
