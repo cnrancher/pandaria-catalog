@@ -1,5 +1,17 @@
 categories:
   - RDS
+  - Databases
+  - DB
+  - DBaaS(DataBase-as-a-Service)
+  - SQL
+  - MySQL
+  - MariaDB
+  - MSSQL
+  - Redis
+  - Oracle
+labels:
+  io.cattle.role: project
+  io.rancher.certified: partner
 namespace: qfusion
 questions:
   - variable: service.installer.type
