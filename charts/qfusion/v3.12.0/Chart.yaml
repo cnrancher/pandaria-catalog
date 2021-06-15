@@ -3,14 +3,25 @@ name: qfusion
 version: v3.12.0-rancher
 appVersion: v3.12.0-rancher
 helmVersion: helm_v3
+kubeVersion: "<1.19.0-0"
 description: Helm chart for QFusion components
 home: http://www.woqutech.com/products.php?id=141
 keywords:
   - QFusion
   - RDS
   - woqutech
+  - Databases
+  - DB
+  - DBaaS(DataBase-as-a-Service)
+  - SQL
+  - MySQL
+  - MariaDB
+  - MSSQL
+  - Redis
+  - Oracle
 sources:
 engine: gotpl
-icon: http://www.woqutech.com/dist/img/logo.png
+icon: file://../woqutech.png
 maintainers:
   - name: qfusion
+dependencies: []

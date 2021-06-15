@@ -4,13 +4,13 @@
 
 replicaCount: 1
 # singleNode or multiNode
-deployType: multiNode
+deployType: singleNode
 
 global:
   registry: registry.cn-hangzhou.aliyuncs.com
   repository: tomc
 #  imagePullSecret: imagepullsecret
-#  imagePullSecretJson: 
+#  imagePullSecretJson:
 
 resources: {}
 
@@ -29,6 +29,6 @@ baseProfiles:
   - redis.profile
   - release-v3.12.profile
 
-ext: 
-  cmName: 
+ext:
+  cmName:
   profiles: []
