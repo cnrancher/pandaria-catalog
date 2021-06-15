@@ -9,7 +9,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "qfusion.selectorLabels" . | nindent 4 }}
+      {{- include "qfusion.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
