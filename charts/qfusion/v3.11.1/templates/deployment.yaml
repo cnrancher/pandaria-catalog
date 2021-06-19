@@ -23,6 +23,12 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.global.registry }}/{{ .Values.global.repository }}/installer-operator:{{ .Chart.AppVersion }}"
+          imagePullPolicy: Always
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9001
+              scheme: HTTP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.ext.cmName }}
