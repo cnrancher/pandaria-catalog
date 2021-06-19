@@ -35,10 +35,10 @@ If you use rancher's local cluster to install, you need to add the following par
 $ helm repo add qfusion https://helm.woqutech.com:8043/qfusion
 ```
 
-2. Install QFusion
+2. Install QFusion(namespace`qfusion-rds`)
 
 ```
-$ helm install qfusion qfusion/qfusion-installer -n qfusion
+$ helm install qfusion qfusion/qfusion-installer -n qfusion-rds --version v3.11.1-rancher
 ```
 
 ## Uninstalling the Chart
@@ -46,11 +46,11 @@ $ helm install qfusion qfusion/qfusion-installer -n qfusion
 To uninstall/delete the `qfusion` release:
 
 ```
-$ kubectl delete qfi qfusion -n qfusion
+$ kubectl delete qfi qfusion -n qfusion-rds
 ```
 
 To uninstall/delete the `qfusion` release completely and make its name free for later use:
 
 ```
-$ helm delete qfusion -n qfusion
+$ helm delete qfusion -n qfusion-rds
 ```

@@ -12,7 +12,7 @@ categories:
 labels:
   io.cattle.role: project
   io.rancher.certified: partner
-namespace: qfusion
+namespace: qfusion-rds
 questions:
   - variable: service.installer.type
     default: "NodePort"
