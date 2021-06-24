@@ -19,6 +19,11 @@ spec:
     - effect: NoSchedule
       key: node-role.kubernetes.io/master
       operator: Exists
+    - effect: NoSchedule
+      key: qfusion/master
+      operator: Exists
+    nodeSelector:
+      qfusion/master: "true"
   prepareYaml: |
     apiVersion: v1
     kind: Namespace
