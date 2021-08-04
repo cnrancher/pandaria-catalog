@@ -23,12 +23,16 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.global.registry }}/{{ .Values.global.repository }}/installer-operator:{{ .Chart.AppVersion }}"
-          imagePullPolicy: Always
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 9001
-              scheme: HTTP
+          args:
+            - --platInfo={{ .Values.platInfo }}
+            - --node-label={{ .Values.nodeLabel }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.ext.cmName }}
@@ -36,13 +40,19 @@ spec:
             - name: extprofiles
               mountPath: /extProfiles
               readOnly: true
+            - name: timezone
+              mountPath: /etc/localtime
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.ext.cmName }}
       volumes:
+        - hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai
+            type: ""
+          name: localtime
+      {{- if .Values.ext.cmName }}
         - name: extprofiles
           configMap:
             name: {{ .Values.ext.cmName }}
@@ -55,3 +65,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+---
+apiVersion: v1
+data:
+  timezone: |
+    Asia/Shanghai
+kind: ConfigMap
+metadata:
+  name: timezone
