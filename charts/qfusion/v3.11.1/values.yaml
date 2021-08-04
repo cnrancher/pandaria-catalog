@@ -5,6 +5,7 @@
 replicaCount: 1
 # singleNode or multiNode
 deployType: singleNode
+nodeLabel: true
 
 global:
   registry: registry.cn-hangzhou.aliyuncs.com
@@ -16,7 +17,13 @@ resources: {}
 
 nodeSelector: {}
 
-tolerations: []
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
+  - effect: NoSchedule
+    key: qfusion/master
+    operator: Exists
 
 affinity: {}
 
@@ -34,3 +41,6 @@ baseProfiles:
 ext:
   cmName:
   profiles: []
+
+platInfo: "rancher"
+imagePullPolicy: "Always"
