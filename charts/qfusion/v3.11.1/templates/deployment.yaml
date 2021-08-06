@@ -35,14 +35,14 @@ spec:
                   fieldPath: metadata.namespace
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.ext.cmName }}
           volumeMounts:
+            {{- with .Values.ext.cmName }}
             - name: extprofiles
               mountPath: /extProfiles
               readOnly: true
+            {{- end }}
             - name: timezone
               mountPath: /etc/localtime
-          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -51,7 +51,7 @@ spec:
         - hostPath:
             path: /usr/share/zoneinfo/Asia/Shanghai
             type: ""
-          name: localtime
+          name: timezone
       {{- if .Values.ext.cmName }}
         - name: extprofiles
           configMap:
