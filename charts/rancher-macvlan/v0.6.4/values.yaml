@@ -1,0 +1,14 @@
+plugin: "Canal+Macvlan"
+
+iface: ""
+
+podCIDR: "10.42.0.0/16"
+
+systemDefaultRegistry: ""
+
+canal:
+  vethmtu: "1450"
+
+ncResources:
+  limits:
+    memory: 512Mi
