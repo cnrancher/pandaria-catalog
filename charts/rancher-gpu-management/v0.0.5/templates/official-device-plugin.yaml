@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nvidia-gpu-device-plugin
+spec:
+  selector:
+    matchLabels:
+      component: nvidia-gpu-device-plugin
+      app: nvidia
+  template:
+    metadata:
+      labels:
+        component: nvidia-gpu-device-plugin
+        app: nvidia
+    spec:
+      containers:
+      - image: "{{ template "system_default_registry" . }}{{ .Values.image.nvidiadeviceplugin.repository }}:{{ .Values.image.nvidiadeviceplugin.tag }}"
+        name: nvidia-gpu-device-plugin
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        volumeMounts:
+          - name: device-plugin
+            mountPath: /var/lib/kubelet/device-plugins
+      volumes:
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+      nodeSelector:
+        gpu.cattle.io/type: 'default'
