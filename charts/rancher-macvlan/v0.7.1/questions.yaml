@@ -1,0 +1,44 @@
+rancher_min_version: 2.6.0-rc1
+categories:
+- Networking
+namespace: kube-system
+questions:
+- variable: systemDefaultRegistry
+  description: "Use public images by default if no input"
+  default: ""
+  type: string
+  label: "Image Registry"
+  group: "Container Images"
+- variable: plugin
+  default: "Attaching Macvlan"
+  type: enum
+  label: "Networking Plugin"
+  show_subquestion_if: "Canal+Macvlan"
+  group: "Network Plugin"
+  options:
+  - "Attaching Macvlan"
+  - "Canal+Macvlan"
+  - "Flannel+Macvlan"
+  subquestions:
+  - variable: canal.vethmtu
+    default: "0"
+    type: string
+    label: "Canal Veth MTU"
+- variable: iface
+  description: "Automatic detection by default"
+  default: ""
+  type: string
+  label: "Networking Iface"
+  group: "Network Plugin"
+- variable: podCIDR
+  default: "10.42.0.0/16"
+  description: "Same value with the Kubernetes config"
+  type: string
+  label: "Pod Networking CIDR"
+  group: "Network Plugin"
+- variable: ncResources.limits.memory
+  default: "512Mi"
+  description: "Maximum amount of memory to allocate per network-controller pod"
+  type: string
+  label: Memory Limits
+  group: "Network Controller"
