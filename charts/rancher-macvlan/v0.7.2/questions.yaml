@@ -1,4 +1,4 @@
-rancher_min_version: 2.6.0-rc1
+rancher_min_version: 2.6.3-rc1
 categories:
 - Networking
 namespace: kube-system

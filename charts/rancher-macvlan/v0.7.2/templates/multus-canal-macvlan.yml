@@ -196,6 +196,8 @@ metadata:
   name: network-admission-deploy
   namespace: kube-system
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: network-admission-deploy
@@ -205,7 +207,7 @@ spec:
         app: network-admission-deploy
     spec:
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.7.1
+      - image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.7.2
         name: network-admission-deploy
         lifecycle:
           preStop:
@@ -221,6 +223,8 @@ metadata:
   labels:
     app: network-controller
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: network-controller
@@ -232,7 +236,7 @@ spec:
     spec:
       serviceAccountName: multus
       containers:
-      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.7.1
+      - image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.7.2
         name: network-controller
         resources:
           limits:
