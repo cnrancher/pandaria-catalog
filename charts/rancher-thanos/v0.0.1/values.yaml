@@ -1,0 +1,214 @@
+global:
+  systemDefaultRegistry: ""
+
+ui:
+  replicaCount: 1
+  image:
+    repository: cnrancher/global-monitoring-ui
+    tag: 0.0.8
+    pullPolicy: IfNotPresent
+  apiToken: ""
+  serverUrl: "http://rancher.cattle-system"
+  title: ""
+  tabTitle: ""
+  favicon: ""
+  logo: ""
+  resources:
+    limits:
+      memory: 300Mi
+      cpu: 300m
+    requests:
+      memory: 50Mi
+      cpu: 50m
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+  service:
+    type: ClusterIP
+    port: 80
+
+thanos:
+  image:
+    repository: cnrancher/thanos
+    tag: v0.17.0
+    pullPolicy: IfNotPresent
+  objectConfig: {}
+
+  query:
+    replicaCount: 1
+    stores: []
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: 100m 
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    service:
+      type: ClusterIP
+      port: 80
+    extraArgs: []
+    proxy:
+      repository: cnrancher/nginx
+      tag: 1.16.1
+      resources:
+        limits:
+          memory: 100Mi
+          cpu: 100m
+        requests:
+          memory: 50Mi
+          cpu: 50m
+      privateCa: false
+
+
+  store:
+    enabled: false
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: 100m
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    extraArgs: []
+
+  compact:
+    enabled: false
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: 100m
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+    extraArgs: []
+
+  tls:
+    enabled: false
+    serverName: "thanos.global.monitoring"
+    ca: 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN2akNDQWFZQ0NRRHdDRnZkS043Z1lUQU5CZ2txaGtpRzl3MEJBUXNGQURBaE1Rc3dDUVlEVlFRR0V3SkQKVGpFU01CQUdBMVVFQXd3SlkyRjBkR3hsTFdOaE1CNFhEVEl5TURFeE9EQTFNVGt5TjFvWERUTXlNREV4TmpBMQpNVGt5TjFvd0lURUxNQWtHQTFVRUJoTUNRMDR4RWpBUUJnTlZCQU1NQ1dOaGRIUnNaUzFqWVRDQ0FTSXdEUVlKCktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQU9CUGtlbG8rTktNSHQxbU1nRXBxek5NRE00Z0pScVQKb243WStWa2RqRHl5OGFJWDZUWkpvckJONVRIYyszZklzbC9GNE4wUGo5ei9BOVJqSTlrdWdMY3p5dGRoVjlWNwo5WmZwOGpuN0FnTXM3aWFsNHRTakZrVnJBV2lUUzZYUjNGQWE3L2R0MDNTTmRqUWtBdjNRNG9TZ0Q3Nll2aGF4CnVPVHVtN3VnTGV1MC90akhYMjducjJDWFNURkhHTXkrQUxoS1lHU1BUNk11citmM1BVMmpaYVRWR3A0N1g4QTgKVmQrQ21pRU5mUmlzT3hDcUpOZmE1aUluV05lOW1LTS9aTklNWDI4dHRLNGdVTEhndjZDVSt0Ri9HRHJDMG9ZMwphL1U2ZTlPR3BpdURpQlpMSy9yNms2N0pFUWxJZVdsdzdrOEJ5QzBCV1pCWEJ4cGZYSk1aL2ZNQ0F3RUFBVEFOCkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQWo0L3RMWTAzNXcxck9NUCtMWUd0dnBXbW1SQklBbTVERDE4S2NWNXoKZHl6aEF5c2xiWXdsNmRkQ1o0ejNPcUZEcjNCNUJ0a2ZHUkt0Nllvai9ISlF2M3Ard09sUldqVnVRZHUwNmtzQgpmZ0xnb0VPei9QUXBoVFRkSGtvM2ROekRscmhOUXIvTGNVUlUza0lWU0lLc3lFcVBSdkc3MjBZWHNraWVQaWt5CmhybE1GZ1hnd0tRWHJURjhZK0RXejRaUC9maVhYN3pMM2RwY1JraFJTMHVqcndwSzVlK0N0dEFJcWhTTTE1QnMKUS8rTVRzb2hPSUNDdlMxSTB4aE5PV2h1TC85ZUx5WVJrVERycHFRSFpCalh0Rlg5WnVGWGRZaThuSURKNVdMVgp5a1h1YU1xSnRIMVNKcit1WFNlUlhoVkhPZkdEdlBjUC8yU1NzQXpEdlVUek93PT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo='
+    cert: 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURNakNDQWhxZ0F3SUJBZ0lKQU9OY2gzdzJJYjhVTUEwR0NTcUdTSWIzRFFFQkN3VUFNQ0V4Q3pBSkJnTlYKQkFZVEFrTk9NUkl3RUFZRFZRUUREQWxqWVhSMGJHVXRZMkV3SGhjTk1qSXdNVEU0TURVeE9USTRXaGNOTXpJdwpNVEUyTURVeE9USTRXakF3TVFzd0NRWURWUVFHRXdKRFRqRWhNQjhHQTFVRUF3d1lkR2hoYm05ekxtZHNiMkpoCmJDNXRiMjVwZEc5eWFXNW5NSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQW42S1cKaTRZOGdGWXZIc1FaaWZXL0VnOEx6NGxsRWw2bU5uUmFhK295VUhzOXhmMGpQUU5XdEtGYmNXTU12ZEN4endubAp0Zm5GV2w1SnY3YXdHSkJwWVFhcEZ1b2poQjZNaXRMZzBqdjVtZFEyQlE0ZnVuVmcwTWhISk9IcmR0Z0QwaHN3CkRnS21PVTBFeHNubEZwMUE0dUFZcFg3NHg1anhzVG1hOUQ1b0FZYjQ3cHlITld6YXdzZ04rRHgvQjk3ZGV5eUIKOG1VeHJISlIzVTRxOGMvMVlKZjJoUTZGb1ZXYi9OYmVjY29TUFFDZGlCVmhYSnpVM2lveEp1WVgyQitVT1o0YwpxcFBzWFArRVVOM3p0b3NzZlhaU1NnU3BCaFJ4TDlQSGJ5QXFIc3Myb29xcVdvMFRldnpWczkwTFgyYTQrNnMwClhDdWJZaDVLbzVqVHpZeFZxUUlEQVFBQm8xNHdYREFKQmdOVkhSTUVBakFBTUFzR0ExVWREd1FFQXdJRjREQWQKQmdOVkhTVUVGakFVQmdnckJnRUZCUWNEQWdZSUt3WUJCUVVIQXdFd0l3WURWUjBSQkJ3d0dvSVlkR2hoYm05egpMbWRzYjJKaGJDNXRiMjVwZEc5eWFXNW5NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUI2UUU3R0QrejNvMVJlCi9XaGNDd2ROenBiWGR3bGU4c25wa0N1R0ZIVDVlajErSVVsWGJoL0NZNHZtbFpkNDFHY1ZyeWhMakdTaC96QWUKbGlmYk0vMDlJT1JXN01RL2o4TVJ5L2s4SWZxckQ4WUtmZ3RxMmlHK1dPQUxFejZHYjFxdmd0Uy9qZTlJVXFZNgo0QjFVZWFpZWRYQkNObjJ3RUZVTzE3dEFCZTFZamRqdVFXWndUTzRwZVByZE9BamZDZDk4Zk0zbnlhZFQwUG5sCllYSjZJRXJSM2FYWkZ4YmhqVFRRMFBVTVY4aFZSMzVOelYvZ3VZTTRhZ21yZWd6T2duZHFSak83MWFzZzE5MHMKL0lYcUdJMXBod2VuR083QnBBN2xFMTlQVHpqdzl1TWNEUy9yTEhpWDFaVzlQZDVldW15aTErdDVibnNpS011UQpGN3p3TU0xNgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlDdmpDQ0FhWUNDUUR3Q0Z2ZEtON2dZVEFOQmdrcWhraUc5dzBCQVFzRkFEQWhNUXN3Q1FZRFZRUUdFd0pEClRqRVNNQkFHQTFVRUF3d0pZMkYwZEd4bExXTmhNQjRYRFRJeU1ERXhPREExTVRreU4xb1hEVE15TURFeE5qQTEKTVRreU4xb3dJVEVMTUFrR0ExVUVCaE1DUTA0eEVqQVFCZ05WQkFNTUNXTmhkSFJzWlMxallUQ0NBU0l3RFFZSgpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFPQlBrZWxvK05LTUh0MW1NZ0VwcXpOTURNNGdKUnFUCm9uN1krVmtkakR5eThhSVg2VFpKb3JCTjVUSGMrM2ZJc2wvRjROMFBqOXovQTlSakk5a3VnTGN6eXRkaFY5VjcKOVpmcDhqbjdBZ01zN2lhbDR0U2pGa1ZyQVdpVFM2WFIzRkFhNy9kdDAzU05kalFrQXYzUTRvU2dENzZZdmhheAp1T1R1bTd1Z0xldTAvdGpIWDI3bnIyQ1hTVEZIR015K0FMaEtZR1NQVDZNdXIrZjNQVTJqWmFUVkdwNDdYOEE4ClZkK0NtaUVOZlJpc094Q3FKTmZhNWlJbldOZTltS00vWk5JTVgyOHR0SzRnVUxIZ3Y2Q1UrdEYvR0RyQzBvWTMKYS9VNmU5T0dwaXVEaUJaTEsvcjZrNjdKRVFsSWVXbHc3azhCeUMwQldaQlhCeHBmWEpNWi9mTUNBd0VBQVRBTgpCZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFqNC90TFkwMzV3MXJPTVArTFlHdHZwV21tUkJJQW01REQxOEtjVjV6CmR5emhBeXNsYll3bDZkZENaNHozT3FGRHIzQjVCdGtmR1JLdDZZb2ovSEpRdjNwK3dPbFJXalZ1UWR1MDZrc0IKZmdMZ29FT3ovUFFwaFRUZEhrbzNkTnpEbHJoTlFyL0xjVVJVM2tJVlNJS3N5RXFQUnZHNzIwWVhza2llUGlreQpocmxNRmdYZ3dLUVhyVEY4WStEV3o0WlAvZmlYWDd6TDNkcGNSa2hSUzB1anJ3cEs1ZStDdHRBSXFoU00xNUJzClEvK01Uc29oT0lDQ3ZTMUkweGhOT1dodUwvOWVMeVlSa1REcnBxUUhaQmpYdEZYOVp1RlhkWWk4bklESjVXTFYKeWtYdWFNcUp0SDFTSnIrdVhTZVJYaFZIT2ZHRHZQY1AvMlNTc0F6RHZVVHpPdz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K'
+    key: 'LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBbjZLV2k0WThnRll2SHNRWmlmVy9FZzhMejRsbEVsNm1OblJhYStveVVIczl4ZjBqClBRTld0S0ZiY1dNTXZkQ3h6d25sdGZuRldsNUp2N2F3R0pCcFlRYXBGdW9qaEI2TWl0TGcwanY1bWRRMkJRNGYKdW5WZzBNaEhKT0hyZHRnRDBoc3dEZ0ttT1UwRXhzbmxGcDFBNHVBWXBYNzR4NWp4c1RtYTlENW9BWWI0N3B5SApOV3phd3NnTitEeC9COTdkZXl5QjhtVXhySEpSM1U0cThjLzFZSmYyaFE2Rm9WV2IvTmJlY2NvU1BRQ2RpQlZoClhKelUzaW94SnVZWDJCK1VPWjRjcXBQc1hQK0VVTjN6dG9zc2ZYWlNTZ1NwQmhSeEw5UEhieUFxSHNzMm9vcXEKV28wVGV2elZzOTBMWDJhNCs2czBYQ3ViWWg1S281alR6WXhWcVFJREFRQUJBb0lCQUdBNThNZWdIajQ2TldNMQpVRFBDUi9BSjA5UEJmWVNLTzJVZDFCZXk3NnRsN3NHM0twT3Z2SWRic0xSendZMTJESWpCN1k4NVJZYUl5YW5mCjVOeVp5SHZ0T09ZUU0yS0R5N0l2RmNpRTBKdXl1UEZwSnlVTmRsUEVObVo4TEtUUjU5T3lBZENnTmpUYVFXUFcKOWRvZzVxa2I3cDlzSDJpcHdCOVZteHRadHZZYnc0dW1wYnFUQVdpRHJkTnQ3NUZhdjR6aWtPVFFVNXVGei9Xagp5RzlFaUlJYVR6cXRGYVY0blcyZ0h4L1lEVXBHL2hrZmdPTWNhamNWdnpDQ0lNMUtsRmpTcHZYTzZmSHp4VGsvCnJvRTQ5V2JYU3pXNDNYT3Y3dHdsdWNkU1hmVDk1dTZKcXBvUVIwNWVmdTFJZk1saHB2ajFMZE82MzJ2b0VQUEoKdlpWZU9ZRUNnWUVBejRDUTExNzlNa3RFK1MrNFVqQmJHS3VUaVRRSlRNN1FqRHdIWmhDbnQ5UlJ1amNBVjN0cQo5VEFhSkRKb1BWMVUrU1c5NDNlYU16VnFNT2pLZnU3ZWZJSkJhdGV3c1Z2S0xocUFkQ3lWYnEzTlluN0xHaHhZCnM2bFBvaGYrNndjaUo5MEdadFRLSnNUTnlWaGtWZnBzWUhvakZtZm9nVTFmR0sxMTNFVlFSQmtDZ1lFQXhQSUEKSktlV0NsVjFRMkd5Vnc3MUN3MVhEbnR2eEJwVjdMall1TkhPU2xLZ3RCREFNR1pOVnN6YlZja1BKbDk2UEJXdgpCUWoxM3ErM2FiVENFS0ZHdTVXeWp2OEp1WFFkOFMrZ1huQk83a2NmelhMZmw3V2tvT0JCcjN3YTJ1eis1cnZzCkRseGFrTE9od2p0WXRYeHJuNms0enEwU21tYzY1WDhEWVV0d1VCRUNnWUJMT09KSkVTaGNxU2l4NVBpKzRzVEQKWnIrdlIydnZxakcwQkxieDZ5dkIybmhlTno0cWVKVkhtVTZBdkwxSk1hSnlSNXBVOGJDMnk3QlpWcXJCNVRwRwpqTG5HVDdiQU5QUlFUazh1emxMRnNyLzM2dHNaOWhpNTJMRURwQXRIakdoM1p3ckJFSGJRSXh3dTE1cFlDTlp0CkN4blpMNFg4Q2Q1bGhjeHFNNzVyVVFLQmdFdkZSMlRTelJrQXMvTE9uWXg5QnEzUDNoU0dUUVBIbGhOVE1wNDQKcWdOU010M1VLL3p5L3dKTUluNm9zaGx6VmxYVGlkaUlFQUF5M24vZXVXTW9pVXdXVmZKS0VQVzJ4T1pNQ29rSwo4SE1nRGc0L0NlTVdVVlpMc1RuUXA0eGU3ZHJicGdBSWJCZUw1TW9UaHhlYjNOUTZpTTZMSzhNWHdFTVhVTGVZCkRJZmhBb0dBZjFqTmpuNXV1b0RJRHUxRjQ1Umc5ZnIxeEdteE91ckswZlJLQ2RaUk9ucCt1QTQvdE00Q2hSQmoKeWhHZkZuS2N5bE0wUXIreG85Zm5yOXhaZlJ4MG4xM3Q5V25uU1V0emMveEU1ZVozeTdRc05pVTlEYTA1cmhVdQpMZTdXWm1FaFRyUmQwUXhOU2JLRWtrekZYbFRnSUpWMENzTzdEa3dyUlNzcjRoa0hWdFk9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg=='
+
+grafana:
+  enabledRBAC: true
+  apiGroup: "monitoring.coreos.com"
+  image:
+    repository: rancher/grafana-grafana
+    tag: 6.3.6
+    pullPolicy: IfNotPresent
+    proxy:
+      repository: cnrancher/nginx
+      tag: 1.16.1
+  nodeSelector: {}
+  resources:
+    core:
+      limits:
+        memory: 200Mi
+        cpu: 200m
+      requests:
+        memory: 100Mi
+        cpu: 100m
+    proxy:
+      limits:
+        memory: 100Mi
+        cpu: 100m
+      requests:
+        memory: 50Mi
+        cpu: 50m
+  persistence:
+    name: ""
+    enabled: false
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
+    size: 50Gi
+  service:
+    type: ClusterIP
+    port: 80
+  # Already exist ServiceAccount
+  serviceAccountName: ""
+  prometheusDatasourceURL: "http://access-thanos"
+
+  ## Tolerations for use with node taints
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+    #  - key: "key"
+    #    operator: "Equal"
+    #    value: "value"
+    #    effect: "NoSchedule"
+
+  ## Pass extra environment variables to the Grafana container.
+  ##
+  # extraVars:
+  # - name: EXTRA_VAR_1
+  #   value: extra-var-value-1
+  # - name: EXTRA_VAR_2
+  #   value: extra-var-value-2
+  extraVars: {}
+
+  storageSpec: {}
+  #   storageClassName: default
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   resources:
+  #     requests:
+  #       storage: 2Gi
+  #   selector: {}
+
+  ## Sidecars that collect the configmaps with specified label and stores the included files them into the respective folders
+  ## Requires at least Grafana 5 to work and can't be used together with parameters dashboardProviders, datasources and dashboards
+  sidecar:
+    image: kiwigrid/k8s-sidecar:0.1.20
+    imagePullPolicy: IfNotPresent
+    resources: {}
+  #   limits:
+  #     cpu: 100m
+  #     memory: 100Mi
+  #   requests:
+  #     cpu: 50m
+  #     memory: 50Mi
+    # skipTlsVerify Set to true to skip tls verification for kube api calls
+    # skipTlsVerify: true
+    dashboards:
+      enabled: false
+      SCProvider: true
+      # label that the configmaps with dashboards are marked with
+      label: grafana_dashboard
+      # folder in the pod that should hold the collected dashboards (unless `defaultFolderName` is set)
+      folder: /tmp/dashboards
+      # The default folder name, it will create a subfolder under the `folder` and put dashboards in there instead
+      defaultFolderName: null
+      # If specified, the sidecar will search for dashboard config-maps inside this namespace.
+      # Otherwise the namespace in which the sidecar is running will be used.
+      # It's also possible to specify ALL to search in all namespaces
+      searchNamespace: null
+      # provider configuration that lets grafana manage the dashboards
+      provider:
+        # name of the provider, should be unique
+        name: sidecarProvider
+        # orgid as configured in grafana
+        orgid: 1
+        # folder in which the dashboards should be imported in grafana
+        folder: ''
+        # type of the provider
+        type: file
+        # disableDelete to activate a import-only behaviour
+        disableDelete: false
+    datasources:
+      enabled: false
+      # label that the configmaps with datasources are marked with
+      label: grafana_datasource
+      # If specified, the sidecar will search for datasource config-maps inside this namespace.
+      # Otherwise the namespace in which the sidecar is running will be used.
+      # It's also possible to specify ALL to search in all namespaces
+      searchNamespace: null

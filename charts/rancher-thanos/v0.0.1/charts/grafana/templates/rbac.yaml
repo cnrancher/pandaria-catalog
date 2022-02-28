@@ -1,0 +1,49 @@
+{{- if and .Values.enabledRBAC (not .Values.serviceAccountName) }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+imagePullSecrets: 
+{{ toYaml .Values.image.pullSecrets | indent 2 }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if or .Values.sidecar.dashboards.enabled .Values.sidecar.datasources.enabled }}
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "watch", "list"]
+{{- else }}
+rules: []
+{{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
