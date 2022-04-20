@@ -1,0 +1,18 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ack-operator
+  namespace: cattle-system
+rules:
+  - apiGroups: ['']
+    resources: ['secrets']
+    verbs: ['get', 'list', 'create', 'watch']
+  - apiGroups: ['']
+    resources: ['configmaps']
+    verbs: ['get', 'list', 'create','update', 'watch']
+  - apiGroups: ['ack.pandaria.io']
+    resources: ['ackclusterconfigs']
+    verbs: ['get', 'list', 'update', 'watch']
+  - apiGroups: ['ack.pandaria.io']
+    resources: ['ackclusterconfigs/status']
+    verbs: ['update']
