@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name:  ack-operator
+  namespace: cattle-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ack-operator
+subjects:
+- kind: ServiceAccount
+  name: ack-operator
+  namespace: cattle-system
