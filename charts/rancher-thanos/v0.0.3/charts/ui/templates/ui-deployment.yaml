@@ -33,7 +33,7 @@ spec:
           - name: SERVER_URL
             value: "{{ .Values.serverUrl }}"
           - name: THANOS_URL
-            value: "http://access-thanos"
+            value: "http://access-thanos/global-monitoring/v2"
           {{- if .Values.title }}
           - name: CUSTOM_RANCHER_TITLE
             value: {{ .Values.title }}
