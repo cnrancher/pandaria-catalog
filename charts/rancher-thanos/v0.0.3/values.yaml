@@ -30,7 +30,7 @@ ui:
 thanos:
   image:
     repository: cnrancher/thanos
-    tag: v0.17.0
+    tag: v0.24.0
     pullPolicy: IfNotPresent
   objectConfig: {}
 
@@ -62,6 +62,8 @@ thanos:
           memory: 50Mi
           cpu: 50m
       privateCa: false
+    externalPrefix: global-monitoring/v2
+    storeInterval: 30s
 
 
   store:
@@ -136,7 +138,7 @@ grafana:
     port: 80
   # Already exist ServiceAccount
   serviceAccountName: ""
-  prometheusDatasourceURL: "http://access-thanos"
+  prometheusDatasourceURL: "http://access-thanos/global-monitoring/v2"
 
   ## Tolerations for use with node taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
