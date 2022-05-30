@@ -38,13 +38,9 @@ spec:
           - --grpc-client-server-name
           - {{ .Values.tls.serverName }}   
           {{- end }}
-          {{- range .Values.query.stores }}
-          - --store={{ . }}
-          {{- end }}
-          {{- if .Values.store.enabled }}
-          - --store
-          - thanos-store-{{ .Release.Name }}:10901
-          {{- end }}
+          - --web.external-prefix={{ .Values.query.externalPrefix }}
+          - --store.sd-files=/etc/thanos/thanos-store.yml
+          - --store.sd-interval={{ .Values.query.storeInterval }}
         {{- range .Values.query.extraArgs }}
           - {{ . }}
         {{- end }}
@@ -62,11 +58,13 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.query.resources | nindent 12 }}
-          {{- if .Values.tls.enabled }}  
           volumeMounts:
+          - mountPath: /etc/thanos
+            name: thanos-store 
+          {{- if .Values.tls.enabled }}
           - mountPath: /etc/tls/grpc
             name: thanos-sidecar-tls
-          {{- end }}
+          {{- end }}   
         - name: nginx
           image: "{{ template "system_default_registry" . }}{{ .Values.query.proxy.repository }}:{{ .Values.query.proxy.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -101,6 +99,9 @@ spec:
             path: default.conf
           name: proxy-{{ .Release.Name }}
         name: nginx-config
+      - configMap:
+          name: thanos-query-stores
+        name: thanos-store
       {{- if .Values.query.proxy.privateCa }}
       - name: ca-cert
         hostPath:
