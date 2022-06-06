@@ -1,0 +1,17 @@
+global:
+  systemDefaultRegistry: ""
+
+ackOperator:
+  image:
+    repository: cnrancher/ack-operator
+    tag: v0.0.4
+
+httpProxy: ""
+httpsProxy: ""
+noProxy: ""
+additionalTrustedCAs: false
+leaderElect: true
+lockName: ""
+lockNamespace: ""
+qps: ""
+burst: ""
