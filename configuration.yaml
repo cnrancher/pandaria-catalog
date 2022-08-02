@@ -1,0 +1,6 @@
+# helmRepo:
+#   cname: charts.cnrancher.com
+
+validate:
+  url: https://github.com/cnrancher/pandaria-catalog.git
+  branch: release/v2.6

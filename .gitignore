@@ -6,3 +6,12 @@
 
 # Vscode files
 .vscode
+
+# Binary files
+bin/
+
+# IDEA config files
+.idea
+
+# Charts build scripts files
+.charts-build-scripts
