@@ -6,7 +6,7 @@ name: f5-cis-ctlr
 sources:
   - https://github.com/F5Networks/charts/blob/master/stable/f5-bigip-ctlr-0.0.9.tgz
 home: https://clouddocs.f5.com/
-icon: file://../f5.logo.png
+icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ctlr.png
 keywords:
 - f5
 - cis
