@@ -1,0 +1,75 @@
+image:
+  repository: registry.aliyuncs.com/acs/kube-eventer-amd64
+  tag: v1.2.0-484d9cd-aliyun
+sinktarget: ""
+sink:
+  dingtalk: # https://github.com/AliyunContainerService/kube-eventer/blob/master/docs/en/dingtalk-sink.md
+    webhook_url: ""
+    label: "" # Custom labels on alerting message.(such as clusterId)
+    level: "" # Level of event (default: Warning. Options: Warning and Normal)
+    namespaces: "" # Namespaces to filter (defualt: all namespaces,use commas to separate multi namespaces)
+    kinds: "" # Kinds to filter (default: all kinds,use commas to separate multi kinds. Options: Node,Pod and so on.)
+    msg_type: "" # Type of message (default: text. Options: text and markdown)
+    cluster_id: ""
+    region: ""
+  sls:
+    sls_endpoint: ""
+    project: "" # Project of SLS instance.
+    logStore: "" # logStore of SLS instance project.
+    topic: "" # topic for every log sent to SLS.
+  elasticsearch:
+    es_server_url: ""
+    index: "" # the index for metrics and events. The default is heapster
+    esUserName: ""  # the username if authentication is enabled
+    esUserSecret: "" # the password if authentication is enabled
+    maxRetries: "" # the number of retries that the Elastic client will perform for a single request after before giving up and return an error. It is 0 by default, so retry is disabled by default.
+    healthCheck: "" # specifies if healthCheck are enabled by default. It is enabled by default. To disable, provide a negative boolean value like 0 or false.
+    sniff: "" # specifies if the sniffer is enabled by default. It is enabled by default. To disable, provide a negative boolean value like 0 or false.
+    startupHealthcheckTimeout: "" # the time in seconds the healthCheck waits for a response from Elasticsearch on startup, i.e. when creating a client. The default value is 1.
+    ver: "" # ElasticSearch cluster version, can be either 2, 5, 6 or 7. The default is 5
+    bulkWorkers: "" # number of workers for bulk processing. Default value is 5.
+    cluster_name: "" # cluster name for different Kubernetes clusters. Default value is default.
+    pipeline: "" # (optional; >ES5) Ingest Pipeline to process the documents. The default is disabled(empty value)
+  honeycomb:
+    dataset: "" # Honeycomb Dataset to which to publish metrics/events
+    writekey: "" # Honeycomb Write Key for your account
+    apihost: "" # Option to send metrics to a different host (default: https://api.honeycomb.com) (optional)
+  influxdb:
+    influxdb_url: ""
+    user: "" # InfluxDB username (default: root)
+    pw: "" # InfluxDB password (default: root)
+    db: "" # InfluxDB Database name (default: k8s)
+    insecuressl: "" # Ignore SSL certificate validity (default: false)
+    withfields: "" #  Use InfluxDB fields (default: false)
+    cluster_name: "" # Cluster name for different Kubernetes clusters. (default: default)
+  kafka:
+    brokers: "" # Kafka's brokers' list
+    eventstopic: "" # Kafka's topic for events. Default value : heapster-events.
+    compression: "" # Kafka's compression for both topics. Must be gzip or none or snappy or lz4. Default value : none.
+    user: "" #  Kafka's SASL PLAIN username. Must be set with password option.
+    password: "" # Kafka's SASL PLAIN password. Must be set with user option.
+    cacert: "" # Kafka's SSL Certificate Authority file path.
+    cert: "" # Kafka's SSL Client Certificate file path (In case of Two-way SSL). Must be set with key option.
+    key: "" # Kafka's SSL Client Private Key file path (In case of Two-way SSL). Must be set with cert option.
+    insecuressl: "" # Kafka's Ignore SSL certificate validity. Default value : false.
+  mysql:
+    mysql_jdbc_url: ""
+  wechat:
+    corp_id: ""  # Your wechat CorpID
+    corp_secret: "" # Your wechat CorpSecret
+    agent_id: "" # Your wechat AgentID
+    to_user: "" #  send to user (defualt: @all)
+    label: "" # Custom labels on alerting message.(such as clusterId)
+    level: "" #  Level of event (default: Warning. Options: Warning and Normal)
+    namespaces: "" # Namespaces to filter (defualt: all namespaces,use commas to separate multi namespaces)
+    kinds: "" # Kinds to filter (default: all kinds,use commas to separate multi kinds. Options: Node,Pod and so on.)
+  webhook:
+    webhook_url: ""
+    level: ""
+    namespaces: ""
+    kinds: ""
+    reason: ""
+    method: ""
+    header: ""
+    use_custom_body: false
+    custom_body_configmap_name: "kube-eventer-webhook-configmap"

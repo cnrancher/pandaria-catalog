@@ -1,2 +1,521 @@
 apiVersion: v1
 entries:
+  f5-cis-ctlr:
+  - apiVersion: v1
+    appVersion: 0.0.9
+    created: "2022-08-03T16:25:42.581015+08:00"
+    description: Deploy the F5 Networks BIG-IP Controller for Kubernetes (k8s-bigip-ctlr).
+      Code base by F5.
+    digest: 772418b841ef5a58fe62b92479080130ffb4c585dcbc4fa77d574e3cc5425c8a
+    home: https://clouddocs.f5.com/
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ctlr.png
+    keywords:
+    - f5
+    - cis
+    - rancher
+    maintainers:
+    - email: xuefeng@rancher.com
+      name: xuefeng.yin
+    name: f5-cis-ctlr
+    sources:
+    - https://github.com/F5Networks/charts/blob/master/stable/f5-bigip-ctlr-0.0.9.tgz
+    urls:
+    - assets/f5-cis-ctlr/f5-cis-ctlr-0.0.9.tgz
+    version: 0.0.9
+  f5-cis-ingress:
+  - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2022-08-03T16:25:42.586503+08:00"
+    description: Deploy the F5 Networks CIS Ingress for Kubernetes (f5-cis-ingress).
+    digest: b8a9f2db9f8cd676497fbf462cb6cb82504ed986ebbbe7e1046efdf1d8cf8a20
+    home: https://clouddocs.f5.com/
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ingress.png
+    keywords:
+    - f5
+    - ingress
+    - cis
+    - rancher
+    maintainers:
+    - email: xuefeng@rancher.com
+      name: xuefeng.yin
+    name: f5-cis-ingress
+    urls:
+    - assets/f5-cis-ingress/f5-cis-ingress-0.1.2.tgz
+    version: 0.1.2
+  fluent-bit:
+  - apiVersion: v1
+    appVersion: 1.6.8
+    created: "2022-08-03T16:25:42.611592+08:00"
+    description: Fast and lightweight log processor and forwarder or Linux, OSX and
+      BSD family operating systems.
+    digest: 1b189cc7934f36385d1f4195033f02f471ecbf3499fe391ebb25f3aa3e2d4f42
+    icon: https://fluentbit.io/assets/img/logo1-default.png
+    keywords:
+    - logging
+    - fluent-bit
+    name: fluent-bit
+    sources:
+    - https://github.com/fluent/fluent-bit/
+    urls:
+    - assets/fluent-bit/fluent-bit-0.0.1.tgz
+    version: 0.0.1
+  kube-eventer:
+  - apiVersion: v1
+    appVersion: 1.2.0
+    created: "2022-08-03T16:25:42.622583+08:00"
+    description: Aliyun kube-eventer
+    digest: e0c311e9e058aeff97a39ec397ee1956beb24265b646bf5360e1ec6b474a6bbd
+    home: https://github.com/AliyunContainerService/kube-eventer
+    icon: https://raw.githubusercontent.com/AliyunContainerService/kube-eventer/master/docs/logo/kube-eventer.png
+    keywords:
+    - event
+    - kube-eventer
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: kube-eventer
+    sources:
+    - https://github.com/AliyunContainerService/kube-eventer
+    urls:
+    - assets/kube-eventer/kube-eventer-0.0.1.tgz
+    version: 0.0.1
+  nginx-ingress:
+  - apiVersion: v1
+    appVersion: 1.7.2
+    created: "2022-08-03T16:25:42.600546+08:00"
+    description: NGINX Ingress Controller
+    digest: 906fe93d83030cb3801726c8b9b8216b122ee507757c06054a658b2da6bfa78c
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-nginx-ingress.png
+    keywords:
+    - ingress
+    - nginx
+    maintainers:
+    - email: xuefeng@rancher.com
+      name: xuefeng.yin
+    name: nginx-ingress
+    sources:
+    - https://github.com/nginxinc/kubernetes-ingress/tree/v1.7.2/deployments/helm-chart
+    urls:
+    - assets/nginx-ingress/nginx-ingress-1.7.2.tgz
+    version: 1.7.2
+  pandaria-alerting-drivers:
+  - annotations:
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+    apiVersion: v1
+    created: "2022-08-03T16:25:42.632885+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: 80ccfa5c2dad4bfa3ed160d674d5875d6c1a278631c555659d09c3f30444ce2f
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.1.tgz
+    version: 0.0.1
+  rancher-ack-operator:
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
+      catalog.cattle.io/release-name: rancher-ack-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-08-03T16:25:42.642662+08:00"
+    description: A Helm chart for provisioning ACK clusters
+    digest: 4ecd6a6b4fc2531ce7fb7163e7894dc5d1042cee0fd61e18ddf10f3d91df8c75
+    home: https://github.com/cnrancher/ack-operator
+    name: rancher-ack-operator
+    sources:
+    - https://github.com/cnrancher/ack-operator
+    urls:
+    - assets/rancher-ack-operator/rancher-ack-operator-100.0.0+up1.0.1.tgz
+    version: 100.0.0+up1.0.1
+  rancher-ack-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/release-name: rancher-ack-operator-crd
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-08-03T16:25:42.652436+08:00"
+    description: ACK Operator CustomResourceDefinitions
+    digest: 101393c9bd2bf7cb52dd1aca9eaaeef5e5c8e79ffcba145175fdb3150dd78608
+    name: rancher-ack-operator-crd
+    urls:
+    - assets/rancher-ack-operator-crd/rancher-ack-operator-crd-100.0.0+up1.0.1.tgz
+    version: 100.0.0+up1.0.1
+  rancher-gpu-management:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2022-08-03T16:25:42.664285+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: d97bd2f02f34466402af3a1444faf63cd1bda7407b52d34e7945bcfedafcdef3
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2022-08-03T16:26:34.702668+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: a1b46a01617b1d27051e4f8c1c3df23682e3eeabfee15b5cf666954ea9cd86d0
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2022-08-03T16:27:14.627445+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: 1d005d3c6a870a30b5fa35f8aa459cddd799da28550725458af8a977383b419b
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v1
+    appVersion: 0.0.3
+    created: "2022-08-03T16:27:28.41732+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: 79bc8e345294dd44236a3cf13b263b3daca724e25378c346d619b34e2c88cbec
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
+    appVersion: 0.0.2
+    created: "2022-08-03T16:27:33.162085+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: 329150a1203d03e025bd9bc28cb3bddc8e9bd6aaba41307a0a9550b9631f5d7b
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2022-08-03T16:27:37.822222+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: 23c7b5103d51fa658f66eafdeab6d44251a23d0f59981b95cd8f4537b9e12724
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.1.tgz
+    version: 0.0.1
+  rancher-gpu-monitoring:
+  - apiVersion: v1
+    appVersion: 1.4.6
+    created: "2022-08-03T16:25:42.677541+08:00"
+    description: Provides gpu monitoring for Rancher2.x
+    digest: a874701aca4e0a2f6d148094b4dcfe8d343d387583ebfb8c2a07135a726192a9
+    home: https://github.com/NVIDIA/gpu-monitoring-tools
+    icon: https://coreos.com/sites/default/files/inline-images/Overview-prometheus_0.png
+    keywords:
+    - exporter
+    - prometheus
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-monitoring
+    sources:
+    - https://github.com/NVIDIA/gpu-monitoring-tools
+    urls:
+    - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v1
+    appVersion: 1.4.6
+    created: "2022-08-03T16:26:34.723744+08:00"
+    description: Provides gpu monitoring for Rancher2.x
+    digest: 9730201ef7a1379fe5ef6b3cfd4379480a163988352a6d57b877028982efd736
+    home: https://github.com/NVIDIA/gpu-monitoring-tools
+    icon: https://coreos.com/sites/default/files/inline-images/Overview-prometheus_0.png
+    keywords:
+    - exporter
+    - prometheus
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-monitoring
+    sources:
+    - https://github.com/NVIDIA/gpu-monitoring-tools
+    urls:
+    - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.0.1.tgz
+    version: 0.0.1
+  rancher-macvlan:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher Macvlan
+      catalog.cattle.io/kube-version: '>=1.18.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
+      catalog.cattle.io/release-name: rancher-macvlan
+    apiVersion: v1
+    appVersion: 0.7.4
+    created: "2022-08-03T16:25:42.697025+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: 7af984c8a9ff194eb6dd4e56f163ca3236d074c0e25573d81288319a249cc952
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: '>=1.18.0-0'
+    maintainers:
+    - email: zhibo.zhang@suse.com
+      name: niusmallnan
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-0.7.4.tgz
+    version: 0.7.4
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher Macvlan
+      catalog.cattle.io/kube-version: '>=1.18.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
+      catalog.cattle.io/release-name: rancher-macvlan
+    apiVersion: v1
+    appVersion: 0.7.3
+    created: "2022-08-03T16:26:34.749252+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: e0564e25918053b9655d148fae575edf2c9fbdd378355106df446182614c5eb3
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: '>=1.18.0-0'
+    maintainers:
+    - email: zhibo.zhang@suse.com
+      name: niusmallnan
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-0.7.3.tgz
+    version: 0.7.3
+  - apiVersion: v1
+    appVersion: 0.7.2
+    created: "2022-08-03T16:27:14.680308+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: 74ff70eed9de0cbe6e0f1354bcd73da1f378e9f295e91e57452088aa6e1574c1
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: < 1.23.0-0
+    maintainers:
+    - email: zhibo.zhang@suse.com
+      name: niusmallnan
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-0.7.2.tgz
+    version: 0.7.2
+  rancher-thanos:
+  - apiVersion: v1
+    created: "2022-08-03T16:28:10.379486+08:00"
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: b42e48fcb9fdf53b4552b53ed0286e739a290102d38346c86e1e6ca5637f44ca
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v1
+    created: "2022-08-03T16:26:34.781598+08:00"
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: 8da31ad11f48076040c63a5220361a822f07ab98d159dc0202dae0a624fca908
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v1
+    created: "2022-08-03T16:27:28.518544+08:00"
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: ba3c4a09ae68c22dc4709d8d2c71bbf575a6ad8d7cb0ccc9358ed625935a1bae
+    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.1.tgz
+    version: 0.0.1
+  virtaitech-orion-vgpu:
+  - apiVersion: v1
+    appVersion: "2.2"
+    created: "2022-08-03T16:25:42.748712+08:00"
+    description: VirtAI Orion Platform can virtulize GPUs and create GPU resource
+      pool
+    digest: 641367d4968f7966bc49e725e69b6185c03af128d59b7e9b1e287e27f7bc8f27
+    home: https://www.virtaitech.com
+    icon: https://portalprodstorage.blob.core.chinacloudapi.cn/static-resources/images/virtai-logo.png
+    keywords:
+    - GPU
+    - virtualization
+    - VirtAI
+    - Orion
+    maintainers:
+    - email: wupengfei@virtaitech.com
+      name: Pengfei
+    name: virtaitech-orion-vgpu
+    type: application
+    urls:
+    - assets/virtaitech-orion-vgpu/virtaitech-orion-vgpu-1.0.0.tgz
+    version: 1.0.0
+  webhook-receiver:
+  - apiVersion: v1
+    appVersion: 0.1.6
+    created: "2022-08-03T16:25:42.76524+08:00"
+    description: The webhook receiver of Prometheus
+    digest: c456a75ab2ee59c6e817d180dea36ef596d79d0983506a2259ee21004b634a87
+    keywords:
+    - prometheus
+    - webhook
+    name: webhook-receiver
+    urls:
+    - assets/webhook-receiver/webhook-receiver-0.1.0.tgz
+    version: 0.1.0
+  xsky:
+  - apiVersion: v1
+    appVersion: v2.2.0-beta.0
+    created: "2022-08-03T16:25:42.788315+08:00"
+    description: Container Storage Interface (CSI) driver, provisioner, snapshotter,
+      and attacher for XSKY block
+    digest: ad7cf292b50e1732533870bb3fb55d8391a2d739a488c3e0df3d6f481ef2c3b0
+    home: https://www.xsky.com
+    icon: https://www.xsky.com/wp-content/themes/xsky/assets/imgs/logo.png
+    keywords:
+    - xsky
+    - block-storage
+    - iSCSI
+    - storage
+    maintainers:
+    - email: zhucan@xsky.com
+      name: zhucan
+    name: xsky
+    urls:
+    - assets/xsky/xsky-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v1
+    appVersion: v2.1.0-beta.0
+    created: "2022-08-03T16:26:34.8643+08:00"
+    description: Container Storage Interface (CSI) driver, provisioner, snapshotter,
+      and attacher for XSKY block
+    digest: bf15edb8a0ced16e9dacc39668ace2b7d5681b052a89c0c1998aa028777c5ac8
+    home: https://www.xsky.com
+    icon: https://www.xsky.com/wp-content/themes/xsky/assets/imgs/logo.png
+    keywords:
+    - xsky
+    - block-storage
+    - iSCSI
+    - storage
+    maintainers:
+    - email: zhucan@xsky.com
+      name: zhucan
+    name: xsky
+    urls:
+    - assets/xsky/xsky-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v1
+    appVersion: 2.0.1
+    created: "2022-08-03T16:27:14.81284+08:00"
+    description: Container Storage Interface (CSI) driver, provisioner, snapshotter,
+      and attacher for XSKY block
+    digest: 86765eb098dfe1fd4ea10779d06542819369ae9db8c94083484e065d4193cb78
+    home: https://www.xsky.com
+    icon: https://www.xsky.com/wp-content/themes/xsky/assets/imgs/logo.png
+    keywords:
+    - xsky
+    - block-storage
+    - iSCSI
+    - storage
+    maintainers:
+    - email: zhucan@xsky.com
+      name: zhucan
+    name: xsky
+    urls:
+    - assets/xsky/xsky-2.0.1.tgz
+    version: 2.0.1
+generated: "0001-01-01T00:00:00Z"
