@@ -5,7 +5,7 @@ name: f5-cis-ingress
 version: 0.1.2
 
 home: https://clouddocs.f5.com/
-icon: file://../f5.logo.png
+icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ingress.png
 keywords:
 - f5
 - ingress

@@ -3,7 +3,7 @@ version: 1.7.2
 appVersion: "1.7.2"
 apiVersion: v1
 description: NGINX Ingress Controller
-icon: file://../chart-icon.png
+icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-nginx-ingress.png
 sources:
   - https://github.com/nginxinc/kubernetes-ingress/tree/v1.7.2/deployments/helm-chart
 keywords:
