@@ -27,7 +27,6 @@ steps:
   when:
     event:
     - push
-    - pull_request
     - tag
 - name: publish
   image: jacie/drone-aliyun-oss
@@ -56,7 +55,7 @@ volumes:
     path: /var/run/docker.sock
 
 node:
-  instance: agent-arm64
+  instance: agent-amd64
 
 trigger:
   event:
