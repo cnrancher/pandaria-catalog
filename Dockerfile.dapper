@@ -1,0 +1,25 @@
+FROM registry.suse.com/bci/golang:1.17
+
+ARG http_proxy=$http_proxy
+ENV http_proxy=$http_proxy
+
+# Create a directory for running scripts.
+RUN mkdir -p /dapper
+ENV DAPPER_SOURCE /dapper
+WORKDIR ${DAPPER_SOURCE}
+
+ENV DAPPER_ENV DRONE_SOURCE_BRANCH DRONE_GIT_HTTP_URL
+
+# Install dependencies.
+RUN zypper -n install make wget curl tar
+
+# Copy entripoint script to workdir.
+COPY ./ci.sh ./
+
+RUN chmod +x ./ci.sh
+
+# unset proxy
+ENV http_proxy=
+
+# Validate
+ENTRYPOINT [ "./ci.sh" ]

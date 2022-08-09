@@ -1,0 +1,64 @@
+---
+kind: pipeline
+type: docker
+name: CI
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: validate
+  pull: default
+  image: rancher/dapper:v0.5.8
+  environment:
+    OAUTH_TOKEN:
+      from_secret: github_token
+    GOPROXY:
+      from_secret: go_proxy
+    http_proxy:
+      from_secret: http_proxy
+  commands:
+    - dapper -f Dockerfile.dapper
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    event:
+    - push
+    - pull_request
+    - tag
+- name: publish
+  image: jacie/drone-aliyun-oss
+  pull: always
+  environment:
+    ALIYUN_ACCESS_KEY_ID:
+      from_secret: aliyun_access_id
+    ALIYUN_SECRET_ACCESS_KEY:
+      from_secret: aliyun_access_secret
+    PLUGIN_SOURCE: "."
+    ALIYUN_BUCKET: oss://pandaria-catalog
+    ALIYUN_ENDPOINT: http://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/
+    PLUGIN_TARGET: dev-v2.6
+    PLUGIN_RECURSIVE: -r
+    PLUGIN_ACCESS: public-read
+  commands:
+  - "aliyun-oss"
+  when:
+    event:
+    - push
+    - tag
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
+
+node:
+  instance: agent-arm64
+
+trigger:
+  event:
+    exclude:
+    - promote
