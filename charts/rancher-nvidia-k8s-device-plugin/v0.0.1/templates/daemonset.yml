@@ -197,6 +197,9 @@ spec:
       {{- if and (empty $nodeSelector) .Subcharts.gfd }}
       {{- $nodeSelector = .Subcharts.gfd.Values.nodeSelector }}
       {{- end }}
+      {{- if and (empty $nodeSelector) (eq .Values.gfd.enabled false) }}
+      {{- $nodeSelector = .Values.nodeSelectorWithoutGFD }}
+      {{- end }}
       {{- with $nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -43,10 +43,10 @@ allowDefaultNamespace: false
 
 imagePullSecrets: []
 image:
-  repository: nvcr.io/nvidia/k8s-device-plugin
+  repository: cnrancher/k8s-device-plugin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v0.12.2"
 
 updateStrategy:
   type: RollingUpdate
@@ -57,7 +57,17 @@ securityContext: {}
 
 resources: {}
 nodeSelector: {}
-affinity: {}
+nodeSelectorWithoutGFD:
+  gpu.cattle.io/type: nvidia
+affinity: 
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: gpu.cattle.io/type
+            operator: NotIn
+            values:
+            - share
 tolerations:
   # This toleration is deprecated. Kept here for backward compatibility
   # See https://kubernetes.io/docs/tasks/administer-cluster/guaranteed-scheduling-critical-addon-pods/
@@ -77,6 +87,12 @@ runtimeClassName: null
 
 # Subcharts
 nfd:
+  image:
+    repository: cnrancher/node-feature-discovery
+    # This should be set to 'IfNotPresent' for released version
+    pullPolicy: IfNotPresent
+    # tag, if defined will use the given image tag, else Chart.AppVersion will be used
+    tag: "v0.11.0"
   nameOverride: node-feature-discovery
   master:
     extraLabelNs:
@@ -106,5 +122,9 @@ nfd:
           deviceLabelFields:
           - vendor
 gfd:
-  enabled: false
+  enabled: true
   nameOverride: gpu-feature-discovery
+  image:
+    repository: cnrancher/gpu-feature-discovery
+    pullPolicy: IfNotPresent
+    tag: "v0.6.1"
