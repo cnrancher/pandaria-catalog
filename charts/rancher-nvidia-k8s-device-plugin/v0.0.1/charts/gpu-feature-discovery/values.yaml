@@ -7,10 +7,10 @@ selectorLabelsOverride: {}
 
 imagePullSecrets: []
 image:
-  repository: nvcr.io/nvidia/gpu-feature-discovery
+  repository: cnrancher/gpu-feature-discovery
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v0.6.1"
 
 podAnnotations: {}
 podSecurityContext: {}
