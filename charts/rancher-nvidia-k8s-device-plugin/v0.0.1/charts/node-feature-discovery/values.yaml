@@ -1,9 +1,9 @@
 image:
-  repository: k8s.gcr.io/nfd/node-feature-discovery
+  repository: cnrancher/node-feature-discovery
   # This should be set to 'IfNotPresent' for released version
   pullPolicy: IfNotPresent
   # tag, if defined will use the given image tag, else Chart.AppVersion will be used
-  # tag
+  tag: "v0.11.0"
 imagePullSecrets: []
 
 nameOverride: ""

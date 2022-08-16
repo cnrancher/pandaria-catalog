@@ -1,11 +1,23 @@
+annotations:
+  catalog.cattle.io/certified: rancher
+  catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
+  catalog.cattle.io/kube-version: '>= 1.20.0-0'
+  catalog.cattle.io/namespace: nvidia-device-plugin
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+  catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
+  catalog.cattle.io/type: cluster-tool
+  catalog.cattle.io/upstream-version: 0.12.2
 apiVersion: v2
-name: nvidia-device-plugin
+name: rancher-nvidia-k8s-device-plugin
 type: application
 description: A Helm chart for the nvidia-device-plugin on Kubernetes
-version: "0.12.2"
+version: "0.0.1"
 appVersion: "0.12.2"
 kubeVersion: ">= 1.10.0-0"
 home: https://github.com/NVIDIA/k8s-device-plugin
+icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
 
 dependencies:
   - name: node-feature-discovery
