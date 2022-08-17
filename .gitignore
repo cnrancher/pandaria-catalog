@@ -12,3 +12,7 @@ bin
 
 # Vscode files
 .vscode
+
+# Temp dapper files
+*.dapper*
+!Dockerfile.dapper

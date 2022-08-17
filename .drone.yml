@@ -28,6 +28,7 @@ steps:
     event:
     - push
     - tag
+    - pull_request
 - name: build-helm-repo
   pull: default
   image: rancher/dapper:v0.5.8
@@ -67,6 +68,9 @@ steps:
   commands:
   - "aliyun-oss"
   when:
+    repo:
+      include:
+      - cnrancher/*
     event:
     - push
     - tag
