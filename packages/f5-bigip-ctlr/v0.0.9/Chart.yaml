@@ -3,7 +3,7 @@ appVersion: 0.0.9
 description: Deploy the F5 Networks BIG-IP Controller for Kubernetes (k8s-bigip-ctlr).
   Code base by F5.
 home: https://clouddocs.f5.com/
-icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ctlr.png
+icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-bigip-ctlr.png
 keywords:
 - f5
 - cis
