@@ -74,6 +74,29 @@ steps:
     event:
     - push
     - tag
+- name: upload-logo
+  image: jacie/drone-aliyun-oss
+  pull: always
+  environment:
+    ALIYUN_ACCESS_KEY_ID:
+      from_secret: aliyun_access_id
+    ALIYUN_SECRET_ACCESS_KEY:
+      from_secret: aliyun_access_secret
+    PLUGIN_SOURCE: "build-helm-repo/assets/logo"
+    ALIYUN_BUCKET: oss://pandaria-catalog
+    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
+    PLUGIN_TARGET: assets/logo
+    PLUGIN_RECURSIVE: -r
+    PLUGIN_ACCESS: public-read
+  commands:
+  - "aliyun-oss"
+  when:
+    repo:
+      include:
+      - cnrancher/*
+    event:
+    - push
+    - tag
 
 volumes:
 - name: docker
