@@ -3,12 +3,12 @@ entries:
   f5-cis-ctlr:
   - apiVersion: v1
     appVersion: 0.0.9
-    created: "2022-08-03T16:25:42.581015+08:00"
+    created: "2022-08-23T17:01:32.497808+08:00"
     description: Deploy the F5 Networks BIG-IP Controller for Kubernetes (k8s-bigip-ctlr).
       Code base by F5.
-    digest: 772418b841ef5a58fe62b92479080130ffb4c585dcbc4fa77d574e3cc5425c8a
+    digest: 142f0e36de6f3c880101bf1a80fda57a10f638aea889194d9b1a388e5d116664
     home: https://clouddocs.f5.com/
-    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ctlr.png
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-bigip-ctlr.png
     keywords:
     - f5
     - cis
@@ -25,11 +25,11 @@ entries:
   f5-cis-ingress:
   - apiVersion: v1
     appVersion: 0.1.2
-    created: "2022-08-03T16:25:42.586503+08:00"
+    created: "2022-08-23T17:01:32.530552+08:00"
     description: Deploy the F5 Networks CIS Ingress for Kubernetes (f5-cis-ingress).
-    digest: b8a9f2db9f8cd676497fbf462cb6cb82504ed986ebbbe7e1046efdf1d8cf8a20
+    digest: 556eb5157f89e4d7ac98224955bd7489f3f0a7c913520765d2e451b553c45cc8
     home: https://clouddocs.f5.com/
-    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-bigip-ingress.png
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-bigip-ingress.png
     keywords:
     - f5
     - ingress
@@ -82,10 +82,10 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 1.7.2
-    created: "2022-08-03T16:25:42.600546+08:00"
+    created: "2022-08-23T17:01:32.569321+08:00"
     description: NGINX Ingress Controller
-    digest: 906fe93d83030cb3801726c8b9b8216b122ee507757c06054a658b2da6bfa78c
-    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/f5-nginx-ingress.png
+    digest: 36e14444b59f45db0310177a20222c89d0effc79be477b1db90b7627386865f7
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-nginx-ingress.png
     keywords:
     - ingress
     - nginx
@@ -387,10 +387,10 @@ entries:
     version: 0.7.2
   rancher-thanos:
   - apiVersion: v1
-    created: "2022-08-03T16:28:10.379486+08:00"
+    created: "2022-08-23T17:01:32.825803+08:00"
     description: A Helm chart for Rancher v2 global monitoring
-    digest: b42e48fcb9fdf53b4552b53ed0286e739a290102d38346c86e1e6ca5637f44ca
-    icon: https://raw.githubusercontent.com/cnrancher/pandaria-catalog/release/v2.6/assets/logo/rancher-thanos.png
+    digest: 529af7a0dde8530c58827d508b9646ac0929dac776b714f78415a7c4ab672e98
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/rancher-thanos.png
     keywords:
     - thanos
     - prometheus
