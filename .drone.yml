@@ -11,13 +11,6 @@ steps:
 - name: validate
   pull: default
   image: rancher/dapper:v0.5.8
-  environment:
-    OAUTH_TOKEN:
-      from_secret: github_token
-    GOPROXY:
-      from_secret: go_proxy
-    http_proxy:
-      from_secret: http_proxy
   commands:
     - dapper -f Dockerfile.dapper
   privileged: true
@@ -29,71 +22,28 @@ steps:
     - push
     - tag
     - pull_request
-- name: build-helm-repo
+- name: upload-helm-repo
   pull: default
   image: rancher/dapper:v0.5.8
   environment:
-    OAUTH_TOKEN:
-      from_secret: github_token
-    GOPROXY:
-      from_secret: go_proxy
-    http_proxy:
-      from_secret: http_proxy
+    ALIYUN_ACCESS_KEY_ID:
+      from_secret: aliyun_access_id
+    ALIYUN_SECRET_ACCESS_KEY:
+      from_secret: aliyun_access_secret
+    ALIYUN_BUCKET: oss://pandaria-catalog
+    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
+    VERSION_FOLDER_ACCESS: public-read
+    LOGO_FOLDER_ACCESS: public-read
+    OSSUTIL_VERSION: "1.7.13"
+    VERSION_FOLDER: dev-v2.6
+    LOGO_FOLDER: assets/logo
   commands:
-    - mkdir build-helm-repo
-    - cp -a ./assets ./build-helm-repo
-    - cp -a ./index.yaml ./build-helm-repo
+    - scripts/aliyun-oss-sync
   privileged: true
   volumes:
   - name: docker
     path: /var/run/docker.sock
   when:
-    event:
-    - push
-    - tag
-- name: publish
-  image: jacie/drone-aliyun-oss
-  pull: always
-  environment:
-    ALIYUN_ACCESS_KEY_ID:
-      from_secret: aliyun_access_id
-    ALIYUN_SECRET_ACCESS_KEY:
-      from_secret: aliyun_access_secret
-    PLUGIN_SOURCE: "build-helm-repo/"
-    ALIYUN_BUCKET: oss://pandaria-catalog
-    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
-    PLUGIN_TARGET: dev-v2.6
-    PLUGIN_RECURSIVE: -r
-    PLUGIN_ACCESS: public-read
-  commands:
-  - "aliyun-oss"
-  when:
-    repo:
-      include:
-      - cnrancher/*
-    event:
-    - push
-    - tag
-- name: upload-logo
-  image: jacie/drone-aliyun-oss
-  pull: always
-  environment:
-    ALIYUN_ACCESS_KEY_ID:
-      from_secret: aliyun_access_id
-    ALIYUN_SECRET_ACCESS_KEY:
-      from_secret: aliyun_access_secret
-    PLUGIN_SOURCE: "build-helm-repo/assets/logo"
-    ALIYUN_BUCKET: oss://pandaria-catalog
-    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
-    PLUGIN_TARGET: assets/logo
-    PLUGIN_RECURSIVE: -r
-    PLUGIN_ACCESS: public-read
-  commands:
-  - "aliyun-oss"
-  when:
-    repo:
-      include:
-      - cnrancher/*
     event:
     - push
     - tag
