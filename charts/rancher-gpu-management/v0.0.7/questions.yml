@@ -56,6 +56,8 @@ questions:
     - v1.20
     - v1.21
     - v1.22
+    - v1.23
+    - v1.24
 - variable: memoryunit
   default: "GiB"
   description: "GPU Memory Unit: GiB or MiB"
