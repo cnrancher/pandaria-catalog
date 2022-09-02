@@ -7,7 +7,7 @@ maintainers:
 name: rancher-gpu-management
 sources:
 - https://github.com/cnrancher
-version: 0.0.6
+version: 0.0.7
 appVersion: "0.1.0"
 home: https://github.com/cnrancher
 keywords:
