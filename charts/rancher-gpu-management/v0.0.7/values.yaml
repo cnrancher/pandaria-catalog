@@ -21,6 +21,8 @@ image:
       v1.20: "rancher/hyperkube:v1.20.13-rancher1"
       v1.21: "rancher/hyperkube:v1.21.8-rancher1"
       v1.22: "rancher/hyperkube:v1.21.8-rancher1"
+      v1.23: "rancher/hyperkube:v1.21.8-rancher1"
+      v1.24: "rancher/hyperkube:v1.21.8-rancher1"
 schedulerextender:
   schedulerName: rancher-gpushare-scheduler
   port: 9100
