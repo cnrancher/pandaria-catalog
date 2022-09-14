@@ -4,5 +4,15 @@
 # Chart dependencies
 **/charts/*.tgz
 
+# Binary files
+bin
+
+# IDEA config files
+.idea
+
 # Vscode files
 .vscode
+
+# Temp dapper files
+*.dapper*
+!Dockerfile.dapper
