@@ -59,6 +59,26 @@ entries:
     urls:
     - assets/fluent-bit/fluent-bit-0.0.1.tgz
     version: 0.0.1
+  kube-eventer:
+  - apiVersion: v1
+    appVersion: 1.2.0
+    created: "2022-09-14T15:56:53.562197689+08:00"
+    description: Aliyun kube-eventer
+    digest: b2bbafa956e14460d1e751afb3ced38d766e07a37f5766040059874913311c09
+    home: https://github.com/AliyunContainerService/kube-eventer
+    icon: https://raw.githubusercontent.com/AliyunContainerService/kube-eventer/master/docs/logo/kube-eventer.png
+    keywords:
+    - event
+    - kube-eventer
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: kube-eventer
+    sources:
+    - https://github.com/AliyunContainerService/kube-eventer
+    urls:
+    - assets/kube-eventer/kube-eventer-0.0.1.tgz
+    version: 0.0.1
   nginx-ingress:
   - apiVersion: v1
     appVersion: 1.7.2
