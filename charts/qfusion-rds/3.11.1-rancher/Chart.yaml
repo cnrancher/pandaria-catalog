@@ -1,0 +1,23 @@
+apiVersion: v2
+appVersion: 3.11.1-rancher
+description: Helm chart for QFusion RDS components
+home: http://www.woqutech.com/products.php?id=141
+icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/woqutech.png
+keywords:
+- QFusion
+- RDS
+- woqutech
+- Databases
+- DB
+- DBaaS(DataBase-as-a-Service)
+- SQL
+- MySQL
+- MariaDB
+- MSSQL
+- Redis
+- Oracle
+kubeVersion: <1.19.0-0
+maintainers:
+- name: qfusion
+name: qfusion-rds
+version: 3.11.1-rancher
