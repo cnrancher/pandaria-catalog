@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # Get the folder of Aliyun OSS bucket from Git branch name.
 # e.g. branch name: `dev/v2.6` -> folder name: `dev-v2.6`, branch: `release/v2.6` -> folder: `release-v2.6`
