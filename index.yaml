@@ -113,4 +113,27 @@ entries:
     urls:
     - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.1.tgz
     version: 0.0.1
+  rancher-ack-operator:
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
+      catalog.cattle.io/release-name: rancher-ack-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-09-14T16:00:42.922838666+08:00"
+    description: A Helm chart for provisioning ACK clusters
+    digest: bdc1699a56d4a1c463039b7c315c526b96b05227aa2f1bf112e6cb1d65970efb
+    home: https://github.com/cnrancher/ack-operator
+    name: rancher-ack-operator
+    sources:
+    - https://github.com/cnrancher/ack-operator
+    urls:
+    - assets/rancher-ack-operator/rancher-ack-operator-100.0.0+up1.0.1.tgz
+    version: 100.0.0+up1.0.1
 generated: "0001-01-01T00:00:00Z"
