@@ -1,12 +1,17 @@
-# Rancher Catalog For CN
+## Rancher Charts CN
 
-A currated collection of Rancher 2.0 enhanced Helm charts. To see how catalogs are added and used in Rancher 2.0 take a look at the [docs page](https://rancher.com/docs/rancher/v2.x/en/concepts/catalogs/).
+This repository contains Helm charts served by Pandaria Apps & Marketplace.
 
-## Rancher Chart Structure
+### Branches
+
+- `dev/v2.X` branches contain charts that under active development, to be released in an upcoming release.
+- `release/v2.X` branches contain charts that have already been developed, tested and released.
+
+### Rancher Chart Structure
 
 A Rancher chart repository differs slightly in directory structure from upstream repos in that it includes an `app version` directory. Though Rancher can use native Helm repositories as well.
 
-A Rancher chart also has two additional files an `app-readme.md` file that provides a high level overview display in the Rancher 2.0 UI and a `questions.yml` file defining questions to prompt the user with. 
+A Rancher chart also has two additional files an `app-readme.md` file that provides a high level overview display in the Rancher 2.0 UI and a `questions.yml` file defining questions to prompt the user with.
 
 ```
 charts/wordpress/<app version>/
@@ -83,9 +88,36 @@ The above file also provides a list of categories that this chart fits into. Thi
 | 	show_if           | string      | false  | show current variable if conditional variable is true, for example `show_if: "serviceType=Nodeport"` |
 | 	show\_subquestion_if |  string  | false     | show subquestions if is true or equal to one of the options. for example `show_subquestion_if: "true"`|
 
-**subquestions**: `subquestions[]` cannot contain `subquestions` or `show_subquestions_if` keys, but all other keys in the above table are supported. 
+**subquestions**: `subquestions[]` cannot contain `subquestions` or `show_subquestions_if` keys, but all other keys in the above table are supported.
 
-## License
+
+### Making Changes
+
+Since this repository uses [`rancher/charts-build-scripts`](https://github.com/rancher/charts-build-scripts), making changes to this repository involves three steps:
+1. Adding or modifying an existing `Package` tracked in the `packages/` directory. Use `export PACKAGE={PACKAGE_NAME}` to specify the modified package name. Then involves `make prepare`, `make patch`, and `make clean` if `url` in `package.yaml` isn't `local`.
+1. Running `make charts` to automatically generate assets used to serve a Helm repository (`charts/`, `assets/`, and `index.yaml`) based on the contents of `packages/`.
+1. [CI] Running `make validate` to ensure that all generated assets are up-to-date and ready to be merged.
+
+### Version
+
+> See [Version](docs/developing.md#version) in `docs/developing.md`.
+
+This repository uses `version` in `package.yaml` to specify the version of the package, and the format of the version code should be [Semantic Versioning](https://semver.org/): `<MAJOR>.<MINOR>.<PATCH>` or *local version + upstream version* (e.g. `100.0.0+up1.2.3`).
+
+### Links
+
+For more information on how to make changes to this repository, please see [`docs/developing.md`](docs/developing.md).
+
+For more information on experimental features, please see [`docs/experimental.md`](docs/experimental.md).
+
+For more information on commands that can be run in this repository, please see [`docs/makefile.md`](docs/makefile.md).
+
+For more information on `Packages`, please see [`docs/packages.md`](docs/packages.md).
+
+For more information on CI, please see [`docs/validation.md`](docs/validation.md).
+
+### License
+
 Copyright (c) 2018 [Rancher Labs, Inc.](http://rancher.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -99,4 +131,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-    
