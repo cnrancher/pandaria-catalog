@@ -1,0 +1,92 @@
+categories:
+- Proxy
+- Loadbalancer
+labels:
+  io.cattle.role: project
+  io.rancher.certified: partner
+questions:
+- variable: ingress.annotations.virtualserverip
+  default: "controller-default"
+  required: true
+  description: "Provide F5 Virtual Server IP for Load Balancing"
+  type: string
+  label: Config F5 Virtual Server IP
+  group: "F5 Virtual Server"
+- variable: ingress.annotations.virtualserverhttpport
+  default: "80"
+  required: true
+  description: "Provide F5 Virtual Server Port for Load Balancing"
+  type: string
+  label: Config F5 Virtual Server Port
+  group: "F5 Virtual Server"
+- variable: ingress.annotations.partition
+  default: "k8s"
+  required: true
+  description: "Provide F5 Partition for the Config"
+  type: string
+  label: Config F5 Partition to Use
+  group: "F5 Virtual Server"
+- variable: ingress.annotations.health
+  default: ""
+  description: "Provide F5 VS Health check for Pool"
+  type: multiline
+  label: Config F5 Virtual Server Health
+  group: "F5 Virtual Server"
+- variable: ingress.annotations.balance
+  default: "round-robin"
+  description: "F5 Virtual Server Balance Type"
+  type: enum
+  required: true
+  label: F5 Virtual Server  Balance 
+  group: "F5 Virtual Server"
+  options:
+  - "round-robin"
+  - "least-connections-node"
+  - "fastest-node"
+- variable: ingress.hosts.host
+  default: "web.rancher.com"
+  required: true
+  description: "Provide Ingress Host Domain Name"
+  type: string
+  label: Config Ingress Host
+  group: "Ingress Basic Config"
+- variable: ingress.hosts.path
+  default: "/web"
+  description: "Provide Ingress Path"
+  type: string
+  label: Config Ingress Path
+  group: "Ingress Basic Config"
+- variable: ingress.tlsenabled
+  default: "false"
+  description: "Use SSL for Ingress"
+  type: boolean
+  label: Config Ingress SSL
+  group: "Ingress Basic Config"
+- variable: ingress.tls.secretName
+  default: ""
+  description: "Provide Ingress Secret Name to Configure With"
+  type: certificate
+  label: Config Ingress SSL Secret
+  show_if: "ingress.tlsenabled=true"
+  group: "Ingress Basic Config"
+- variable: ingress.tls.hosts
+  default: ""
+  description: "Provide Ingress TLS Host to Configure With"
+  type: string
+  label: Config Ingress SSL Host
+  show_if: "ingress.tlsenabled=true"
+  group: "Ingress Basic Config"
+- variable: service.serviceName
+  default: "your-service-name"
+  description: "Provide Ingress Service Name to be Proxied and Loadbalanced"
+  type: string
+  required: true
+  label: Config Ingress Backend Service
+  group: "Ingress Basic Config"
+- variable: service.port
+  default: "80"
+  required: true
+  description: "Provide Ingress Service Port to be Accessed"
+  type: string
+  label: Config Ingress Backend Service Port
+  group: "Ingress Basic Config"
