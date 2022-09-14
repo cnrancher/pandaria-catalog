@@ -1,0 +1,78 @@
+categories:
+- Proxy
+- Loadbalancer
+labels:
+  io.cattle.role: project
+  io.rancher.certified: partner
+questions:
+- variable: bigip_login_secret
+  default: "f5-bigip-ctlr-login"
+  required: true
+  description: "Provide F5 BIGIP Device Login Secret"
+  type: secret
+  label: F5 BIGIP Login Secert
+  group: "F5 BIGIP Device Auth"
+- variable: namespace
+  default: "f5-cis-ctlr"
+  required: true
+  description: "Namespace to Host all the Resources"
+  type: string
+  label: Namespace
+  group: "F5 BIGIP Device Auth"
+- variable: rbac.create
+  default: "true"
+  description: "Enable RBAC for F5 BIGP Auth"
+  type: boolean
+  label: Enable RBAC
+  group: "F5 BIGIP Device Auth"
+- variable: serviceAccount.name
+  default: ""
+  description: "If not set and create is true, a name is generated using the fullname template"
+  type: string
+  label: ServiceAccount Name
+  show_if: "rbac.create=true"
+  group: "F5 BIGIP Device Auth"
+- variable: args.bigip_url
+  default: ""
+  required: true
+  description: "Provide F5 BIGIP Device URL"
+  type: string
+  label: F5 BIGIP URL
+  group: "F5 BIGIP CIS CONFIG"
+- variable: args.bigip_partition
+  default: "f5-bigip-ctlr"
+  required: true
+  description: "F5 BIGIP Device Partition for Kubernetes"
+  type: string
+  label: F5 BIGIP Partition
+  group: "F5 BIGIP CIS CONFIG"
+- variable: args.pool_member_type
+  default: "nodeport"
+  required: true
+  description: "F5 BIGIP CIS Pool Member Type for Kubernetes"
+  type: enum
+  label: F5 CIS Pool Member Type
+  group: "F5 BIGIP CIS CONFIG"
+  options:
+  - "nodeport"
+  - "cluster"
+- variable: image.repo
+  default: "k8s-bigip-ctlr"
+  required: true
+  description: "Provide F5 CIS Image Repository"
+  type: string
+  label: F5 Image Repository
+  group: "F5 BIGIP CIS CONFIG"
+- variable: image.user
+  default: "f5networks"
+  required: true
+  description: "Provide F5 CIS Image Repository User"
+  type: string
+  label: F5 Image Repository User
+  group: "F5 BIGIP CIS CONFIG"
+- variable: version
+  default: "latest"
+  description: "Provide F5 CIS Image Version"
+  type: string
+  label: F5 Controller Version
+  group: "F5 BIGIP CIS CONFIG"
