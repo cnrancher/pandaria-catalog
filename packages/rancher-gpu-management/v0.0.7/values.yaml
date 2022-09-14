@@ -1,0 +1,36 @@
+image:
+  nvidiadeviceplugin:
+    repository: cnrancher/k8s-device-plugin
+    tag: "v0.10.0"
+  sharedeviceplugin:
+    repository: cnrancher/gpu-device-plugin
+    tag: "v0.1.0"
+  schedulerextender:
+    repository: cnrancher/gpu-scheduler-extender
+    tag: "v0.1.0"
+  defaultScheduler:
+    version: v1.13
+    supportedVersions:
+      v1.13: "rancher/hyperkube:v1.13.12-rancher2"
+      v1.14: "rancher/hyperkube:v1.14.10-rancher1"
+      v1.15: "rancher/hyperkube:v1.15.12-rancher2"
+      v1.16: "rancher/hyperkube:v1.16.15-rancher2"
+      v1.17: "rancher/hyperkube:v1.17.14-rancher1"
+      v1.18: "rancher/hyperkube:v1.18.12-rancher1"
+      v1.19: "rancher/hyperkube:v1.19.16-rancher1"
+      v1.20: "rancher/hyperkube:v1.20.13-rancher1"
+      v1.21: "rancher/hyperkube:v1.21.8-rancher1"
+      v1.22: "rancher/hyperkube:v1.21.8-rancher1"
+      v1.23: "rancher/hyperkube:v1.21.8-rancher1"
+      v1.24: "rancher/hyperkube:v1.21.8-rancher1"
+schedulerextender:
+  schedulerName: rancher-gpushare-scheduler
+  port: 9100
+  verbose: 4
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+# GPU Sharing Memory unit: GiB or MiB    
+memoryunit: GiB
+global:
+  systemDefaultRegistry: ""
