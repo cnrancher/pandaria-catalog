@@ -1,8 +1,0 @@
-apiVersion: v1
-description: A Helm chart for Rancher v2 global monitoring
-name: rancher-thanos
-version: 0.0.4
-icon: file://../thanos-logo.png
-keywords:
-- thanos
-- prometheus
