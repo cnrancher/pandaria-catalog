@@ -1,0 +1,5 @@
+url: local
+workingDir: "v0.11.0"
+version: 0.11.0
+# This package is used as dependency, set doNotRelease to true.
+doNotRelease: true
