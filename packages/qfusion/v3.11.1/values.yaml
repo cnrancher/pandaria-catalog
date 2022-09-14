@@ -1,0 +1,46 @@
+# Default values for qfusion-installer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+# singleNode or multiNode
+deployType: singleNode
+nodeLabel: true
+
+global:
+  registry: registry.cn-hangzhou.aliyuncs.com
+  repository: tomc
+#  imagePullSecret: imagepullsecret
+#  imagePullSecretJson:
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
+  - effect: NoSchedule
+    key: qfusion/master
+    operator: Exists
+
+affinity: {}
+
+baseProfiles:
+  - common.profile
+  - logs.profile
+  - mysql.profile
+  - mgr.profile
+  - oracle.profile
+  - mssql.profile
+  - redis.profile
+  - release.profile
+  - rds.profile
+
+ext:
+  cmName:
+  profiles: []
+
+platInfo: "rancher"
+imagePullPolicy: "Always"
