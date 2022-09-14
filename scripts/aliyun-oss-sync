@@ -1,0 +1,26 @@
+#!/bin/sh
+
+echo "---- Downloading ossutil"
+wget -O /bin/ossutil "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil32"
+chmod 755 /bin/ossutil
+
+echo "---- Configuring ossutil"
+ossutil config -e "${ALIYUN_ENDPOINT}" -i "${ALIYUN_ACCESS_KEY_ID}" -k "${ALIYUN_SECRET_ACCESS_KEY}"
+
+echo "---- Removing existing asset files"
+ossutil rm -rf "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
+
+echo "---- Creating folders"
+ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" # Recreate the folder just deleted
+ossutil mkdir "${ALIYUN_BUCKET}/${LOGO_FOLDER}/" # Ensure LOGO folder exists
+
+echo "---- Copy asset files"
+ossutil cp -rf "./assets" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets/"
+ossutil cp -f "./index.yaml" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
+
+echo "---- Copy LOGO files"
+ossutil cp -rf "./assets/logo" "${ALIYUN_BUCKET}/${LOGO_FOLDER}/"
+
+echo '---- Set ACL for file'
+ossutil set-acl ${ALIYUN_BUCKET}/${VERSION_FOLDER} ${VERSION_FOLDER_ACCESS} -rf
+ossutil set-acl ${ALIYUN_BUCKET}/${LOGO_FOLDER} ${LOGO_FOLDER_ACCESS} -rf

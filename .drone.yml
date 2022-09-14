@@ -1,0 +1,62 @@
+---
+kind: pipeline
+type: docker
+name: CI
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: validate
+  pull: default
+  image: rancher/dapper:v0.5.8
+  commands:
+    - dapper -f Dockerfile.dapper
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    event:
+    - push
+    - tag
+    - pull_request
+- name: upload-helm-repo
+  pull: default
+  image: rancher/dapper:v0.5.8
+  environment:
+    ALIYUN_ACCESS_KEY_ID:
+      from_secret: aliyun_access_id
+    ALIYUN_SECRET_ACCESS_KEY:
+      from_secret: aliyun_access_secret
+    ALIYUN_BUCKET: oss://pandaria-catalog
+    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
+    VERSION_FOLDER_ACCESS: public-read
+    LOGO_FOLDER_ACCESS: public-read
+    OSSUTIL_VERSION: "1.7.13"
+    VERSION_FOLDER: release-v2.6
+    LOGO_FOLDER: assets/logo
+  commands:
+    - scripts/aliyun-oss-sync
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    event:
+    - push
+    - tag
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
+
+node:
+  instance: agent-amd64
+
+trigger:
+  event:
+    exclude:
+    - promote
