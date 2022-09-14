@@ -592,4 +592,17 @@ entries:
     urls:
     - assets/virtaitech-orion-vgpu/virtaitech-orion-vgpu-1.0.0.tgz
     version: 1.0.0
+  webhook-receiver:
+  - apiVersion: v1
+    appVersion: 0.1.6
+    created: "2022-09-14T16:53:21.940888758+08:00"
+    description: The webhook receiver of Prometheus
+    digest: 6d8e3d8a39bccf674d8a1e6fbef777ee5347c62868cae93b47384845ccf7bd27
+    keywords:
+    - prometheus
+    - webhook
+    name: webhook-receiver
+    urls:
+    - assets/webhook-receiver/webhook-receiver-0.1.0.tgz
+    version: 0.1.0
 generated: "0001-01-01T00:00:00Z"
