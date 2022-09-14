@@ -1,0 +1,73 @@
+{{- if or (eq .Values.image.defaultScheduler.version "v1.19") (eq .Values.image.defaultScheduler.version "v1.20") (eq .Values.image.defaultScheduler.version "v1.21") (eq .Values.image.defaultScheduler.version "v1.22") -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpushare-scheduler-config
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1beta1
+    kind: KubeSchedulerConfiguration
+    profiles:
+      - schedulerName: {{ .Values.schedulerextender.schedulerName }}
+    leaderElection:
+      leaderElect: false
+    extenders:
+      - urlPrefix: "http://localhost:{{ .Values.schedulerextender.port }}/gpushare-scheduler"
+        filterVerb: "filter"
+        bindVerb: "bind"
+        enableHTTPS: false
+        nodeCacheCapable: true
+        managedResources:
+          - name: "rancher.io/gpu-mem"
+            ignoredByScheduler: false
+        ignorable: false
+{{- else -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpushare-scheduler-config
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1alpha1
+    kind: KubeSchedulerConfiguration
+    schedulerName: {{ .Values.schedulerextender.schedulerName }}
+    algorithmSource:
+      policy:
+        configMap:
+          namespace: {{ .Release.Namespace }}
+          name: gpushare-scheduler-policy
+    leaderElection:
+      leaderElect: true
+      lockObjectName: gpushare-scheduler
+      lockObjectNamespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpushare-scheduler-policy
+  namespace: {{ .Release.Namespace }}
+data:
+ policy.cfg : |
+  {
+    "kind": "Policy",
+    "apiVersion": "v1",
+    "extenders": [
+      {
+        "urlPrefix": "http://localhost:{{ .Values.schedulerextender.port }}/gpushare-scheduler",
+        "filterVerb": "filter",
+        "bindVerb":   "bind",
+        "enableHttps": false,
+        "nodeCacheCapable": true,
+        "managedResources": [
+          {
+            "name": "rancher.io/gpu-mem",
+            "ignoredByScheduler": false
+          }
+        ],
+        "ignorable": false
+      }
+    ]
+  }
+{{- end -}}
