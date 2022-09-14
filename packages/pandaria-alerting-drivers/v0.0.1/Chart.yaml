@@ -1,0 +1,10 @@
+annotations:
+  catalog.cattle.io/release-name: pandaria-alerting-drivers
+  catalog.cattle.io/namespace: cattle-monitoring-system
+apiVersion: v1
+description: Pandaria alerting drivers for Prometheus
+name: pandaria-alerting-drivers
+version: 0.0.1
+keywords:
+- alert
+- prometheus
