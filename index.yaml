@@ -42,4 +42,23 @@ entries:
     urls:
     - assets/f5-cis-ingress/f5-cis-ingress-0.1.2.tgz
     version: 0.1.2
+  nginx-ingress:
+  - apiVersion: v1
+    appVersion: 1.7.2
+    created: "2022-09-14T15:52:09.035182071+08:00"
+    description: NGINX Ingress Controller
+    digest: af71b614cfd3eff7db2721ca9dc606c872e7e59bf9595df4f8d050b8f4484660
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-nginx-ingress.png
+    keywords:
+    - ingress
+    - nginx
+    maintainers:
+    - email: xuefeng@rancher.com
+      name: xuefeng.yin
+    name: nginx-ingress
+    sources:
+    - https://github.com/nginxinc/kubernetes-ingress/tree/v1.7.2/deployments/helm-chart
+    urls:
+    - assets/nginx-ingress/nginx-ingress-1.7.2.tgz
+    version: 1.7.2
 generated: "0001-01-01T00:00:00Z"
