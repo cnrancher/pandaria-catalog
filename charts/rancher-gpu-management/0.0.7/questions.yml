@@ -1,0 +1,65 @@
+rancher_min_version: 2.4.11-rc1
+categories:
+- GPU Management
+questions:
+- variable: defaultImage
+  default: true
+  description: "Use default Docker image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: image.nvidiadeviceplugin.repository
+    default: "nvidia/k8s-device-plugin"
+    description: "Nvidia GPU device plugin"
+    type: string
+    label: Nvidia GPU device plugin Image Name
+  - variable: image.nvidiadeviceplugin.tag
+    default: "1.0.0-beta4"
+    description: "Nvidia GPU device plugin image tag"
+    type: string
+    label: Image Tag
+  - variable: image.sharedeviceplugin.repository
+    default: "cnrancher/gpu-device-plugin"
+    description: "Shared GPU device plugin"
+    type: string
+    label: Shared GPU device plugin Image Name
+  - variable: image.sharedeviceplugin.tag
+    default: "v0.1.0"
+    description: "Shared GPU device plugin image tag"
+    type: string
+    label: Image Tag
+  - variable: image.schedulerextender.repository
+    default: "cnrancher/gpu-scheduler-extender"
+    description: "GPU Sharing scheduler extender"
+    type: string
+    label: Shared GPU device plugin Image Name
+  - variable: image.schedulerextender.tag
+    default: "v0.1.0"
+    description: "GPU Sharing scheduler extender tag"
+    type: string
+    label: Image Tag
+- variable: image.defaultScheduler.version
+  default: "v1.13"
+  description: "k8s version"
+  type: enum
+  label: K8S Version
+  options:
+    - v1.13
+    - v1.14
+    - v1.15
+    - v1.16
+    - v1.17
+    - v1.18
+    - v1.19
+    - v1.20
+    - v1.21
+    - v1.22
+    - v1.23
+    - v1.24
+- variable: memoryunit
+  default: "GiB"
+  description: "GPU Memory Unit: GiB or MiB"
+  type: string
+  label: GPU Memory Unit
