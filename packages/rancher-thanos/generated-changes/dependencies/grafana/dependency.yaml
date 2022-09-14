@@ -1,0 +1,3 @@
+workingDir: ""
+url: packages/grafana/v0.0.1
+doNotRelease: true
