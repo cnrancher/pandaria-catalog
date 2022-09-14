@@ -1,0 +1,31 @@
+# Default values for f5-cis-ingress.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+nameOverride: ""
+fullnameOverride: ""
+ingressnameOverride: ""
+
+service:
+  type: ClusterIP
+  serviceName: nginx
+  port: 80
+
+ingress:
+  enabled: true
+  tlsenabled: false
+  annotations: 
+    virtualserverip: 172.16.1.100
+    virtualserverhttpport: 80
+    partition: k8s
+    balance: round-robin
+    health: ""
+  hosts:
+    host: chart-example.local
+    path: /web
+
+  tls:
+#    secretName: chart-example-tls
+#    hosts: chart-example.local
+
