@@ -1,0 +1,3 @@
+workingDir: ""
+url: packages/gpu-feature-discovery
+doNotRelease: true
