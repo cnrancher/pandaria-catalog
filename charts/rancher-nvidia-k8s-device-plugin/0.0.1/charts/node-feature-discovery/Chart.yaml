@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.6.1
+description: A Helm chart for gpu-feature-discovery on Kubernetes
+home: https://github.com/NVIDIA/gpu-feature-discovery
+kubeVersion: '>= 1.10.0-0'
+name: node-feature-discovery
+type: application
+version: 0.6.1
