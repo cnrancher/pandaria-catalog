@@ -335,4 +335,45 @@ entries:
     urls:
     - assets/rancher-gpu-management/rancher-gpu-management-0.0.1.tgz
     version: 0.0.1
+  rancher-gpu-monitoring:
+  - apiVersion: v1
+    appVersion: 1.4.6
+    created: "2022-09-14T16:10:50.345695538+08:00"
+    description: Provides gpu monitoring for Rancher2.x
+    digest: 2c62d7431c1bcccbd712688a4126eed3cec374216af28aa3f7803ea07fd946c3
+    home: https://github.com/NVIDIA/gpu-monitoring-tools
+    icon: https://coreos.com/sites/default/files/inline-images/Overview-prometheus_0.png
+    keywords:
+    - exporter
+    - prometheus
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-monitoring
+    sources:
+    - https://github.com/NVIDIA/gpu-monitoring-tools
+    urls:
+    - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v1
+    appVersion: 1.4.6
+    created: "2022-09-14T16:10:41.672705686+08:00"
+    description: Provides gpu monitoring for Rancher2.x
+    digest: 9decb3aeeb776ac5baecd304b134652f7c2acd21f0dc854ad179713abdce4da2
+    home: https://github.com/NVIDIA/gpu-monitoring-tools
+    icon: https://coreos.com/sites/default/files/inline-images/Overview-prometheus_0.png
+    keywords:
+    - exporter
+    - prometheus
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-monitoring
+    sources:
+    - https://github.com/NVIDIA/gpu-monitoring-tools
+    urls:
+    - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.0.1.tgz
+    version: 0.0.1
 generated: "0001-01-01T00:00:00Z"
