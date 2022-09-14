@@ -1,0 +1,14 @@
+apiVersion: v1
+description: The Macvlan Networking For Rancher2.x
+maintainers:
+- name: niusmallnan
+  email: zhibo.zhang@suse.com
+name: rancher-macvlan
+kubeVersion: < 1.23.0-0
+sources:
+- https://github.com/cnrancher
+version: 0.7.2
+appVersion: 0.7.2
+home: https://github.com/cnrancher
+keywords:
+- networking
