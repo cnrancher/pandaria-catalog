@@ -42,6 +42,23 @@ entries:
     urls:
     - assets/f5-cis-ingress/f5-cis-ingress-0.1.2.tgz
     version: 0.1.2
+  fluent-bit:
+  - apiVersion: v1
+    appVersion: 1.6.8
+    created: "2022-09-14T15:55:15.449322005+08:00"
+    description: Fast and lightweight log processor and forwarder or Linux, OSX and
+      BSD family operating systems.
+    digest: 050af32ace257c91a1427e0813639b6c204b07735d79318d90acab3b9b49280d
+    icon: https://fluentbit.io/assets/img/logo1-default.png
+    keywords:
+    - logging
+    - fluent-bit
+    name: fluent-bit
+    sources:
+    - https://github.com/fluent/fluent-bit/
+    urls:
+    - assets/fluent-bit/fluent-bit-0.0.1.tgz
+    version: 0.0.1
   nginx-ingress:
   - apiVersion: v1
     appVersion: 1.7.2
