@@ -570,4 +570,26 @@ entries:
     urls:
     - assets/rancher-thanos/rancher-thanos-0.0.1.tgz
     version: 0.0.1
+  virtaitech-orion-vgpu:
+  - apiVersion: v1
+    appVersion: "2.2"
+    created: "2022-09-14T16:51:12.327607654+08:00"
+    description: VirtAI Orion Platform can virtulize GPUs and create GPU resource
+      pool
+    digest: 4fc5ddfff629bcc70435948cf441e7d017232f31cafae3e694d129f5e3722ea3
+    home: https://www.virtaitech.com
+    icon: https://portalprodstorage.blob.core.chinacloudapi.cn/static-resources/images/virtai-logo.png
+    keywords:
+    - GPU
+    - virtualization
+    - VirtAI
+    - Orion
+    maintainers:
+    - email: wupengfei@virtaitech.com
+      name: Pengfei
+    name: virtaitech-orion-vgpu
+    type: application
+    urls:
+    - assets/virtaitech-orion-vgpu/virtaitech-orion-vgpu-1.0.0.tgz
+    version: 1.0.0
 generated: "0001-01-01T00:00:00Z"
