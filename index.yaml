@@ -113,6 +113,34 @@ entries:
     urls:
     - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.1.tgz
     version: 0.0.1
+  qfusion-rds:
+  - apiVersion: v2
+    appVersion: 3.11.1-rancher
+    created: "2022-09-14T17:27:48.310050099+08:00"
+    description: Helm chart for QFusion RDS components
+    digest: f626647b9ed32dec32f6511b207c0213eea8ac8bff160aa49789af059397c63c
+    home: http://www.woqutech.com/products.php?id=141
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/woqutech.png
+    keywords:
+    - QFusion
+    - RDS
+    - woqutech
+    - Databases
+    - DB
+    - DBaaS(DataBase-as-a-Service)
+    - SQL
+    - MySQL
+    - MariaDB
+    - MSSQL
+    - Redis
+    - Oracle
+    kubeVersion: <1.19.0-0
+    maintainers:
+    - name: qfusion
+    name: qfusion-rds
+    urls:
+    - assets/qfusion-rds/qfusion-rds-3.11.1-rancher.tgz
+    version: 3.11.1-rancher
   rancher-ack-operator:
   - annotations:
       catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
