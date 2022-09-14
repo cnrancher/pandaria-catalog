@@ -98,4 +98,19 @@ entries:
     urls:
     - assets/nginx-ingress/nginx-ingress-1.7.2.tgz
     version: 1.7.2
+  pandaria-alerting-drivers:
+  - annotations:
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+    apiVersion: v1
+    created: "2022-09-14T15:59:10.243579322+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: f7751e2f8515edfe5a6fdd0b8a052f30e79fc9d59bd577c326ab6e7ce374b854
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.1.tgz
+    version: 0.0.1
 generated: "0001-01-01T00:00:00Z"
