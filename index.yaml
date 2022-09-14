@@ -152,4 +152,29 @@ entries:
     urls:
     - assets/rancher-ack-operator-crd/rancher-ack-operator-crd-100.0.0+up1.0.1.tgz
     version: 100.0.0+up1.0.1
+  rancher-aks-operator:
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-aks-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/provides-gvr: aksclusterconfigs.aks.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0 < 2.7.0-0'
+      catalog.cattle.io/release-name: rancher-aks-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 1.0.6
+    created: "2022-09-14T16:03:28.356380586+08:00"
+    description: A Helm chart for provisioning AKS clusters
+    digest: f0883db7661a228afb26981ea2a0fde6ce23972615d9b627978b0bef3641fe42
+    home: https://github.com/rancher/aks-operator
+    name: rancher-aks-operator
+    sources:
+    - https://github.com/rancher/aks-operator
+    urls:
+    - assets/rancher-aks-operator/rancher-aks-operator-100.0.5+up1.0.6.tgz
+    version: 100.0.5+up1.0.6
 generated: "0001-01-01T00:00:00Z"
