@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Creates Global Monitoring Dashboard UI.
+name: ui
+version: 0.0.1

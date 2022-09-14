@@ -1,0 +1,3 @@
+url: local
+# Used as dependency
+doNotRelease: true
