@@ -22,4 +22,24 @@ entries:
     urls:
     - assets/f5-cis-ctlr/f5-cis-ctlr-0.0.9.tgz
     version: 0.0.9
+  f5-cis-ingress:
+  - apiVersion: v1
+    appVersion: 0.1.2
+    created: "2022-09-14T15:49:17.577924878+08:00"
+    description: Deploy the F5 Networks CIS Ingress for Kubernetes (f5-cis-ingress).
+    digest: da664b6245121f6e23f6ece059ea6e659ebd30ede7ab61cf54e4aa8f7525e9ec
+    home: https://clouddocs.f5.com/
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-bigip-ingress.png
+    keywords:
+    - f5
+    - ingress
+    - cis
+    - rancher
+    maintainers:
+    - email: xuefeng@rancher.com
+      name: xuefeng.yin
+    name: f5-cis-ingress
+    urls:
+    - assets/f5-cis-ingress/f5-cis-ingress-0.1.2.tgz
+    version: 0.1.2
 generated: "0001-01-01T00:00:00Z"
