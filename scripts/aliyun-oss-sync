@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 # Get the folder of Aliyun OSS bucket from Git branch name.
 # e.g. branch name: `dev/v2.6` -> folder name: `dev-v2.6`, branch: `release/v2.6` -> folder: `release-v2.6`
@@ -34,8 +33,8 @@ echo "---- Removing existing asset files"
 ossutil rm -rf "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
 
 echo "---- Creating folders"
-ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" # Recreate the folder just deleted
-ossutil mkdir "${ALIYUN_BUCKET}/${LOGO_FOLDER}/" # Ensure LOGO folder exists
+ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" || echo "---- assets folder already exists" # Recreate the folder just deleted
+ossutil mkdir "${ALIYUN_BUCKET}/${LOGO_FOLDER}/" || echo "---- logo folder already exists" # Ensure LOGO folder exists
 
 echo "---- Copy asset files"
 ossutil cp -rf "./assets" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets/"
