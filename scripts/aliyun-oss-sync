@@ -1,4 +1,27 @@
 #!/bin/sh
+set -e
+
+# Get the folder of Aliyun OSS bucket from Git branch name.
+# e.g. branch name: `dev/v2.6` -> folder name: `dev-v2.6`, branch: `release/v2.6` -> folder: `release-v2.6`
+if [[ -z "${DRONE_COMMIT_BRANCH}" ]]; then
+    echo "ERROR: this script needs to run in drone pipeline."
+    exit 1
+else
+    echo "---- DRONE_COMMIT_BRANCH: ${DRONE_COMMIT_BRANCH}"
+    echo "---- Checking git branch format"
+    if echo "${DRONE_COMMIT_BRANCH}" | grep "dev/\|release/"; then
+        echo "---- Git branch format valid."
+    else
+        echo "---- Invalid git branch format: ${DRONE_COMMIT_BRANCH}"
+        exit 1
+    fi
+    VERSION_FOLDER="$(echo ${DRONE_COMMIT_BRANCH} | tr / -)"
+    echo "---- VERSION_FOLDER: ${VERSION_FOLDER}"
+    if [[ -z "${VERSION_FOLDER}" ]]; then
+        echo "ERROR: failed to get VERSION_FOLDER"
+        exit 1
+    fi
+fi
 
 echo "---- Downloading ossutil"
 wget -O /bin/ossutil "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil32"
