@@ -35,7 +35,6 @@ steps:
     VERSION_FOLDER_ACCESS: public-read
     LOGO_FOLDER_ACCESS: public-read
     OSSUTIL_VERSION: "1.7.13"
-    VERSION_FOLDER: dev-v2.6
     LOGO_FOLDER: assets/logo
   commands:
     - scripts/aliyun-oss-sync
