@@ -2,6 +2,8 @@
 
 This repository contains Helm charts served by Pandaria Apps & Marketplace.
 
+> Handbook (Chinese)：[pandaria-catalog 仓库维护手册](docs/pandaria-catalog_zh_CN.md)
+
 ### Branches
 
 - `dev/v2.X` branches contain charts that under active development, to be released in an upcoming release.
