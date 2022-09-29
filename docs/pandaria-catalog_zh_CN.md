@@ -2,6 +2,8 @@
 
 ## 目录结构
 
+![](images/pandaria-catalog-dir-structure.png)
+
 pandaria-catalog 仓库的目录结构可参考 [rancher/charts](https://github.com/rancher/charts) 仓库。
 
 - `assets/` 存放 `make charts` 生成的 `tgz` 包以及 `icon` 等资源文件。
@@ -12,25 +14,32 @@ pandaria-catalog 仓库的目录结构可参考 [rancher/charts](https://github.
 
 ## Developing
 
-> 此部分可参考英文版 [Developing](https://github.com/rancher/charts/blob/dev-v2.6/docs/developing.md) 文档。
+> 此部分可参考英文版 [Developing](developing.md) 文档。
 
 ### 为 pandaria-catalog 仓库添加新的 package
 
-添加新的 package 通常需要以下步骤：在 `packages` 中新建文件夹并在其中创建 `package.yaml`。
+添加新的 package 通常需要以下步骤：
 
-```sh
-PACKAGE=<packageName> # can be nested, e.g. rancher-monitoring/rancher-windows-exporter is acceptable
-mkdir -p packages/${PACKAGE}
-touch packages/${PACKAGE}/package.yaml
-```
+1. 在 `packages` 中新建文件夹并在其中创建 `package.yaml`。
 
-`package.yaml` 中填写的配置在[英文文档](https://github.com/rancher/charts/blob/dev-v2.6/docs/packages.md)中有详细介绍。
+    ```sh
+    PACKAGE=<packageName> # can be nested, e.g. rancher-monitoring/rancher-windows-exporter is acceptable
+    mkdir packages/${PACKAGE}
+    touch packages/${PACKAGE}/package.yaml
+    mkdir packages/${PACKAGE}/v${VERSION} # semantic version of the chart
+    ```
 
-```yaml
-url: local              # 表示 charts 的代码存储在本地，不需要从网络上下载
-workingDir: "v0.0.9"    # charts 文件所在的目录名称，默认为 charts
-version: 0.0.9          # charts 的版本号，该参数将覆盖 Charts.yaml 中的设置。
-```
+2. `package.yaml` 中填写的配置在[英文文档](packages.md)中有详细介绍。
+
+    ```yaml
+    url: local              # 表示 charts 的代码存储在本地，不需要从网络上下载
+    workingDir: "v0.0.9"    # charts 文件所在的目录名称，默认为 charts
+    version: 0.0.9          # charts 的版本号，该参数将覆盖 Charts.yaml 中的设置。
+    ```
+
+3. 将 Charts 的代码放在 `workingDir` 对应的目录下面，本例中为 `v0.0.9/`。
+
+> 如果 Charts 中含有子 Charts （依赖），请按照下方的 **[子 Chart / 依赖的维护](#%E5%AD%90-chart--%E4%BE%9D%E8%B5%96%E7%9A%84%E7%BB%B4%E6%8A%A4)** 中介绍的步骤进行维护。
 
 ### 修改现有的 Package
 
@@ -43,20 +52,55 @@ version: 0.0.9          # charts 的版本号，该参数将覆盖 Charts.yaml �
 3. 因为本仓库 `Package` 的 `url` 均为 `local`，因此可不用执行 `make prepare`, `make patch` 和 `make clean`。
 4. 当 `Package` 修改完毕，执行 `make charts`，这将生成一个名为 `assets/${PACKAGE}/${CHART}-${VERSION}.tgz` 的压缩包，并创建 `charts/${PACKAGE}/${CHART}/${VERSION}/` 目录存放 Charts 的代码，并更新 `index.yaml` 文件。
     首次执行 `make charts` 会生成大量的未被 Git 暂存的文件，为了方便 review，建议单独为 `make charts` 编写一条 commit 记录。
-5. 编辑 `release.yaml` ，在修改的 Chart 下方添加刚刚创建的新的版本号。
 
-    格式为：
+### 子 Chart / 依赖的维护
+
+在引入 charts-build-scripts 机制之前，子 Chart 的代码是存放在父 Chart 的 `charts/` 目录下面，引入 charts-build-scripts 机制后，请勿将子 Chart 的代码直接存放在 Package 的 Chart 的代码文件夹的 `charts/` 目录下面，而是 **将子 chart 作为单独的 Package 进行维护**。
+
+1. 首先为子 Chart 创建 Package。
+
+    ```sh
+    CPACKAGE=<CHILDREN_PACKAGE_NAME> # 子 chart 的 Package Name
+    mkdir -p packages/${CPACKAGE}/v${CVERSION}/charts
+    vim packages/${CPACKAGE}/v${CVERSION}/package.yaml
+    ```
+1. 编辑 `package.yaml`。
 
     ```yaml
-    <chart>:
-    - <version>
+    url: local
+    workingDir: "charts"    # not required, default is `charts`
+    version: 0.0.1          # not required
+    doNotRelease: true      # required, do not create tgz tarball for this package
     ```
 
-    有关 `release.yaml` 的介绍在下方的 Validation / CI 或 英文文档 [Validation](https://github.com/rancher/charts/blob/dev-v2.6/docs/validation.md) 中。
+    其中，`workingDir` 和 `version` 可以省略，`doNotRelease` 设定为 `true` 是因为这个 Package 只用来作为其他 Chart 的依赖，因此 charts-build-scripts 将不会发布这个 Package。
+
+1. 在父 Chart 的 Package 目录中建立 `generated-changes/dependencies/` 目录，指明父 Chart 与子 Chart 之间的依赖关系。
+
+    ```sh
+    FPACKAGE=<FATHER_PACKAGE_NAME> # 父 Chart 的 Package Name
+    CPACKAGE=<CHILDREN_PACKAGE_NAME> # 子 Chart 的 Package Name
+    mkdir -p packages/${FPACKAGE}/generated-changes/dependencies/${CPACKAGE}/
+    vim packages/${FPACKAGE}/generated-changes/dependencies/${CPACKAGE}/dependency.yaml
+    ```
+
+1. 编辑 `dependency.yaml`
+
+    ```yaml
+    workingDir: ""                  # empty string
+    url: packages/grafana/v0.0.4    # the path to the package
+    doNotRelease: true
+    ```
+
+1. 之后执行 `make charts`, `charts-build-scripts` 会为生成的 Chart 代码中建立子 Chart 的目录，并建立依赖关系。
+
+> 关于 package 中的依赖关系是如何建立的，可参考本仓库已有的 `rancher-thanos` 与 `grafana`, `thanos`, `thanos-ui` 之间的依赖关系是如何建立的。
+
+![](images/package-dependencies.png)
 
 ## Validation / CI
 
-> 此部分参考英文版 [Validation](https://github.com/rancher/charts/blob/dev-v2.6/docs/validation.md) 文档。
+> 此部分参考英文版 [Validation](validation.md) 文档。
 
 在 CI pipeline 中运行的 `make validate` 执行以下几个步骤：
 
