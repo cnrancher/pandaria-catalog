@@ -1,0 +1,117 @@
+# pandaria-catalog 仓库维护手册
+
+## 目录结构
+
+pandaria-catalog 仓库的目录结构可参考 [rancher/charts](https://github.com/rancher/charts) 仓库。
+
+- `assets/` 存放 `make charts` 生成的 `tgz` 包以及 `icon` 等资源文件。
+- `charts/` 目录存放由 `make charts` 或 `make validate` 生成的 `charts` 的代码。
+- `packages/` 存放 package 的信息，每个 package 的文件夹中包含 `package.yaml` 定义该 package 的代码链接 `url` 以及版本号 `version`、工作目录 `workingDir`。
+- `docs/` 存放文档。
+- `scripts` 存放 `charts-build-script` 脚本。
+
+## Developing
+
+> 此部分可参考英文版 [Developing](https://github.com/rancher/charts/blob/dev-v2.6/docs/developing.md) 文档。
+
+### 为 pandaria-catalog 仓库添加新的 package
+
+添加新的 package 通常需要以下步骤：在 `packages` 中新建文件夹并在其中创建 `package.yaml`。
+
+```sh
+PACKAGE=<packageName> # can be nested, e.g. rancher-monitoring/rancher-windows-exporter is acceptable
+mkdir -p packages/${PACKAGE}
+touch packages/${PACKAGE}/package.yaml
+```
+
+`package.yaml` 中填写的配置在[英文文档](https://github.com/rancher/charts/blob/dev-v2.6/docs/packages.md)中有详细介绍。
+
+```yaml
+url: local              # 表示 charts 的代码存储在本地，不需要从网络上下载
+workingDir: "v0.0.9"    # charts 文件所在的目录名称，默认为 charts
+version: 0.0.9          # charts 的版本号，该参数将覆盖 Charts.yaml 中的设置。
+```
+
+### 修改现有的 Package
+
+修改本仓库中的 `Package` 需要以下几步：
+
+1. 设置环境变量 `export PACKAGE=<packageName>`
+   （不设置环境变量将默认修改所有的 `Packages`）
+2. 修改 `Package` 代码后，编辑 `package.yaml` 中的版本号，发布新的版本。
+    本仓库中，如果下载了新版本 Charts 的代码，本仓库的维护方法是，在该 `Package` 目录下使用新的版本号新建一个文件夹(`vX.Y.Z`)，之后修改 `package.yaml` 中的 `workingDir` 和 `version` 为对应的新版本 Charts 的代码所在目录和版本号。
+3. 因为本仓库 `Package` 的 `url` 均为 `local`，因此可不用执行 `make prepare`, `make patch` 和 `make clean`。
+4. 当 `Package` 修改完毕，执行 `make charts`，这将生成一个名为 `assets/${PACKAGE}/${CHART}-${VERSION}.tgz` 的压缩包，并创建 `charts/${PACKAGE}/${CHART}/${VERSION}/` 目录存放 Charts 的代码，并更新 `index.yaml` 文件。
+    首次执行 `make charts` 会生成大量的未被 Git 暂存的文件，为了方便 review，建议单独为 `make charts` 编写一条 commit 记录。
+5. 编辑 `release.yaml` ，在修改的 Chart 下方添加刚刚创建的新的版本号。
+
+    格式为：
+
+    ```yaml
+    <chart>:
+    - <version>
+    ```
+
+    有关 `release.yaml` 的介绍在下方的 Validation / CI 或 英文文档 [Validation](https://github.com/rancher/charts/blob/dev-v2.6/docs/validation.md) 中。
+
+## Validation / CI
+
+> 此部分参考英文版 [Validation](https://github.com/rancher/charts/blob/dev-v2.6/docs/validation.md) 文档。
+
+在 CI pipeline 中运行的 `make validate` 执行以下几个步骤：
+
+1. 确保 Git 工作目录干净，否则验证失败。
+2. 执行 `make charts`, 如果执行后 Git 工作目录不干净，那么验证失败。
+3. 当 `configuration.yaml` 中配置了 `validate.url` 和 `validate.branch` 时，拉取这个上游 Git 仓库，对比上游和本地仓库的资源文件 (assets)：
+    1. 对比本地的资源文件和上游的资源文件是否相同。
+    1. 如果本地与上游不相同，检查这个资源文件所对应的 Charts 版本是否在 `release.yaml` 中。
+    1. **本仓库暂未启用检测本地的资源文件与上游的资源文件是否相同的验证机制。**
+4. 执行 `make unzip`, 如果 Git 工作目录不干净，那么验证失败。
+
+<!--
+### release.yaml
+
+当 `configuration.yaml` 中存在 `validate.url` 和 `validate.branch` 配置时，`make validate` 会自动生成一个 `release.yaml`，表示本地与上游存在差异的 Charts。
+
+`make validate` 的目的是为了确保本地的改动不会对上游仓库的 `charts/`, `assets/` 和 `index.yaml` 产生改动，然而有一种情况是，当对上游仓库添加新的 Package 或修改已有的 Package 时，就存在这种影响。因此需要在 `release.yaml` 中标注存在改动的 Charts。因此当修改或添加一个新的 Charts 后，要在 `release.yaml` 中标识与上游不同步的 Charts 的版本号。
+
+格式例如：
+
+```yaml
+<chart>:
+- <version>
+- <version>
+- ...
+rancher-monitoring:
+- 100.0.0+up16.6.0
+rancher-monitoring-crd:
+- 100.0.0+up16.6.0
+```
+-->
+
+## Example
+
+假设正在为名为 `my-chart` 的 Charts 添加新的版本 `0.1.2-rc4`，上游和本地现有的版本为 `0.1.2-rc3`，按照上述逻辑，需要执行以下几个步骤:
+
+1. 在 `my-chart` 的 Package 目录下创建新的 `v0.1.2-rc4` 目录存放 Chart 代码。
+2. 修改 `package.yaml` 中的 `version` 和 `workingDir` 为对应的版本 `0.1.2-rc4`。
+3. 执行 `make charts`，在 `charts` 目录中生成对应的 Charts 的代码，并在 `assets` 目录创建 tgz 包。
+4. 将所有改动提交 commit 使 Git 工作目录干净，执行 `make validate`，以确保 CI check 不会失败。
+5. 提交 PR。
+
+----
+
+假设 PR merge 后，你打算删除 `my-chart` 的 `0.1.2-rc3` 版本，只保留 `0.1.2-rc4`，需要执行以下步骤：
+
+1. 执行 `CHART=my-chart VERSION=0.1.2-rc3 make remove`，这将删除 `charts/my-chart` 目录下版本号为 `0.1.2-rc3` 的代码，并删除 `assets/my-chart` 中版本号为 `0.1.2-rc3` 的 tgz 包。
+2. 将所有改动提交 commit，确保 Git 工作目录干净，执行 `make validate`，确保 CI check 不会失败。
+3. 提交PR。
+
+## Note
+
+`charts-build-script` 无法识别以英文字母开头的 [Semantic](https://semver.org/) 版本号，所以每个 Chart 的 `Chart.yaml` 中版本号 `version` 不能以英文字母开头，否则 `charts-build-script` 会认为这是非法的命名，例如：
+
+``` yaml
+version: 1.2.3      # valid
+version: v1.2.3     # invalid
+```
