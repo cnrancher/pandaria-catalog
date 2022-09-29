@@ -46,6 +46,11 @@ steps:
     event:
     - push
     - tag
+    branch:
+    - dev/*
+    - release/*
+    repo:
+    - cnrancher/pandaria-catalog
 
 volumes:
 - name: docker
