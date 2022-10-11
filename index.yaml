@@ -3,10 +3,10 @@ entries:
   f5-cis-ctlr:
   - apiVersion: v1
     appVersion: 0.0.9
-    created: "2022-09-14T15:46:09.901152045+08:00"
+    created: "2022-10-11T10:34:59.992971+08:00"
     description: Deploy the F5 Networks BIG-IP Controller for Kubernetes (k8s-bigip-ctlr).
       Code base by F5.
-    digest: e86de96a0d4af7dafe62fd3f315279061628af027db4afb98600ffe54cee7e22
+    digest: 4408517ec664c1a77558891f8de0595985fbf9851ba7e489ed5f9369753df350
     home: https://clouddocs.f5.com/
     icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-bigip-ctlr.png
     keywords:
@@ -82,9 +82,9 @@ entries:
   nginx-ingress:
   - apiVersion: v1
     appVersion: 1.7.2
-    created: "2022-09-14T15:52:09.035182071+08:00"
+    created: "2022-10-11T10:35:00.164748+08:00"
     description: NGINX Ingress Controller
-    digest: af71b614cfd3eff7db2721ca9dc606c872e7e59bf9595df4f8d050b8f4484660
+    digest: 658c78f60653ba34ae65558406effe6f62f193ffb073f26e9303310cce8b65c9
     icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/f5-nginx-ingress.png
     keywords:
     - ingress
@@ -116,9 +116,9 @@ entries:
   qfusion-rds:
   - apiVersion: v2
     appVersion: 3.11.1-rancher
-    created: "2022-09-14T17:27:48.310050099+08:00"
+    created: "2022-10-11T10:35:00.396611+08:00"
     description: Helm chart for QFusion RDS components
-    digest: f626647b9ed32dec32f6511b207c0213eea8ac8bff160aa49789af059397c63c
+    digest: 1f25f47e86d502527120ee9c819235b14ede12c94ef225c3f03eda5d63dd738c
     home: http://www.woqutech.com/products.php?id=141
     icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/woqutech.png
     keywords:
