@@ -302,6 +302,19 @@ entries:
     urls:
     - assets/rancher-gpu-management/rancher-gpu-management-0.0.1.tgz
     version: 0.0.1
+  rancher-k8s-auditlog-collector:
+  - apiVersion: v2
+    appVersion: 1.8.13
+    created: "2022-10-18T17:33:20.234621+08:00"
+    description: collect k8s auditlog for rancher auditlog server
+    digest: 62f02e7ffc5174a44cca99567f882fc3a99744c79b2caed2ebcd4f12889fc210
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    kubeVersion: '>= 1.18.0-0'
+    name: rancher-k8s-auditlog-collector
+    type: application
+    urls:
+    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.0.1.tgz
+    version: 0.0.1
   rancher-macvlan:
   - annotations:
       catalog.cattle.io/certified: rancher

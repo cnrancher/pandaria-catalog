@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 1.8.13
+description: collect k8s auditlog for rancher auditlog server
+icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+kubeVersion: '>= 1.18.0-0'
+name: rancher-k8s-auditlog-collector
+type: application
+version: 0.0.1
