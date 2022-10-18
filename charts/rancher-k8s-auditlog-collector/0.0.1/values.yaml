@@ -1,0 +1,15 @@
+mode: "file" # file webhook
+apiserverLogPath: "/var/log/kubernetes/audit/"
+apiserverLogFile: "audit.log"
+fluentbit:
+  image:
+    repository: fluent/fluent-bit
+    tag: "1.8.13"
+auditlogServerHost: ""
+auditlogServerPort: ""
+clusterid: ""
+nodeSelector: 
+  node-role.kubernetes.io/controlplane: "true"
+webhook:
+  servicePort: "8888"
+  serviceNodePort: ""
