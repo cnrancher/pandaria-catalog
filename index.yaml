@@ -92,6 +92,28 @@ entries:
       catalog.cattle.io/release-name: rancher-ack-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
+    appVersion: 1.0.2
+    created: "2022-10-25T10:44:20.008592+08:00"
+    description: A Helm chart for provisioning ACK clusters
+    digest: 492cf01c4df6917097ed463c604956fdc71ced300d8b3bea51c0e2f19c669f36
+    home: https://github.com/cnrancher/ack-operator
+    name: rancher-ack-operator
+    sources:
+    - https://github.com/cnrancher/ack-operator
+    urls:
+    - assets/rancher-ack-operator/rancher-ack-operator-100.0.1+up1.0.2.tgz
+    version: 100.0.1+up1.0.2
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
+      catalog.cattle.io/release-name: rancher-ack-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
     appVersion: 1.0.1
     created: "2022-09-14T16:00:42.922838666+08:00"
     description: A Helm chart for provisioning ACK clusters
@@ -104,6 +126,21 @@ entries:
     - assets/rancher-ack-operator/rancher-ack-operator-100.0.0+up1.0.1.tgz
     version: 100.0.0+up1.0.1
   rancher-ack-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/release-name: rancher-ack-operator-crd
+    apiVersion: v2
+    appVersion: 1.0.2
+    created: "2022-10-25T10:48:09.395392+08:00"
+    description: ACK Operator CustomResourceDefinitions
+    digest: cf6ce048ff5e4d59409d2d843ae2d40650122b30aaa47b1ef035a2127f588bfc
+    name: rancher-ack-operator-crd
+    urls:
+    - assets/rancher-ack-operator-crd/rancher-ack-operator-crd-100.0.1+up1.0.2.tgz
+    version: 100.0.1+up1.0.2
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
