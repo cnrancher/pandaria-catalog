@@ -403,9 +403,9 @@ entries:
       catalog.cattle.io/release-name: rancher-macvlan
     apiVersion: v1
     appVersion: 0.7.5
-    created: "2022-09-28T17:32:17.646485+08:00"
+    created: "2022-10-27T11:51:21.307005+08:00"
     description: The Macvlan Networking For Rancher2.x
-    digest: f4e36db2e5c23e2cbe46f27f387999ce2897068778aa241c86b2488c569b2655
+    digest: 5d901883a39d18388e36cfbb06557edd8688b7d1bff46078707d21bd584c2643
     home: https://github.com/cnrancher
     keywords:
     - networking
