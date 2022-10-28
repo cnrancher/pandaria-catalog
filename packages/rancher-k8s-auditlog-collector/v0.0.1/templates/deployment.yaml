@@ -13,6 +13,7 @@ spec:
       labels:
         app: rancher-k8s-auditlog-fluentbit-webhook
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
     spec:
       volumes:
       - name: fluentbit-config
