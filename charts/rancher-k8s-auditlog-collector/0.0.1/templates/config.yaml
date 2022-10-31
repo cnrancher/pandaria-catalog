@@ -37,7 +37,7 @@ data:
         HTTP_Port    2020
     [INPUT]
         Name        tail
-        Path        /var/log/kubernetes/audit/audit.log
+        Path        /var/log/kubernetes/audit/{{ .Values.apiserverLogFile }}
         Buffer_Chunk_Size 1M
         Buffer_Max_Size 10M
         Mem_Buf_Limit 10M
