@@ -1,5 +1,5 @@
 mode: "file" # file webhook
-apiserverLogPath: "/var/log/kubernetes/audit/"
+apiserverLogPath: "/var/log/kubernetes/audit"
 apiserverLogFile: "audit.log"
 fluentbit:
   image:
