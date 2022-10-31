@@ -20,7 +20,7 @@ spec:
           name: rancher-k8s-auditlog-fluentbit-config
       - name: kubeapiserver-log
         hostPath:
-          path: /var/log/kubernetes/audit/
+          path: {{ .Values.apiserverLogPath }}
           type: DirectoryOrCreate
       containers:
         - name: fluentbit
