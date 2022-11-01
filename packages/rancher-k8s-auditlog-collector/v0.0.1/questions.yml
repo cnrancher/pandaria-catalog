@@ -46,11 +46,13 @@ questions:
   type: string
   label: K8S ApiServer Auditlog Path
   group: "Settings"
+  show_if: "mode=file"
 - variable: apiserverLogFile
   description: "k8s apiserver log file name"
   type: string
   label: K8S ApiServer Auditlog File Name
   group: "Settings"
+  show_if: "mode=file"
 - variable: defaultImage
   default: true
   description: "Use default Docker image"
