@@ -54,12 +54,12 @@ entries:
     version: 0.0.1
   qfusion-rds:
   - apiVersion: v2
-    appVersion: 3.11.1-rancher
-    created: "2022-10-11T10:35:00.396611+08:00"
+    appVersion: v3.11.1-rancher
+    created: "2022-11-08T03:26:53.150474581Z"
     description: Helm chart for QFusion RDS components
-    digest: 1f25f47e86d502527120ee9c819235b14ede12c94ef225c3f03eda5d63dd738c
+    digest: 6a250b64bd52cb828e74a9d571c2df974e11c51ef0c39632a1546526d9a6ae31
     home: http://www.woqutech.com/products.php?id=141
-    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/woqutech.png
+    icon: file://../woqutech.png
     keywords:
     - QFusion
     - RDS
@@ -78,8 +78,8 @@ entries:
     - name: qfusion
     name: qfusion-rds
     urls:
-    - assets/qfusion-rds/qfusion-rds-3.11.1-rancher.tgz
-    version: 3.11.1-rancher
+    - assets/qfusion/qfusion-rds-v3.11.1-rancher.tgz
+    version: v3.11.1-rancher
   rancher-ack-operator:
   - annotations:
       catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
