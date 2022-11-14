@@ -98,6 +98,23 @@ pandaria-catalog 仓库的目录结构可参考 [rancher/charts](https://github.
 
 ![](images/package-dependencies.png)
 
+### 移除已发布的 Charts & Packages
+
+`charts-build-scripts` 使用 `make remove` 命令移除已发布的 charts，执行此命令需要手动标识 `CHART=<chart name>` 和 `VERSION=<version>` 两个环境变量。
+例如删除所有已发布的名为 `xsky` 的 charts，执行以下命令：
+
+```sh
+CHART=xsky VERSION=2.0.1 make remove
+CHART=xsky VERSION=2.1.0 make remove
+CHART=xsky VERSION=2.2.0 make remove
+```
+
+> `VERSION` 版本号可以在 `charts/<chart-name>/` 目录下获取到，比如想要删除的应用对应的目录为 `charts/xsky/2.2.0/`，那么 `VERSION=2.2.0`。
+
+以上样例中的命令将删除 `assets/xsky` 目录下对应版本的 `tgz` 包，同时删除 `charts/xsky` 目录下的对应版本的 chart 的文件。
+
+在删除 charts 后，还需要手动删除 `packages/xsky` 目录下对应的文件，否则重新执行 `make charts` 会再次重新在 `assets/` 目录下生成 `tgz` 包，并在 `charts/` 目录下生成应用的代码。
+
 ## Validation / CI
 
 > 此部分参考英文版 [Validation](validation.md) 文档。
@@ -111,6 +128,8 @@ pandaria-catalog 仓库的目录结构可参考 [rancher/charts](https://github.
     1. 如果本地与上游不相同，检查这个资源文件所对应的 Charts 版本是否在 `release.yaml` 中。
     1. **本仓库暂未启用检测本地的资源文件与上游的资源文件是否相同的验证机制。**
 4. 执行 `make unzip`, 如果 Git 工作目录不干净，那么验证失败。
+
+> 建议在提交 PR / Commit 之前，先手动在本地执行一遍 `make validate`，在确保本地执行 `make validate` 通过后再提交 PR，以避免 CI Check 失败。
 
 <!--
 ### release.yaml
