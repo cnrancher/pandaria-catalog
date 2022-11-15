@@ -190,6 +190,48 @@ entries:
     urls:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.5+up1.0.6.tgz
     version: 100.0.5+up1.0.6
+  rancher-eks-operator:
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-eks-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/provides-gvr: eksclusterconfigs.eks.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-eks-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 1.1.5
+    created: "2022-11-15T10:26:54.217086+08:00"
+    description: A Helm chart for provisioning EKS clusters
+    digest: 6773fbff4f75201b8f45cc5208ed96d3f2205ff5dfa54e02a07f6d836cae572e
+    home: https://github.com/rancher/eks-operator
+    name: rancher-eks-operator
+    sources:
+    - https://github.com/rancher/eks-operator
+    urls:
+    - assets/rancher-eks-operator/rancher-eks-operator-101.0.0+up1.1.5.tgz
+    version: 101.0.0+up1.1.5
+  rancher-eks-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/release-name: rancher-eks-operator-crd
+    apiVersion: v2
+    appVersion: 1.1.5
+    created: "2022-11-15T10:26:54.175173+08:00"
+    description: EKS Operator CustomResourceDefinitions
+    digest: d8aa5045870fb0ddb0e2bccc7ffec8087abdf53a524feb51d562c98a6c11b3b2
+    name: rancher-eks-operator-crd
+    urls:
+    - assets/rancher-eks-operator-crd/rancher-eks-operator-crd-101.0.0+up1.1.5.tgz
+    version: 101.0.0+up1.1.5
   rancher-gpu-management:
   - apiVersion: v1
     appVersion: 0.1.0
