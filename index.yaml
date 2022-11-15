@@ -348,20 +348,20 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher Macvlan
-      catalog.cattle.io/kube-version: '>=1.18.0-0'
+      catalog.cattle.io/kube-version: '>=1.23.0-0'
       catalog.cattle.io/namespace: kube-system
       catalog.cattle.io/os: linux
-      catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-rc1'
       catalog.cattle.io/release-name: rancher-macvlan
-    apiVersion: v1
-    appVersion: 0.7.5
-    created: "2022-10-27T11:51:21.307005+08:00"
+    apiVersion: v2
+    appVersion: 0.8.0
+    created: "2022-11-21T16:44:52.567875+08:00"
     description: The Macvlan Networking For Rancher2.x
-    digest: 5d901883a39d18388e36cfbb06557edd8688b7d1bff46078707d21bd584c2643
+    digest: debdb2730a730d4b3b3dc1109274e3c1012024c1ac658f17d796c6f1a6cf5fe2
     home: https://github.com/cnrancher
     keywords:
     - networking
-    kubeVersion: '>=1.18.0-0'
+    kubeVersion: '>=1.23.0-0'
     maintainers:
     - email: zhibo.zhang@suse.com
       name: niusmallnan
@@ -369,78 +369,8 @@ entries:
     sources:
     - https://github.com/cnrancher
     urls:
-    - assets/rancher-macvlan/rancher-macvlan-0.7.5.tgz
-    version: 0.7.5
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher Macvlan
-      catalog.cattle.io/kube-version: '>=1.18.0-0'
-      catalog.cattle.io/namespace: kube-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
-      catalog.cattle.io/release-name: rancher-macvlan
-    apiVersion: v1
-    appVersion: 0.7.4
-    created: "2022-09-14T16:13:13.967505217+08:00"
-    description: The Macvlan Networking For Rancher2.x
-    digest: 586c62f768310754240df7a20540a9a412ad847b97f7812977d9d42c82b6c68d
-    home: https://github.com/cnrancher
-    keywords:
-    - networking
-    kubeVersion: '>=1.18.0-0'
-    maintainers:
-    - email: zhibo.zhang@suse.com
-      name: niusmallnan
-    name: rancher-macvlan
-    sources:
-    - https://github.com/cnrancher
-    urls:
-    - assets/rancher-macvlan/rancher-macvlan-0.7.4.tgz
-    version: 0.7.4
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher Macvlan
-      catalog.cattle.io/kube-version: '>=1.18.0-0'
-      catalog.cattle.io/namespace: kube-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
-      catalog.cattle.io/release-name: rancher-macvlan
-    apiVersion: v1
-    appVersion: 0.7.3
-    created: "2022-09-14T16:13:09.123002932+08:00"
-    description: The Macvlan Networking For Rancher2.x
-    digest: 33e0606112c9a15c56893bc417471d483cd3642aadb7bd9414dae16a4e5f42c4
-    home: https://github.com/cnrancher
-    keywords:
-    - networking
-    kubeVersion: '>=1.18.0-0'
-    maintainers:
-    - email: zhibo.zhang@suse.com
-      name: niusmallnan
-    name: rancher-macvlan
-    sources:
-    - https://github.com/cnrancher
-    urls:
-    - assets/rancher-macvlan/rancher-macvlan-0.7.3.tgz
-    version: 0.7.3
-  - apiVersion: v1
-    appVersion: 0.7.2
-    created: "2022-09-14T16:12:51.944210549+08:00"
-    description: The Macvlan Networking For Rancher2.x
-    digest: ee034077a1b1dc3ab56be81c32ee283dff8618ee42a1932f0f8aceed3fbd68a1
-    home: https://github.com/cnrancher
-    keywords:
-    - networking
-    kubeVersion: < 1.23.0-0
-    maintainers:
-    - email: zhibo.zhang@suse.com
-      name: niusmallnan
-    name: rancher-macvlan
-    sources:
-    - https://github.com/cnrancher
-    urls:
-    - assets/rancher-macvlan/rancher-macvlan-0.7.2.tgz
-    version: 0.7.2
+    - assets/rancher-macvlan/rancher-macvlan-0.8.0.tgz
+    version: 0.8.0
   rancher-nvidia-k8s-device-plugin:
   - annotations:
       catalog.cattle.io/certified: rancher
