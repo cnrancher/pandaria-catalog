@@ -1,0 +1,18 @@
+annotations:
+  catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
+  catalog.cattle.io/certified: rancher
+  catalog.cattle.io/hidden: "true"
+  catalog.cattle.io/namespace: cattle-system
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
+  catalog.cattle.io/rancher-version: '>= 2.7.0-alpha'
+  catalog.cattle.io/release-name: rancher-ack-operator
+  catalog.cattle.io/scope: management
+apiVersion: v2
+appVersion: 1.0.3
+description: A Helm chart for provisioning ACK clusters
+home: https://github.com/cnrancher/ack-operator
+name: rancher-ack-operator
+sources:
+- https://github.com/cnrancher/ack-operator
+version: 101.0.0+up1.0.3
