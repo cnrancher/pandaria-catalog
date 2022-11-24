@@ -1,0 +1,19 @@
+annotations:
+  catalog.cattle.io/auto-install: rancher-tke-operator-crd=match
+  catalog.cattle.io/certified: rancher
+  catalog.cattle.io/hidden: "true"
+  catalog.cattle.io/kube-version: '>= 1.18.0-0'
+  catalog.cattle.io/namespace: cattle-system
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/provides-gvr: tkeclusterconfigs.tke.cattle.io/v1
+  catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
+  catalog.cattle.io/release-name: rancher-tke-operator
+  catalog.cattle.io/scope: management
+apiVersion: v2
+appVersion: 1.0.1
+description: A Helm chart for provisioning TKE clusters
+home: https://github.com/cnrancher/tke-operator
+name: rancher-tke-operator
+sources:
+- https://github.com/cnrancher/tke-operator
+version: 100.0.0+up1.0.1
