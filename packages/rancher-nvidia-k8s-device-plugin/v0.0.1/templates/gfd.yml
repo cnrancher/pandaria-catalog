@@ -57,7 +57,7 @@ spec:
       serviceAccountName: {{ include "nvidia-device-plugin.fullname" $root }}-service-account
       shareProcessNamespace: true
       initContainers:
-      - image: {{ include "nvidia-device-plugin.fullimage" $root }}
+      - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" $root }}
         name: gpu-feature-discovery-init
         command: ["config-manager"]
         env:
@@ -93,7 +93,7 @@ spec:
       {{- end }}
       containers:
       {{- if eq $hasConfigMap "true" }}
-        - image: {{ include "nvidia-device-plugin.fullimage" $root }}
+        - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" $root }}
           name: gpu-feature-discovery-sidecar
           command: ["config-manager"]
           env:
@@ -129,7 +129,7 @@ spec:
           securityContext:
             {{- include "gpu-feature-discovery.securityContext" $root | nindent 12 }}
       {{- end }}
-        - image: {{ include "nvidia-device-plugin.fullimage" . }}
+        - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: gpu-feature-discovery-ctr
           env:

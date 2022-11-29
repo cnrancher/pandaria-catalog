@@ -59,7 +59,7 @@ spec:
       serviceAccountName: {{ include "nvidia-device-plugin.fullname" . }}-service-account
       shareProcessNamespace: true
       initContainers:
-      - image: {{ include "nvidia-device-plugin.fullimage" . }}
+      - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" . }}
         name: nvidia-device-plugin-init
         command: ["config-manager"]
         env:
@@ -95,7 +95,7 @@ spec:
       {{- end }}
       containers:
       {{- if eq $hasConfigMap "true" }}
-      - image: {{ include "nvidia-device-plugin.fullimage" . }}
+      - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" . }}
         name: nvidia-device-plugin-sidecar
         command: ["config-manager"]
         env:
@@ -131,7 +131,7 @@ spec:
         securityContext:
           {{- include "nvidia-device-plugin.securityContext" . | nindent 10 }}
       {{- end }}
-      - image: {{ include "nvidia-device-plugin.fullimage" . }}
+      - image: {{ template "system_default_registry" . }}{{ include "nvidia-device-plugin.fullimage" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: nvidia-device-plugin-ctr
         env:

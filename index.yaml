@@ -274,9 +274,9 @@ entries:
   rancher-k8s-auditlog-collector:
   - apiVersion: v2
     appVersion: 1.8.13
-    created: "2022-11-23T15:51:39.081672+08:00"
+    created: "2022-11-29T16:11:33.90447+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: d52699fb6ee61205498d26a3734a17e2b80b05eb963c68343698925961c99dec
+    digest: 1b40c8d1ed42feed4dd94264c14490e8dcef5fc36cc2162369ceb90aa01966db
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.18.0-0'
     name: rancher-k8s-auditlog-collector
@@ -325,7 +325,7 @@ entries:
       catalog.cattle.io/upstream-version: 0.12.2
     apiVersion: v2
     appVersion: 0.12.2
-    created: "2022-10-28T09:19:58.356116+08:00"
+    created: "2022-11-29T16:11:33.960724+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -336,7 +336,7 @@ entries:
       name: node-feature-discovery
       repository: file://./charts/node-feature-discovery
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: 9cc93a82c3d4267909c662fa8e377f5ec025245cfb81a18a1f43bf601fbb1728
+    digest: 4c4ce9c5945058883aee8fa0588752c8444fe27531d28234e8f82182f14a7bfc
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.10.0-0'

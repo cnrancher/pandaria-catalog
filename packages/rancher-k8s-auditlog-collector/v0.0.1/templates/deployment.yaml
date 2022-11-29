@@ -21,7 +21,7 @@ spec:
           name: rancher-k8s-auditlog-fluentbit-config
       containers:
         - name: fluentbit
-          image: "{{ .Values.fluentbit.image.repository }}:{{ .Values.fluentbit.image.tag }}"
+          image: "{{ template "system_default_registry" . }}{{ .Values.fluentbit.image.repository }}:{{ .Values.fluentbit.image.tag }}"
           args:
           - /fluent-bit/bin/fluent-bit
           - --config=/fluenbit-config/main.conf
