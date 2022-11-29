@@ -101,7 +101,7 @@ spec:
       serviceAccountName: multus
       containers:
       - name: kube-multus
-        image: {{ template "registry_url" . }}cnrancher/mirrored-multus-cni:v3.9.2
+        image: {{ template "registry_url" . }}{{ .Values.image.multus.repository }}:{{ .Values.image.multus.tag }}
         imagePullPolicy: IfNotPresent
         command: ["/entrypoint.sh"]
         args:
@@ -162,7 +162,7 @@ spec:
       serviceAccountName: multus
       containers:
       - name: kube-macvlan-cni
-        image: {{ template "registry_url" . }}cnrancher/static-macvlan-cni:{{ .Values.image.staticMacvlan.tag }}
+        image: {{ template "registry_url" . }}{{ .Values.image.staticMacvlan.repository }}:{{ .Values.image.staticMacvlan.tag }}
         imagePullPolicy: IfNotPresent
         command: ["/entrypoint.sh"]
         resources:
@@ -205,7 +205,7 @@ spec:
         app: network-admission-deploy
     spec:
       containers:
-      - image: {{ template "registry_url" . }}cnrancher/network-admission-deploy:{{ .Values.image.networkController.tag }}
+      - image: {{ template "registry_url" . }}{{ .Values.image.admission.repository }}:{{ .Values.image.admission.tag }}
         name: network-admission-deploy
         imagePullPolicy: IfNotPresent
         lifecycle:
@@ -235,7 +235,7 @@ spec:
     spec:
       serviceAccountName: multus
       containers:
-      - image: {{ template "registry_url" . }}cnrancher/network-controller:{{ .Values.image.networkController.tag }}
+      - image: {{ template "registry_url" . }}{{ .Values.image.networkController.repository }}:{{ .Values.image.networkController.tag }}
         name: network-controller
         env:
         - name: PANDARIA_MACVLAN_CNI_ARP_POLICY
@@ -274,7 +274,7 @@ spec:
     spec:
       serviceAccountName: multus
       containers:
-      - image: {{ template "registry_url" . }}cnrancher/k8s-net-attach-def-controller:{{ .Values.image.nadController.tag }}
+      - image: {{ template "registry_url" . }}{{ .Values.image.nadController.repository }}:{{ .Values.image.nadController.tag }}
         name: kube-net-attach-def-controller
         resources:
           limits:
