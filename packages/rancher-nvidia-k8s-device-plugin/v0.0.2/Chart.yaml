@@ -26,4 +26,4 @@ icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/m
 kubeVersion: '>= 1.10.0-0'
 name: rancher-nvidia-k8s-device-plugin
 type: application
-version: 0.0.1
+version: 0.0.2
