@@ -7,7 +7,7 @@ keywords:
 - feature-discovery
 - feature-detection
 - node-labels
-name: gpu-feature-discovery
+name: nfd
 sources:
 - https://github.com/kubernetes-sigs/node-feature-discovery
 type: application

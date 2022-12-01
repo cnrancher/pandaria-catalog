@@ -503,18 +503,51 @@ entries:
       catalog.cattle.io/upstream-version: 0.12.2
     apiVersion: v2
     appVersion: 0.12.2
-    created: "2022-10-28T09:19:58.356116+08:00"
+    created: "2022-12-02T11:00:38.344794+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
-      name: gpu-feature-discovery
-      repository: file://./charts/gpu-feature-discovery
+      name: gfd
+      repository: file://./charts/gfd
     - alias: nfd
       condition: nfd.enabled,gfd.enabled
-      name: node-feature-discovery
-      repository: file://./charts/node-feature-discovery
+      name: nfd
+      repository: file://./charts/nfd
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: 9cc93a82c3d4267909c662fa8e377f5ec025245cfb81a18a1f43bf601fbb1728
+    digest: 99a30d8c9d416cfc0e65902eea83a6e6740fe4827fafcbe9754c77c93db7f1b3
+    home: https://github.com/NVIDIA/k8s-device-plugin
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    kubeVersion: '>= 1.10.0-0'
+    name: rancher-nvidia-k8s-device-plugin
+    type: application
+    urls:
+    - assets/rancher-nvidia-k8s-device-plugin/rancher-nvidia-k8s-device-plugin-0.0.2.tgz
+    version: 0.0.2
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: nvidia-device-plugin
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
+      catalog.cattle.io/type: cluster-tool
+      catalog.cattle.io/upstream-version: 0.12.2
+    apiVersion: v2
+    appVersion: 0.12.2
+    created: "2022-12-02T11:44:42.405653+08:00"
+    dependencies:
+    - alias: gfd
+      condition: gfd.enabled
+      name: gfd
+      repository: file://./charts/gfd
+    - alias: nfd
+      condition: nfd.enabled,gfd.enabled
+      name: nfd
+      repository: file://./charts/nfd
+    description: A Helm chart for the nvidia-device-plugin on Kubernetes
+    digest: b0dd6d0fa150762b85906309a2a0e380b51ba736cc0db69b3c41c5c277517f9b
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.10.0-0'
