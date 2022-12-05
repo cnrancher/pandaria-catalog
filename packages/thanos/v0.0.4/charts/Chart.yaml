@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: Creates Thanos for Kubernetes.
 name: thanos
 version: 0.0.4
