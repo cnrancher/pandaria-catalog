@@ -5,7 +5,7 @@ ui:
   replicaCount: 1
   image:
     repository: cnrancher/global-monitoring-ui
-    tag: 0.0.9
+    tag: 0.1.1
     pullPolicy: IfNotPresent
   apiToken: ""
   serverUrl: "http://rancher.cattle-system"
