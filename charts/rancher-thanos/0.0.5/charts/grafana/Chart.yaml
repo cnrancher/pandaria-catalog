@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Creates Grafana instance for Kubernetes.
+name: grafana
+version: 0.0.4
