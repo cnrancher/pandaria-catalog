@@ -2,6 +2,22 @@ apiVersion: v1
 entries:
   pandaria-alerting-drivers:
   - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+    apiVersion: v2
+    created: "2022-12-05T11:25:49.615494+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: 03691daed99587ca89e14074475c2d4b2ecfc958cf506f3772423577d59c289a
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.2.tgz
+    version: 0.0.2
+  - annotations:
       catalog.cattle.io/namespace: cattle-monitoring-system
       catalog.cattle.io/release-name: pandaria-alerting-drivers
     apiVersion: v1
@@ -379,6 +395,31 @@ entries:
     - assets/rancher-nvidia-k8s-device-plugin/rancher-nvidia-k8s-device-plugin-0.0.1.tgz
     version: 0.0.1
   rancher-thanos:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+    apiVersion: v2
+    created: "2022-12-05T11:25:50.121512+08:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: file://./charts/grafana
+    - condition: thanos.enabled
+      name: thanos
+      repository: file://./charts/thanos
+    - condition: ui.enabled
+      name: ui
+      repository: file://./charts/ui
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: ca55fd1caafe60d0e2a2b493bf212df1891bf8d623cafdc1766ca57e4d4e05ac
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.5.tgz
+    version: 0.0.5
   - apiVersion: v1
     created: "2022-09-14T16:49:17.184808575+08:00"
     dependencies:
