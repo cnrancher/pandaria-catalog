@@ -313,9 +313,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.8.0
-    created: "2022-12-06T11:04:41.974787+08:00"
+    created: "2022-12-09T12:13:32.10332+08:00"
     description: The Macvlan Networking For Rancher2.x
-    digest: 7ed1ab998c745d3e3dc9ddac351fd284bd5559687377f7271e06c75491bf668a
+    digest: 51c5ae46c456529e8b966de9955c24b83c330b62126bee34c9888f6ed81cd969
     home: https://github.com/cnrancher
     keywords:
     - networking
