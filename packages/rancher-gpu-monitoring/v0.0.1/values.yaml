@@ -1,0 +1,126 @@
+image:
+  repository: cnrancher/mirrored-nvidia-dcgm-exporter
+  pullPolicy: IfNotPresent
+  # Image tag defaults to AppVersion, but you can use the tag key
+  # for the image tag, e.g:
+  tag: 3.1.6-3.1.3-ubuntu20.04
+
+# Comment the following line to stop profiling metrics from DCGM
+arguments: ["-f", "/etc/dcgm-exporter/dcp-metrics-included.csv"]
+# NOTE: in general, add any command line arguments to arguments above
+# and they will be passed through.
+# Use "-r", "<HOST>:<PORT>" to connect to an already running hostengine
+# Example arguments: ["-r", "host123:5555"]
+# Use "-n" to remove the hostname tag from the output.
+# Example arguments: ["-n"]
+# Use "-d" to specify the devices to monitor. -d must be followed by a string
+# in the following format: [f] or [g[:numeric_range][+]][i[:numeric_range]]
+# Where a numeric range is something like 0-4 or 0,2,4, etc.
+# Example arguments: ["-d", "g+i"] to monitor all GPUs and GPU instances or
+# ["-d", "g:0-3"] to monitor GPUs 0-3.
+# Use "-m" to specify the namespace and name of a configmap containing
+# the watched exporter fields.
+# Example arguments: ["-m", "default:exporter-metrics-config-map"]
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+namespaceOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podAnnotations: {}
+# Using this annotation which is required for prometheus scraping
+ # prometheus.io/scrape: "true"
+ # prometheus.io/port: "9400"
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  runAsNonRoot: false
+  runAsUser: 0
+  capabilities:
+     add: ["SYS_ADMIN"]
+  # readOnlyRootFilesystem: true
+
+service:
+  enable: true
+  type: ClusterIP
+  port: 9400
+  address: ":9400"
+  # Annotations to add to the service
+  annotations: {}
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+serviceMonitor:
+  enabled: true
+  interval: 15s
+  honorLabels: false
+  additionalLabels: {}
+    #monitoring: prometheus
+  relabelings: []
+    # - sourceLabels: [__meta_kubernetes_pod_node_name]
+    #   separator: ;
+    #   regex: ^(.*)$
+    #   targetLabel: nodename
+    #   replacement: $1
+    #   action: replace
+
+mapPodsMetrics: false
+
+nodeSelector:
+  gpu.cattle.io/monitoring-enabled: "true"
+
+tolerations: []
+#- operator: Exists
+
+affinity: {}
+  #nodeAffinity:
+  #  requiredDuringSchedulingIgnoredDuringExecution:
+  #    nodeSelectorTerms:
+  #    - matchExpressions:
+  #      - key: nvidia-gpu
+  #        operator: Exists
+
+extraHostVolumes: []
+#- name: host-binaries
+#  hostPath: /opt/bin
+
+extraConfigMapVolumes: []
+#- name: exporter-metrics-volume
+#  configMap:
+#    name: exporter-metrics-config-map
+
+extraVolumeMounts: []
+#- name: host-binaries
+#  mountPath: /opt/bin
+#  readOnly: true
+
+extraEnv: []
+#- name: EXTRA_VAR
+#  value: "TheStringValue"
+
+kubeletPath: "/var/lib/kubelet/pod-resources"
+grafana:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    searchNamespace: cattle-dashboards
+    labelValue: "1"
+  annotations: {}
+
+runtimeClassName: null
