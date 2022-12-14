@@ -41,21 +41,11 @@ questions:
     type: string
     label: Image Tag
 - variable: image.defaultScheduler.version
-  default: "v1.13"
+  default: "v1.23"
   description: "k8s version"
   type: enum
   label: K8S Version
   options:
-    - v1.13
-    - v1.14
-    - v1.15
-    - v1.16
-    - v1.17
-    - v1.18
-    - v1.19
-    - v1.20
-    - v1.21
-    - v1.22
     - v1.23
     - v1.24
 - variable: memoryunit
