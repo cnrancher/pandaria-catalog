@@ -1,0 +1,29 @@
+sharedeviceplugin:
+  image:
+    repository: cnrancher/gpu-device-plugin
+    tag: "v0.1.2-rc1"
+defaultScheduler:
+  version: "v1.23"
+  supportedVersions:
+    v1.23:
+      repository: "rancher/hyperkube"
+      tag: "v1.21.8-rancher1"
+    v1.24:
+      repository: "rancher/hyperkube"
+      tag: "v1.21.8-rancher1"
+schedulerextender:
+  image:
+    repository: cnrancher/gpu-scheduler-extender
+    tag: "v0.1.2-rc1"
+  schedulerName: rancher-gpushare-scheduler
+  port: 9100
+  verbose: 4
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+# GPU Sharing Memory unit: GiB or MiB    
+memoryunit: GiB
+global:
+  systemDefaultRegistry: ""
+
+runtimeClassName: null
