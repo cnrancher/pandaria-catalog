@@ -4,10 +4,10 @@ image:
     tag: "v0.10.0"
   sharedeviceplugin:
     repository: cnrancher/gpu-device-plugin
-    tag: "v0.1.0"
+    tag: "v0.1.1"
   schedulerextender:
     repository: cnrancher/gpu-scheduler-extender
-    tag: "v0.1.0"
+    tag: "v0.1.1"
   defaultScheduler:
     version: v1.13
     supportedVersions:
