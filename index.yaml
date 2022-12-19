@@ -257,9 +257,9 @@ entries:
   rancher-gpu-management:
   - apiVersion: v1
     appVersion: 0.1.0
-    created: "2022-09-14T16:09:06.556303659+08:00"
+    created: "2022-12-19T10:58:31.584384+08:00"
     description: Provides gpu management for Rancher2.x
-    digest: d373965d83299e9bd23807696bbc849af5b99fc4dfde6908f87d63ae6417bc7c
+    digest: cac56db772892c0280a5518167041a2169df702f86021dd4e8c48c6aa5752330
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
