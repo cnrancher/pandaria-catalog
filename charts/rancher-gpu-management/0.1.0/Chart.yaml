@@ -1,5 +1,5 @@
 apiVersion: v1
-appVersion: 0.1.0
+appVersion: 0.1.1
 description: Provides gpu management for Rancher2.x
 home: https://github.com/cnrancher
 icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
@@ -13,4 +13,4 @@ maintainers:
 name: rancher-gpu-management
 sources:
 - https://github.com/cnrancher
-version: 0.0.7
+version: 0.1.0
