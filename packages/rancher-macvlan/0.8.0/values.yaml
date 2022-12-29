@@ -24,10 +24,10 @@ image:
     tag: v3.9.2
   networkController:
     repository: cnrancher/network-controller
-    tag: v0.8.0-rc3
+    tag: v0.8.0
   admission:
     repository: cnrancher/network-admission-deploy
-    tag: v0.8.0-rc3
+    tag: v0.8.0
   nadController:
     repository: cnrancher/k8s-net-attach-def-controller
     tag: v0.3.0
