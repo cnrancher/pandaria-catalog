@@ -46,17 +46,18 @@ entries:
       catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
-      catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-ack-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 1.0.2
-    created: "2022-10-27T10:28:47.304808+08:00"
+    created: "2023-01-04T17:02:25.779687+08:00"
     description: A Helm chart for provisioning ACK clusters
-    digest: a974c68729bc5027792bd540ed7b327d3302be308eaa68616a529a2477d69755
+    digest: 4d5d1cf8725158ecc85264b2c7d5bffeaab833983dbbda0c61f664022bb1741b
     home: https://github.com/cnrancher/ack-operator
     name: rancher-ack-operator
     sources:
@@ -68,17 +69,18 @@ entries:
       catalog.cattle.io/auto-install: rancher-ack-operator-crd=match
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/provides-gvr: ackclusterconfigs.ack.cattle.io/v1
-      catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-ack-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 1.0.1
-    created: "2022-10-27T10:29:43.002069+08:00"
+    created: "2023-01-04T17:02:45.324475+08:00"
     description: A Helm chart for provisioning ACK clusters
-    digest: eb834bff3fb1f10f41919aa5b335d2b9c2adddadeb73ddd16af2b11aed658894
+    digest: 6c0f89521f99c3e22059b154394e2b6dcf025be47b3e8b05258afcb6ab8ce51d
     home: https://github.com/cnrancher/ack-operator
     name: rancher-ack-operator
     sources:
@@ -107,14 +109,16 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-ack-operator-crd
     apiVersion: v2
     appVersion: 1.0.2
-    created: "2022-10-27T10:31:59.935084+08:00"
+    created: "2023-01-04T17:01:26.498906+08:00"
     description: ACK Operator CustomResourceDefinitions
-    digest: f502faa03513e609d1f7c54745c059b96a4c0fc69254861fb403d6014732f58b
+    digest: 71c2709cb123b52c9ca39282d71a1fc339caf52d32267e49312d9ac4eab12ced
     name: rancher-ack-operator-crd
     urls:
     - assets/rancher-ack-operator-crd/rancher-ack-operator-crd-100.0.1+up1.0.2.tgz
@@ -122,14 +126,16 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-ack-operator-crd
     apiVersion: v2
     appVersion: 1.0.1
-    created: "2022-10-27T10:29:43.003476+08:00"
+    created: "2023-01-04T17:01:49.997566+08:00"
     description: ACK Operator CustomResourceDefinitions
-    digest: 986faa4b5c9bbee8f31191758a5e25d5d180ebf13ec7bc1414aa234012585cce
+    digest: badcf87a7f3a0601686603beeaee1c0328da93e6852d478fb333f1bb761bdc15
     name: rancher-ack-operator-crd
     urls:
     - assets/rancher-ack-operator-crd/rancher-ack-operator-crd-100.0.0+up1.0.1.tgz
@@ -229,15 +235,17 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-aks-operator-crd
     apiVersion: v2
     appVersion: 1.0.7
-    created: "2022-10-28T13:56:14.49198+08:00"
+    created: "2023-01-04T17:00:16.127724+08:00"
     description: AKS Operator CustomResourceDefinitions
-    digest: e8c04a49e99d13552b466dd65facebd77290f89569987a2c36ac5798fa5ca662
+    digest: f0d0b46d9b562bf27e9099990dbca3c374f6e47bb7cee1bd5ddb0663413aeadc
     name: rancher-aks-operator-crd
     urls:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.6+up1.0.7.tgz
@@ -245,15 +253,17 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0 < 1.25.0-0'
       catalog.cattle.io/namespace: cattle-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-aks-operator-crd
     apiVersion: v2
     appVersion: 1.0.6
-    created: "2022-10-27T10:28:47.505744+08:00"
+    created: "2023-01-04T17:00:48.088639+08:00"
     description: AKS Operator CustomResourceDefinitions
-    digest: ab2c35c3a83bf8cfdb1c6a81b8c4b9977b68bf99e7430cb6e9a5bfaf045459b6
+    digest: fa860c3672f6474d9fdaa80b6f1ad54c898175958dc680b1efad10a5e0df008f
     name: rancher-aks-operator-crd
     urls:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.5+up1.0.6.tgz
