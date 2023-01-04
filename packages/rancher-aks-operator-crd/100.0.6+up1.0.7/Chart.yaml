@@ -5,8 +5,8 @@ annotations:
   catalog.cattle.io/namespace: cattle-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux,windows
-  catalog.cattle.io/release-name: rancher-aks-operator-crd
   catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
+  catalog.cattle.io/release-name: rancher-aks-operator-crd
 apiVersion: v2
 appVersion: 1.0.7
 description: AKS Operator CustomResourceDefinitions
