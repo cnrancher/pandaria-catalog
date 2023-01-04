@@ -268,11 +268,14 @@ entries:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.5+up1.0.6.tgz
     version: 100.0.5+up1.0.6
   rancher-gpu-management:
-  - apiVersion: v1
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0'
+    apiVersion: v1
     appVersion: 0.1.1
-    created: "2022-12-20T12:04:54.209536+08:00"
+    created: "2023-01-04T15:19:34.704025+08:00"
     description: Provides gpu management for Rancher2.x
-    digest: 7623dfa497d978200709892f36a66e9f241d11457b017e38f4cbd12b8307951c
+    digest: 4cfe9aba33952ceb55feb272cc2fa6c7d532761dbf621717dcd6a4cccef5b6bc
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
@@ -289,11 +292,14 @@ entries:
     - assets/rancher-gpu-management/rancher-gpu-management-0.1.0.tgz
     version: 0.1.0
   rancher-k8s-auditlog-collector:
-  - apiVersion: v2
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0'
+    apiVersion: v2
     appVersion: 1.8.13
-    created: "2022-11-29T16:11:33.90447+08:00"
+    created: "2023-01-04T15:19:34.725933+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: 1b40c8d1ed42feed4dd94264c14490e8dcef5fc36cc2162369ceb90aa01966db
+    digest: d0eaf0e0c39c9e0a7dfb1d1b3f577967229da57e366332f1fd8df9d9e63cfbbf
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.18.0-0'
     name: rancher-k8s-auditlog-collector
@@ -337,13 +343,13 @@ entries:
       catalog.cattle.io/namespace: nvidia-device-plugin
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0'
       catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
       catalog.cattle.io/type: cluster-tool
       catalog.cattle.io/upstream-version: 0.12.2
     apiVersion: v2
     appVersion: 0.12.2
-    created: "2022-12-02T10:57:05.567604+08:00"
+    created: "2023-01-04T15:19:34.795974+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -354,7 +360,7 @@ entries:
       name: nfd
       repository: file://./charts/nfd
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: c87ae6932e2b48137af94846036e56b433e13ce7c5f6025b05d81fa3544d3770
+    digest: 317a02f331347bd50467080b598e211428249a0b1c8eb725a01dc140a16c0631
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.10.0-0'
