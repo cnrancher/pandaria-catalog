@@ -190,11 +190,14 @@ entries:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.5+up1.0.6.tgz
     version: 100.0.5+up1.0.6
   rancher-gpu-management:
-  - apiVersion: v1
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+    apiVersion: v1
     appVersion: 0.1.1
-    created: "2022-12-20T12:17:01.692634+08:00"
+    created: "2023-02-21T10:26:24.425489+08:00"
     description: Provides gpu management for Rancher2.x
-    digest: a16483747b7533fa7da54a6bd0cb3884958b8a1dc562bb2d2bd76e26422edd2b
+    digest: 7d840afed3e0536ac962fce7f8ace1f82d5d4242a6525c15a4f778c66ddbee6a
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
@@ -351,11 +354,14 @@ entries:
     - assets/rancher-gpu-management/rancher-gpu-management-0.0.1.tgz
     version: 0.0.1
   rancher-k8s-auditlog-collector:
-  - apiVersion: v2
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+    apiVersion: v2
     appVersion: 1.8.13
-    created: "2022-11-01T23:30:54.668695+08:00"
+    created: "2023-02-21T10:26:24.464248+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: 15fe121f2ed63bed0f31d612427da4b3200a6f2ead3a3d8e5e9d84e4056d996c
+    digest: 2443ebaf3c2a8859790b61b02b0dd526d39a684ef4aa1d9fe5b85ef8301d53d0
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.18.0-0'
     name: rancher-k8s-auditlog-collector

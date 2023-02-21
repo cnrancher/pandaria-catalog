@@ -1,3 +1,6 @@
+annotations:
+  catalog.cattle.io/kube-version: '>= 1.18.0-0'
+  catalog.cattle.io/rancher-version: '>= 2.6.0-0'
 apiVersion: v2
 appVersion: 1.8.13
 description: collect k8s auditlog for rancher auditlog server
