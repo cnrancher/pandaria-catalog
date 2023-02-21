@@ -1,0 +1,28 @@
+rancher_min_version: 2.6.12
+categories:
+- GPU Sharing
+questions:
+- variable: defaultScheduler.version
+  default: "v1.24"
+  description: "k8s version"
+  type: enum
+  group: "Settings"
+  label: K8S Version
+  options:
+    - v1.22
+    - v1.23
+    - v1.24
+- variable: useRuntimeClass
+  default: false
+  description: "Use RuntimeClass"
+  label: Use RuntimeClass
+  type: boolean
+  group: "Settings"
+  show_subquestion_if: true
+  subquestions:
+  - variable: runtimeClassName
+    default: ""
+    description: "If the cluster use RuntimeClass for NVIDIA runtime. Set the NVIDIA RuntimeClass name."
+    type: string
+    label: NVIDIA RuntimeClass Name
+    required: true
