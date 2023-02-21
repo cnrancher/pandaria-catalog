@@ -4,8 +4,10 @@ cd $(dirname $0)/
 
 go mod download && go mod verify
 
+echo "-------- start annotation check --------"
+
 ERROR=""
-go run main.go ../charts/ || ERROR="true"
+go run main.go ../ || ERROR="true"
 if [[ -e "no-kube-version.txt" ]]; then
     echo ""
     echo "Some charts does not have kube-version annotations:"
@@ -22,3 +24,5 @@ if [[ ! -z "${ERROR}"  ]]; then
     # check failed
     exit 1
 fi
+
+echo "-------- annotation check passed --------"

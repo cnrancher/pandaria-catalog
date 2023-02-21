@@ -1,132 +1,98 @@
 package main
 
 import (
-	"errors"
+	"flag"
 	"fmt"
-	"io/fs"
 	"os"
-	"path/filepath"
-	"strings"
 
+	"github.com/cnrancher/hangar/pkg/rancher/chartimages"
 	"github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v2"
 )
 
-type ChartYaml struct {
-	Annotations ChartAnnotations `yaml:"annotations"`
-	Name        string           `yaml:"name"`
-	Version     string           `yaml:"version"`
-}
-
-type ChartAnnotations struct {
-	KubeVersion    string `yaml:"catalog.cattle.io/kube-version"`
-	RancherVersion string `yaml:"catalog.cattle.io/rancher-version"`
-}
+const (
+	RancherVersionAnnotationKey = "catalog.cattle.io/rancher-version"
+	KubeVersionAnnotationKey    = "catalog.cattle.io/kube-version"
+	NoRancherVersionFile        = "no-rancher-version.txt"
+	NoKubeVersionFile           = "no-kube-version.txt"
+)
 
 var (
-	NoRancherVersionFile = "no-rancher-version.txt"
-	NoKubeVersionFile    = "no-kube-version.txt"
+	cmdDebug bool
 )
 
-func init() {
-	// logrus.SetLevel(logrus.DebugLevel)
-}
-
 func main() {
-	if len(os.Args) == 1 || os.Args[1] == "-h" || os.Args[1] == "--help" {
-		logrus.Info("This program ensure charts in this repo has" +
-			"'rancher-version' and 'kube-version' annotations")
-		logrus.Info("Usage: go run ./main.go <path>")
+	flag.BoolVar(&cmdDebug, "debug", false, "Enable the debug output")
+	flag.Usage = func() {
+		logrus.Infof("This program ensure the latest version chart in this " +
+			"repo has 'rancher-version' and 'kube-version' annotations")
+		logrus.Infof("Usage: annotation-check [OPTIONS] <path>")
+		logrus.Infof("Available options:")
+		flag.PrintDefaults()
+	}
+	flag.Parse()
+	if cmdDebug {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
+
+	args := flag.Args()
+	if len(args) == 0 {
+		flag.Usage()
 		return
 	}
 
-	// delete output file if exists, ignore error
+	// Delete output files if exists
 	os.Remove(NoKubeVersionFile)
 	os.Remove(NoRancherVersionFile)
 
-	path := os.Args[1]
-	flag := false
-	err := filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
-		if err != nil {
-			logrus.Infof("failed to access %q: %v", path, err)
-			return err
-		}
-		if info.IsDir() {
-			if isSubChart(path) {
-				logrus.Debugf("skip subchart folder: %s", path)
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if info.Name() != "Chart.yaml" {
-			return nil
-		}
-		logrus.Debugf("visit file: %q", path)
-		if err := checkAnnotation(path); err != nil {
-			logrus.Errorf("Failed to check %q", path)
-			logrus.Error(err)
-			flag = true
-		}
-		return nil
-	})
+	path := args[0]
+	var annotationCheckFailed = false
+	index, err := chartimages.BuildOrGetIndex(path)
 	if err != nil {
 		logrus.Fatalf("Error walking the path %q: %v\n", path, err)
 	}
-	if flag {
+	if len(index.Entries) == 0 {
+		logrus.Warnf("No charts found in %q", path)
+		return
+	}
+
+	for _, versions := range index.Entries {
+		if len(versions) == 0 {
+			continue
+		}
+		latestVersion := versions[0]
+		// check annotations
+		rv, ok := latestVersion.Annotations[RancherVersionAnnotationKey]
+		if !ok {
+			nr := fmt.Sprintf("%s - %s",
+				latestVersion.Name, latestVersion.Version)
+			logrus.Errorf("FAILED: No rancher-version annotation: %s", nr)
+			annotationCheckFailed = true
+			AppendFileLine(NoRancherVersionFile, nr)
+		} else {
+			logrus.Debugf("Found rancher-version of %q: %q",
+				latestVersion.Name, rv)
+		}
+		kv, ok := latestVersion.Annotations[KubeVersionAnnotationKey]
+		if !ok {
+			nk := fmt.Sprintf("%s - %s",
+				latestVersion.Name, latestVersion.Version)
+			logrus.Errorf("FAILED: No kube-version annotation: %s", nk)
+			annotationCheckFailed = true
+			AppendFileLine(NoKubeVersionFile, nk)
+		} else {
+			logrus.Debugf("Found rancher-version of %q: %q",
+				latestVersion.Name, kv)
+		}
+	}
+
+	if annotationCheckFailed {
 		logrus.Fatal("There are some charts failed to check")
+	} else {
+		logrus.Infof("annotation-heck passed")
 	}
 }
 
-func checkAnnotation(path string) error {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return fmt.Errorf("checkAnnotation: %w", err)
-	}
-
-	spec := ChartYaml{}
-	if err := yaml.Unmarshal(data, &spec); err != nil {
-		return fmt.Errorf("checkAnnotation: %w", err)
-	}
-	var errmsg string
-	if spec.Annotations.KubeVersion == "" {
-		errmsg += fmt.Sprintf("%q version %q does not have 'kube-version'\n",
-			spec.Name, spec.Version)
-		appendFileLine(NoKubeVersionFile,
-			fmt.Sprintf("%s - %s", spec.Name, spec.Version))
-	}
-	if spec.Annotations.RancherVersion == "" {
-		errmsg += fmt.Sprintf("%q version %q does not have 'rancher-version'\n",
-			spec.Name, spec.Version)
-		appendFileLine(NoRancherVersionFile,
-			fmt.Sprintf("%s - %s", spec.Name, spec.Version))
-	}
-	if errmsg != "" {
-		return errors.New(errmsg)
-	}
-	return nil
-}
-
-func isSubChart(path string) bool {
-	spec := strings.Split(path, "/")
-	var firstChart bool = false
-	for _, v := range spec {
-		if v == "packages" {
-			// skip packages folder
-			return true
-		}
-		if v == "charts" {
-			if !firstChart {
-				firstChart = true
-			} else {
-				return true
-			}
-		}
-	}
-
-	return false
-}
-
-func appendFileLine(fileName string, line string) error {
+func AppendFileLine(fileName string, line string) error {
 	f, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return fmt.Errorf("AppendFileLine: %w", err)
