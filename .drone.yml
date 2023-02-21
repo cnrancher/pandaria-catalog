@@ -8,6 +8,20 @@ platform:
   arch: amd64
 
 steps:
+- name: validate
+  pull: always
+  image: rancher/dapper:v0.6.0
+  commands:
+    - dapper -f Dockerfile.dapper
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  when:
+    event:
+    - push
+    - tag
+    - pull_request
 - name: annotation-check
   pull: always
   image: golang:1.19.4
@@ -20,23 +34,9 @@ steps:
     branch:
     - dev/*
     - release/*
-- name: validate
-  pull: always
-  image: rancher/dapper:v0.5.8
-  commands:
-    - dapper -f Dockerfile.dapper
-  privileged: true
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-  when:
-    event:
-    - push
-    - tag
-    - pull_request
 - name: upload-helm-repo
   pull: always
-  image: rancher/dapper:v0.5.8
+  image: rancher/dapper:v0.6.0
   environment:
     ALIYUN_ACCESS_KEY_ID:
       from_secret: aliyun_access_id

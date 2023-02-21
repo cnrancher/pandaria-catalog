@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -11,34 +12,47 @@ import (
 const (
 	RancherVersionAnnotationKey = "catalog.cattle.io/rancher-version"
 	KubeVersionAnnotationKey    = "catalog.cattle.io/kube-version"
+	NoRancherVersionFile        = "no-rancher-version.txt"
+	NoKubeVersionFile           = "no-kube-version.txt"
 )
 
 var (
-	NoRancherVersionFile = "no-rancher-version.txt"
-	NoKubeVersionFile    = "no-kube-version.txt"
+	cmdDebug bool
 )
 
-func init() {
-	// logrus.SetLevel(logrus.DebugLevel)
-}
-
 func main() {
-	if len(os.Args) == 1 || os.Args[1] == "-h" || os.Args[1] == "--help" {
-		logrus.Infof("This program ensure charts in this repo has" +
-			"'rancher-version' and 'kube-version' annotations")
-		logrus.Infof("Usage: %s <path>", os.Args[0])
+	flag.BoolVar(&cmdDebug, "debug", false, "Enable the debug output")
+	flag.Usage = func() {
+		logrus.Infof("This program ensure the latest version chart in this " +
+			"repo has 'rancher-version' and 'kube-version' annotations")
+		logrus.Infof("Usage: annotation-check [OPTIONS] <path>")
+		logrus.Infof("Available options:")
+		flag.PrintDefaults()
+	}
+	flag.Parse()
+	if cmdDebug {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
+
+	args := flag.Args()
+	if len(args) == 0 {
+		flag.Usage()
 		return
 	}
 
-	// delete output file if exists, ignore error
+	// Delete output files if exists
 	os.Remove(NoKubeVersionFile)
 	os.Remove(NoRancherVersionFile)
 
-	path := os.Args[1]
+	path := args[0]
 	var annotationCheckFailed = false
 	index, err := chartimages.BuildOrGetIndex(path)
 	if err != nil {
 		logrus.Fatalf("Error walking the path %q: %v\n", path, err)
+	}
+	if len(index.Entries) == 0 {
+		logrus.Warnf("No charts found in %q", path)
+		return
 	}
 
 	for _, versions := range index.Entries {
@@ -54,9 +68,10 @@ func main() {
 			logrus.Errorf("FAILED: No rancher-version annotation: %s", nr)
 			annotationCheckFailed = true
 			AppendFileLine(NoRancherVersionFile, nr)
+		} else {
+			logrus.Debugf("Found rancher-version of %q: %q",
+				latestVersion.Name, rv)
 		}
-		logrus.Debugf("Found rancher-version of %q: %q",
-			latestVersion.Name, rv)
 		kv, ok := latestVersion.Annotations[KubeVersionAnnotationKey]
 		if !ok {
 			nk := fmt.Sprintf("%s - %s",
@@ -64,13 +79,16 @@ func main() {
 			logrus.Errorf("FAILED: No kube-version annotation: %s", nk)
 			annotationCheckFailed = true
 			AppendFileLine(NoKubeVersionFile, nk)
+		} else {
+			logrus.Debugf("Found rancher-version of %q: %q",
+				latestVersion.Name, kv)
 		}
-		logrus.Debugf("Found rancher-version of %q: %q",
-			latestVersion.Name, kv)
 	}
 
 	if annotationCheckFailed {
 		logrus.Fatal("There are some charts failed to check")
+	} else {
+		logrus.Infof("annotation-heck passed")
 	}
 }
 

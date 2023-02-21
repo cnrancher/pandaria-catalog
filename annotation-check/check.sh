@@ -24,3 +24,5 @@ if [[ ! -z "${ERROR}"  ]]; then
     # check failed
     exit 1
 fi
+
+echo "-------- annotation check passed --------"
