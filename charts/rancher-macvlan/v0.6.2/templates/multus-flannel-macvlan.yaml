@@ -216,7 +216,7 @@ spec:
 ---
 # This is a modified Flannel daemonset.
 # it is based on: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-# Notably, it removes the creation of an configuration file in/etc/cni/net.d/
+# Notably, it removes the creation of an configuration file in/etc/cni/net.d/ 
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
