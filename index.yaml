@@ -698,9 +698,9 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 1.0.1
-    created: "2023-02-21T14:50:53.139133+08:00"
+    created: "2023-03-02T10:37:28.532575+08:00"
     description: A Helm chart for provisioning TKE clusters
-    digest: 1e407b3e8a30e326f3335dab05dd82bcca687208cf2ab424d517aca875804333
+    digest: 96a970a7095373cc0d9de1a7fe150e58748f7428568edbe2b3638d6768fcf9ba
     home: https://github.com/cnrancher/tke-operator
     name: rancher-tke-operator
     sources:
