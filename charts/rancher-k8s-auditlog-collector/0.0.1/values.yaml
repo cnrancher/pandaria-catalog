@@ -3,7 +3,7 @@ apiserverLogPath: "/var/log/kubernetes/audit"
 apiserverLogFile: "audit.log"
 fluentbit:
   image:
-    repository: fluent/fluent-bit
+    repository: cnrancher/mirrored-fluent-fluent-bit
     tag: "1.8.13"
 auditlogServerHost: ""
 auditlogServerPort: ""

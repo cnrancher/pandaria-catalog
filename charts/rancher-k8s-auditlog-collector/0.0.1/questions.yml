@@ -1,4 +1,4 @@
-rancher_min_version: 2.5.16
+rancher_min_version: 2.6.0
 categories:
 - rancher k8s auditlog
 labels:
@@ -62,7 +62,7 @@ questions:
   group: "Container Images"
   subquestions:
   - variable: fluentbit.image.repository
-    default: "fluent/fluent-bit"
+    default: "cnrancher/mirrored-fluent-fluent-bit"
     description: "fluentbit image name"
     type: string
     label: Fluentbit Image Name
