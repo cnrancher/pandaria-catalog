@@ -411,9 +411,9 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.6.0-0'
     apiVersion: v2
     appVersion: 1.8.13
-    created: "2023-02-21T10:26:24.464248+08:00"
+    created: "2023-03-13T15:48:16.544704+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: 2443ebaf3c2a8859790b61b02b0dd526d39a684ef4aa1d9fe5b85ef8301d53d0
+    digest: 02dafc0a0c7a39e83ee461bc8d00bce8c4ff8c80a4348550febbaf8330c9745a
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.18.0-0'
     name: rancher-k8s-auditlog-collector
