@@ -1,0 +1,393 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    helm.sh/resource-policy: keep
+  name: tkeclusterconfigs.tke.pandaria.io
+spec:
+  group: tke.pandaria.io
+  names:
+    kind: TKEClusterConfig
+    plural: tkeclusterconfigs
+    shortNames:
+    - tkecc
+    singular: tkeclusterconfig
+  preserveUnknownFields: false
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              clusterAdvancedSettings:
+                nullable: true
+                properties:
+                  asEnabled:
+                    type: boolean
+                  auditEnabled:
+                    type: boolean
+                  auditLogTopicId:
+                    nullable: true
+                    type: string
+                  auditLogsetId:
+                    nullable: true
+                    type: string
+                  basePodNumber:
+                    type: integer
+                  ciliumMode:
+                    nullable: true
+                    type: string
+                  containerRuntime:
+                    nullable: true
+                    type: string
+                  deletionProtection:
+                    type: boolean
+                  enableCustomizedPodCIDR:
+                    type: boolean
+                  etcd:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  ipvs:
+                    type: boolean
+                  isDualStack:
+                    type: boolean
+                  isNonStaticIpMode:
+                    type: boolean
+                  kubeAPIServer:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  kubeControllerManager:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  kubeProxyMode:
+                    nullable: true
+                    type: string
+                  kubeScheduler:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  networkType:
+                    nullable: true
+                    type: string
+                  nodeNameType:
+                    nullable: true
+                    type: string
+                  qgpuShareEnable:
+                    type: boolean
+                  runtimeVersion:
+                    nullable: true
+                    type: string
+                  vpcCniType:
+                    nullable: true
+                    type: string
+                type: object
+              clusterBasicSettings:
+                nullable: true
+                properties:
+                  clusterDescription:
+                    nullable: true
+                    type: string
+                  clusterLevel:
+                    nullable: true
+                    type: string
+                  clusterName:
+                    nullable: true
+                    type: string
+                  clusterOs:
+                    nullable: true
+                    type: string
+                  clusterType:
+                    nullable: true
+                    type: string
+                  clusterVersion:
+                    nullable: true
+                    type: string
+                  isAutoUpgrade:
+                    type: boolean
+                  projectId:
+                    type: integer
+                  tags:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  vpcId:
+                    nullable: true
+                    type: string
+                type: object
+              clusterCIDRSettings:
+                nullable: true
+                properties:
+                  claimExpiredSeconds:
+                    type: integer
+                  clusterCIDR:
+                    nullable: true
+                    type: string
+                  eniSubnetIds:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  ignoreClusterCIDRConflict:
+                    type: boolean
+                  ignoreServiceCIDRConflict:
+                    type: boolean
+                  maxClusterServiceNum:
+                    type: integer
+                  maxNodePodNum:
+                    type: integer
+                  osCustomizeType:
+                    nullable: true
+                    type: string
+                  serviceCIDR:
+                    nullable: true
+                    type: string
+                  subnetId:
+                    nullable: true
+                    type: string
+                type: object
+              clusterEndpoint:
+                nullable: true
+                properties:
+                  domain:
+                    nullable: true
+                    type: string
+                  enable:
+                    type: boolean
+                  extensiveParameters:
+                    nullable: true
+                    type: string
+                  securityGroup:
+                    nullable: true
+                    type: string
+                  subnetId:
+                    nullable: true
+                    type: string
+                type: object
+              clusterId:
+                nullable: true
+                type: string
+              extensionAddon:
+                items:
+                  properties:
+                    addonName:
+                      nullable: true
+                      type: string
+                    addonParam:
+                      nullable: true
+                      type: string
+                  type: object
+                nullable: true
+                type: array
+              imported:
+                type: boolean
+              nodePoolList:
+                items:
+                  properties:
+                    autoScalingGroupPara:
+                      properties:
+                        autoScalingGroupName:
+                          nullable: true
+                          type: string
+                        desiredCapacity:
+                          type: integer
+                        maxSize:
+                          type: integer
+                        minSize:
+                          type: integer
+                        subnetIds:
+                          items:
+                            nullable: true
+                            type: string
+                          nullable: true
+                          type: array
+                        vpcId:
+                          nullable: true
+                          type: string
+                      type: object
+                    clusterId:
+                      nullable: true
+                      type: string
+                    deletionProtection:
+                      type: boolean
+                    enableAutoscale:
+                      type: boolean
+                    labels:
+                      items:
+                        nullable: true
+                        type: string
+                      nullable: true
+                      type: array
+                    launchConfigurePara:
+                      properties:
+                        dataDisks:
+                          items:
+                            properties:
+                              diskSize:
+                                type: integer
+                              diskType:
+                                nullable: true
+                                type: string
+                            type: object
+                          nullable: true
+                          type: array
+                        instanceChargeType:
+                          nullable: true
+                          type: string
+                        instanceType:
+                          nullable: true
+                          type: string
+                        internetChargeType:
+                          nullable: true
+                          type: string
+                        internetMaxBandwidthOut:
+                          type: integer
+                        keyIds:
+                          items:
+                            nullable: true
+                            type: string
+                          nullable: true
+                          type: array
+                        launchConfigurationName:
+                          nullable: true
+                          type: string
+                        publicIpAssigned:
+                          type: boolean
+                        securityGroupIds:
+                          items:
+                            nullable: true
+                            type: string
+                          nullable: true
+                          type: array
+                        systemDisk:
+                          properties:
+                            diskSize:
+                              type: integer
+                            diskType:
+                              nullable: true
+                              type: string
+                          type: object
+                      type: object
+                    name:
+                      nullable: true
+                      type: string
+                    nodePoolId:
+                      nullable: true
+                      type: string
+                    nodePoolOs:
+                      nullable: true
+                      type: string
+                    osCustomizeType:
+                      nullable: true
+                      type: string
+                    tags:
+                      items:
+                        nullable: true
+                        type: string
+                      nullable: true
+                      type: array
+                    taints:
+                      items:
+                        nullable: true
+                        type: string
+                      nullable: true
+                      type: array
+                  type: object
+                nullable: true
+                type: array
+              region:
+                nullable: true
+                type: string
+              runInstancesForNode:
+                nullable: true
+                properties:
+                  imageId:
+                    nullable: true
+                    type: string
+                  instanceChargeType:
+                    nullable: true
+                    type: string
+                  instanceCount:
+                    type: integer
+                  instanceName:
+                    nullable: true
+                    type: string
+                  instanceType:
+                    nullable: true
+                    type: string
+                  internetChargeType:
+                    nullable: true
+                    type: string
+                  internetMaxBandwidthOut:
+                    type: integer
+                  keyIds:
+                    items:
+                      nullable: true
+                      type: string
+                    nullable: true
+                    type: array
+                  monitorService:
+                    type: boolean
+                  nodeRole:
+                    nullable: true
+                    type: string
+                  projectId:
+                    type: integer
+                  publicIpAssigned:
+                    type: boolean
+                  securityService:
+                    type: boolean
+                  subnetId:
+                    nullable: true
+                    type: string
+                  systemDisk:
+                    properties:
+                      diskSize:
+                        type: integer
+                      diskType:
+                        nullable: true
+                        type: string
+                    type: object
+                  userData:
+                    nullable: true
+                    type: string
+                  vpcId:
+                    nullable: true
+                    type: string
+                  zone:
+                    nullable: true
+                    type: string
+                type: object
+              tkeCredentialSecret:
+                nullable: true
+                type: string
+            type: object
+          status:
+            properties:
+              failureMessage:
+                nullable: true
+                type: string
+              phase:
+                nullable: true
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
