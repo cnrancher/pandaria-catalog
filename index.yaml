@@ -8,6 +8,23 @@ entries:
       catalog.cattle.io/release-name: pandaria-alerting-drivers
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
+    created: "2023-03-16T18:01:54.629738+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: f9ebc6557b78ea9cf3d330c749608f3ba592800d6de38c57cd9a93095366a169
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.3.tgz
+    version: 0.0.3
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
     created: "2022-12-06T11:32:33.311345+08:00"
     description: Pandaria alerting drivers for Prometheus
     digest: 9da444eccc3353a872372306143aa3379d4ad28fbbb4a12576203b73e66d8be5
@@ -531,6 +548,31 @@ entries:
     - assets/rancher-nvidia-k8s-device-plugin/rancher-nvidia-k8s-device-plugin-0.0.1.tgz
     version: 0.0.1
   rancher-thanos:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+    apiVersion: v2
+    created: "2023-03-17T16:05:43.339335+08:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: file://./charts/grafana
+    - condition: thanos.enabled
+      name: thanos
+      repository: file://./charts/thanos
+    - condition: ui.enabled
+      name: ui
+      repository: file://./charts/ui
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: e7fde01b9d3d109b839d9e2f1dac720ced9354663920a44101657a37655cfebb
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.6.tgz
+    version: 0.0.6
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.20.0-0'
       catalog.cattle.io/rancher-version: '>= 2.6.0-0'
