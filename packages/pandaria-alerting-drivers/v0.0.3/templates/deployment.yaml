@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      chart: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        chart: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: alerting-drivers
+        image: {{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}
+        command:
+        - /webhook-receiver
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /state
+            port: {{ .Values.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        ports:
+        - containerPort: {{ .Values.port }}
+        volumeMounts:
+        - name: config
+          mountPath: /etc/webhook-receiver
+{{- if .Values.affinity }}
+        affinity:
+{{ toYaml .Values.affinity | indent 10 }}
+{{- end }}
+{{- if .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 10 }}
+{{- end }}
+{{- if .Values.tolerations }}
+        tolerations:
+{{ toYaml .Values.tolerations | indent 10 }}
+{{- end }}
+{{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+{{- end }}
+      volumes:
+      - name: config
+        secret:
+          secretName: alerting-drivers
+          defaultMode: 420
+          items:
+          - key: config.yaml
+            path: config.yaml
+          - key: notification.tmpl
+            path: tmpl/notification.tmpl
+
