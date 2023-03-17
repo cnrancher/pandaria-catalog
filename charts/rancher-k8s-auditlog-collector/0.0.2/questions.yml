@@ -1,0 +1,73 @@
+rancher_min_version: 2.7.0
+categories:
+- rancher k8s auditlog
+labels:
+  catalog.cattle.io/hidden: "true"
+questions:
+- variable: mode
+  default: "file"
+  description: "collect k8s apiserver auditlog from file or webhook"
+  type: enum
+  label: K8S apiserver log from
+  options:
+    - file
+    - webhook
+  group: "Settings"
+  show_subquestion_if: "webhook"
+  subquestions:
+  - variable: webhook.serviceNodePort
+    default: ""
+    description: "fluentbit service nodeport"
+    type: string
+    label: Service Node Port
+- variable: clusterid
+  default: ""
+  description: "Cluster ID in rancher. Always like c-xxxx"
+  type: string
+  required: true
+  label: ClusterID
+  group: "Settings"
+- variable: auditlogServerHost
+  default: ""
+  description: "The auditlog server host."
+  type: string
+  required: true
+  label: "Auditlog Server Host"
+  group: "Settings"
+- variable: auditlogServerPort
+  default: ""
+  description: "The auditlog server port."
+  type: string
+  required: true
+  label: "Auditlog Server Port"
+  group: "Settings"
+- variable: apiserverLogPath
+  description: "k8s apiserver log file path"
+  type: string
+  label: K8S ApiServer Auditlog Path
+  group: "Settings"
+  show_if: "mode=file"
+- variable: apiserverLogFile
+  description: "k8s apiserver log file name"
+  type: string
+  label: K8S ApiServer Auditlog File Name
+  group: "Settings"
+  show_if: "mode=file"
+- variable: defaultImage
+  default: true
+  description: "Use default Docker image"
+  label: Use Default Image
+  type: boolean
+  show_subquestion_if: false
+  group: "Container Images"
+  subquestions:
+  - variable: fluentbit.image.repository
+    default: "cnrancher/mirrored-fluent-fluent-bit"
+    description: "fluentbit image name"
+    type: string
+    label: Fluentbit Image Name
+  - variable: fluentbit.image.tag
+    default: "2.0.9"
+    description: "fluentbit image tag"
+    type: string
+    label: Fluentbit Image Tag

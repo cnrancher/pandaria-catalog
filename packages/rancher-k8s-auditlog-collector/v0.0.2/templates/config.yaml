@@ -1,0 +1,105 @@
+{{- if eq .Values.mode "file" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rancher-k8s-auditlog-fluentbit-config
+data:
+  main.conf: |
+    [SERVICE]
+        # Flush
+        # =====
+        # Set an interval of seconds before to flush records to a destination
+        Flush        1
+
+        # Daemon
+        # ======
+        # Instruct Fluent Bit to run in foreground or background mode.
+        Daemon       off
+
+        # Log_Level
+        # =========
+        # Set the verbosity level of the service, values can be:
+        #
+        # - error
+        # - warning
+        # - info
+        # - debug
+        # - trace
+        #
+        # By default 'info' is set, that means it includes 'error' and 'warning'.
+        Log_Level    info
+
+        # HTTP Server
+        # ===========
+        # Enable/Disable the built-in HTTP Server for metrics
+        HTTP_Server  True
+        HTTP_Listen  0.0.0.0
+        HTTP_Port    2020
+    [INPUT]
+        Name        tail
+        Path        /var/log/kubernetes/audit/{{ .Values.apiserverLogFile }}
+        Buffer_Chunk_Size 1M
+        Buffer_Max_Size 10M
+        Mem_Buf_Limit 10M
+        Skip_Long_Lines On
+
+
+    [OUTPUT]
+        Name  http
+        Match *
+        Host  {{ .Values.auditlogServerHost }}
+        Port  {{ .Values.auditlogServerPort }}
+        URI   /v1/{{ .Values.clusterid }}/k8sauditlogsfluentbit
+        Format json
+{{- else if eq .Values.mode "webhook" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rancher-k8s-auditlog-fluentbit-config
+data:
+  main.conf: |
+    [SERVICE]
+        # Flush
+        # =====
+        # Set an interval of seconds before to flush records to a destination
+        Flush        1
+
+        # Daemon
+        # ======
+        # Instruct Fluent Bit to run in foreground or background mode.
+        Daemon       off
+
+        # Log_Level
+        # =========
+        # Set the verbosity level of the service, values can be:
+        #
+        # - error
+        # - warning
+        # - info
+        # - debug
+        # - trace
+        #
+        # By default 'info' is set, that means it includes 'error' and 'warning'.
+        Log_Level    info
+
+        # HTTP Server
+        # ===========
+        # Enable/Disable the built-in HTTP Server for metrics
+        HTTP_Server  True
+        HTTP_Listen  0.0.0.0
+        HTTP_Port    2020
+    [INPUT]
+        Name              http
+        Listen            0.0.0.0
+        Port              {{ .Values.webhook.servicePort }}
+        Buffer_Chunk_Size 1M
+        Buffer_Max_Size   6M
+
+    [OUTPUT]
+        Name  http
+        Match *
+        Host  {{ .Values.auditlogServerHost }}
+        Port  {{ .Values.auditlogServerPort }}
+        URI   /v1/{{ .Values.clusterid }}/k8sauditlogsfluentbitwebhook
+        Format json
+{{- end -}}
