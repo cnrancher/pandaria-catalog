@@ -494,7 +494,7 @@ entries:
       catalog.cattle.io/upstream-version: 0.13.0
     apiVersion: v2
     appVersion: 0.13.0
-    created: "2023-03-17T18:25:49.49057+08:00"
+    created: "2023-03-19T09:17:17.559674+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -505,7 +505,7 @@ entries:
       name: nfd
       repository: file://./charts/nfd
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: 64b65531711ac56a6848b6b122da6071f21e4a619a9b01a74a0f7e5791b52185
+    digest: 2409ad1d4c1a66272fd8315b874931b014215d018bf951007933fcc3c9f81b6f
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.20.0-0'
