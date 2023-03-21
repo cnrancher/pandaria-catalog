@@ -1,4 +1,5 @@
 rancher_min_version: 2.7.0
+rancher_max_version: 2.7.2
 categories:
 - GPU Management
 questions:
