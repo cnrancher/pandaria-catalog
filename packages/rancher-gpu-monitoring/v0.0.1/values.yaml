@@ -83,7 +83,7 @@ serviceMonitor:
 mapPodsMetrics: false
 
 nodeSelector:
-  gpu.cattle.io/monitoring-enabled: "true"
+  gpu.pandaria.io/monitoring-enabled: "true"
 
 tolerations: []
 #- operator: Exists
