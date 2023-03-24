@@ -94,3 +94,14 @@ Create the name of the service account which topologyUpdater will use
     {{ default "default" .Values.topologyUpdater.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Get Rancher system-default-registry
+*/}}
+{{- define "system_default_registry" -}}
+{{- if .Values.global.systemDefaultRegistry -}}
+{{- printf "%s/" .Values.global.systemDefaultRegistry -}}
+{{- else -}}
+{{- "" -}}
+{{- end -}}
+{{- end -}}

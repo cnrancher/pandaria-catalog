@@ -157,3 +157,6 @@ gfd:
     repository: cnrancher/mirrored-nvidia-gpu-feature-discovery
     pullPolicy: IfNotPresent
     tag: "v0.7.0"
+
+global:
+  systemDefaultRegistry: ""

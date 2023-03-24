@@ -6,6 +6,7 @@ questions:
   default: "v1.25"
   description: "k8s version"
   type: enum
+  group: "Settings"
   label: K8S Version
   options:
     - v1.23
@@ -16,6 +17,7 @@ questions:
   description: "Use RuntimeClass"
   label: Use RuntimeClass
   type: boolean
+  group: "Settings"
   show_subquestion_if: true
   subquestions:
   - variable: runtimeClassName
