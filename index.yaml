@@ -323,9 +323,9 @@ entries:
       catalog.cattle.io/upstream-version: 3.1.3
     apiVersion: v2
     appVersion: 3.1.3
-    created: "2023-03-08T18:00:32.260581+08:00"
+    created: "2023-03-24T11:52:40.361984+08:00"
     description: Provides gpu monitoring depending on Rancher Prime Monitoring.
-    digest: 77032425cbaadc8bdf6ff0e91402d944eeae53dbf2fc018efd9df83460cf2c6b
+    digest: 1b2f04929b0e4759c568b7424208953432c98f8971f39c30aa74b645f9b39575
     home: https://github.com/nvidia/dcgm-exporter/
     icon: https://assets.nvidiagrid.net/ngc/logos/DCGM.png
     kubeVersion: '>= 1.20.0-0'
@@ -350,9 +350,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.1.2
-    created: "2023-03-16T20:21:35.276751+08:00"
+    created: "2023-03-24T11:52:40.393915+08:00"
     description: Provides gpu sharing by gpu memory for Rancher Prime
-    digest: 1ab9cb215a61d082ca8281acc12907f88309a971c4b3346ee57478f22920a3ba
+    digest: d4103cccc876041998718d0691ec1e09684ff57d7a819cfaa1662ca9aeb2d5a9
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
@@ -373,9 +373,9 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.7.0-0'
     apiVersion: v2
     appVersion: 2.0.9
-    created: "2023-03-17T13:35:00.199505+08:00"
+    created: "2023-03-24T11:39:08.923328+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: 63bfcaf8a4b859bb7b9ce89c50a7f529d368ec841be3ad44dcb6050516167675
+    digest: ce0f6f1bee693b75183582958e2544002e63b184e616c5eea3a6a633d50d0dda
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.20.0-0'
     name: rancher-k8s-auditlog-collector
@@ -494,7 +494,7 @@ entries:
       catalog.cattle.io/upstream-version: 0.13.0
     apiVersion: v2
     appVersion: 0.13.0
-    created: "2023-03-19T09:17:17.559674+08:00"
+    created: "2023-03-24T11:39:09.013765+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -505,7 +505,7 @@ entries:
       name: nfd
       repository: file://./charts/nfd
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: 2409ad1d4c1a66272fd8315b874931b014215d018bf951007933fcc3c9f81b6f
+    digest: d81af7a4a72edd1f4029c15cd4032c77262fb2cbb5090a42682943c8a9925793
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.20.0-0'

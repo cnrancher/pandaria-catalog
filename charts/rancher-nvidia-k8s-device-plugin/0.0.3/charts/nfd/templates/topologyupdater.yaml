@@ -30,7 +30,7 @@ spec:
         {{- toYaml .Values.topologyUpdater.podSecurityContext | nindent 8 }}
       containers:
       - name: topology-updater
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         env:
         - name: NODE_NAME

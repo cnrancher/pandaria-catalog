@@ -13,3 +13,5 @@ nodeSelector:
 webhook:
   servicePort: "8888"
   serviceNodePort: ""
+global:
+  systemDefaultRegistry: ""

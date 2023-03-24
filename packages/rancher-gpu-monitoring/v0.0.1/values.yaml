@@ -124,3 +124,6 @@ grafana:
   annotations: {}
 
 runtimeClassName: null
+
+global:
+  systemDefaultRegistry: ""
