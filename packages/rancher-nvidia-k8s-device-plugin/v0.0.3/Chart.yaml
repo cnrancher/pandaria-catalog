@@ -8,6 +8,7 @@ annotations:
   catalog.cattle.io/rancher-version: '>= 2.7.0-0'
   catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
   catalog.cattle.io/type: cluster-tool
+  catalog.cattle.io/ui-component: rancher-nvidia-k8s-device-plugin
   catalog.cattle.io/upstream-version: 0.13.0
 apiVersion: v2
 appVersion: 0.13.0
