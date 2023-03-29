@@ -491,10 +491,11 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.7.0-0'
       catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
       catalog.cattle.io/type: cluster-tool
+      catalog.cattle.io/ui-component: rancher-nvidia-k8s-device-plugin
       catalog.cattle.io/upstream-version: 0.13.0
     apiVersion: v2
     appVersion: 0.13.0
-    created: "2023-03-24T11:39:09.013765+08:00"
+    created: "2023-03-29T15:49:12.668083+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -505,7 +506,7 @@ entries:
       name: nfd
       repository: file://./charts/nfd
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: d81af7a4a72edd1f4029c15cd4032c77262fb2cbb5090a42682943c8a9925793
+    digest: d345dad615d3f68dc34b665260fab3ed50b82aef5b166adec5b5a3860cb8b948
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.20.0-0'
