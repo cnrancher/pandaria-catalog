@@ -1,9 +1,9 @@
 sharedeviceplugin:
   image:
     repository: cnrancher/gpu-device-plugin
-    tag: "v0.1.2-rc2"
+    tag: "v0.1.2"
 defaultScheduler:
-  version: "v1.23"
+  version: "v1.25"
   supportedVersions:
     v1.23:
       repository: "rancher/hyperkube"
@@ -17,7 +17,7 @@ defaultScheduler:
 schedulerextender:
   image:
     repository: cnrancher/gpu-scheduler-extender
-    tag: "v0.1.2-rc2"
+    tag: "v0.1.2"
   schedulerName: rancher-gpushare-scheduler
   port: 9100
   verbose: 4
