@@ -16,4 +16,4 @@ home: https://github.com/cnrancher/ack-operator
 name: rancher-ack-operator
 sources:
 - https://github.com/cnrancher/ack-operator
-version: 101.0.1+up1.0.4
+version: 102.0.0+up1.0.4

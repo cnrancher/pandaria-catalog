@@ -10,4 +10,4 @@ apiVersion: v2
 appVersion: 1.0.4
 description: ACK Operator CustomResourceDefinitions
 name: rancher-ack-operator-crd
-version: 101.0.1+up1.0.4
+version: 102.0.0+up1.0.4
