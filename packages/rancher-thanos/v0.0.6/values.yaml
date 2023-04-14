@@ -1,5 +1,6 @@
 global:
   systemDefaultRegistry: ""
+  clusterId: ""
 
 ui:
   replicaCount: 1

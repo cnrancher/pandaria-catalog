@@ -49,7 +49,6 @@ data:
 
           sub_filter_types application/json;
           sub_filter_once off;
-          sub_filter '"url":"/d' '"url":"d';
         }
 
         location / {
@@ -63,15 +62,16 @@ data:
           
           proxy_pass     http://localhost:3000/;
 
-          sub_filter_types text/html;
           sub_filter_once off;
-          sub_filter '"appSubUrl":""' '"appSubUrl":"."';
-          sub_filter '"url":"/' '"url":"./';
+          sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/{{ .Values.global.clusterId }}/api/v1/namespaces/cattle-global-monitoring/services/http:access-grafana:80/proxy"';
           sub_filter ':"/avatar/' ':"avatar/';
 
           if ($request_filename ~ .*\.(?:js|css|jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm)$) {
             expires             90d;
           }
+
+          rewrite ^/k8s/clusters/.*/proxy(.*) /$1 break;
+
         }
       }
     }
