@@ -63,7 +63,7 @@ data:
           proxy_pass     http://localhost:3000/;
 
           sub_filter_once off;
-          sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/local/api/v1/namespaces/cattle-global-monitoring/services/http:access-grafana:80/proxy"';
+          sub_filter '"appSubUrl":""' '"appSubUrl":"/k8s/clusters/{{ .Values.global.clusterId }}/api/v1/namespaces/cattle-global-monitoring/services/http:access-grafana:80/proxy"';
           sub_filter ':"/avatar/' ':"avatar/';
 
           if ($request_filename ~ .*\.(?:js|css|jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm)$) {
