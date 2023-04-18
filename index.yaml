@@ -245,6 +245,29 @@ entries:
   rancher-gpu-management:
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.18.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.12-0'
+    apiVersion: v1
+    appVersion: 0.1.2
+    created: "2023-04-27T10:16:50.588792+08:00"
+    description: Provides gpu management for Rancher2.x
+    digest: 5e46d1d4b8b626a0bfcc8867eaef19b95606e509b9a9a963469e96a99f91a592
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - management
+    - gpu
+    maintainers:
+    - email: hang.jiang@rancher.com
+      name: jianghang8421
+    name: rancher-gpu-management
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-management/rancher-gpu-management-0.0.9.tgz
+    version: 0.0.9
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
       catalog.cattle.io/rancher-version: '>= 2.6.0-0'
     apiVersion: v1
     appVersion: 0.1.1
