@@ -1,0 +1,17 @@
+{{- if eq .Values.mode "webhook" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher-k8s-auditlog-fluentbit
+spec:
+  selector:
+    app: rancher-k8s-auditlog-fluentbit-webhook
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: {{ .Values.webhook.servicePort }}
+{{- if ne .Values.webhook.serviceNodePort "" }}
+    nodePort: {{ .Values.webhook.serviceNodePort }}
+{{- end }}
+{{- end }}
