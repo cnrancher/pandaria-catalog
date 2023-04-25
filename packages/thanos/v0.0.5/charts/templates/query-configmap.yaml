@@ -9,7 +9,12 @@ metadata:
 data:
   thanos-store.yml: |-
     - targets:
-      {{- range .Values.query.stores }}
+      {{- range .Values.query.enabledClusterStores }}
+      {{- if .enabled }}
+      - {{ .address }}
+      {{- end }}
+      {{- end }}
+      {{- range .Values.query.otherClusterStores }}
       - {{ . }}
       {{- end }}
       {{- if .Values.store.enabled }}
