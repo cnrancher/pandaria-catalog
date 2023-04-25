@@ -1,6 +1,7 @@
 global:
   systemDefaultRegistry: ""
   clusterId: ""
+  version: ""
 
 ui:
   replicaCount: 1
@@ -8,6 +9,7 @@ ui:
     repository: cnrancher/global-monitoring-ui
     tag: 0.1.2
     pullPolicy: IfNotPresent
+  defaultApiToken: true
   apiToken: ""
   serverUrl: "http://rancher.cattle-system"
   title: ""
@@ -37,7 +39,11 @@ thanos:
 
   query:
     replicaCount: 1
-    stores: []
+    enabledClusterStores: []
+    #  - address: "172.17.0.2:30901"
+    #    id: "local"
+    #    enabled: true
+    otherClusterStores: []
     resources:
       limits:
         memory: 1Gi
