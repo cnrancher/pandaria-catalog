@@ -1,7 +1,7 @@
 annotations:
   catalog.cattle.io/certified: rancher
   catalog.cattle.io/display-name: Rancher GPU Sharing
-  catalog.cattle.io/kube-version: '>= 1.20.0-0'
+  catalog.cattle.io/kube-version: '>= 1.18.0-0'
   catalog.cattle.io/namespace: cattle-gpu
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux

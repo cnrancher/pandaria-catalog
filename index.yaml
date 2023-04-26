@@ -438,7 +438,7 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher GPU Sharing
-      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
       catalog.cattle.io/namespace: cattle-gpu
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
@@ -447,9 +447,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.1.2
-    created: "2023-04-11T14:05:55.666088+08:00"
+    created: "2023-04-26T14:44:23.738076+08:00"
     description: Provides gpu sharing by gpu memory for Rancher Prime
-    digest: 08846381ea62eb13c27f0998589334dfc8b5fd346b932e2fc27bc728ae4b000b
+    digest: dff751f86201861353e78d0dad5098b602c5f7ea2b831a6561646a22b277f6c9
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
