@@ -25,7 +25,10 @@ Get Rancher system-default-registry
 Scheduler config apiversion
 */}}
 {{- define "scheduler_extender_apiversion" -}}
-{{- if eq .Values.defaultScheduler.version "v1.22" -}}
+{{- $vbeta1list := list "v1.19" "v1.20" "v1.21" -}}
+{{- if has .Values.defaultScheduler.version $vbeta1list -}}
+{{- "kubescheduler.config.k8s.io/v1beta1" -}}
+{{- else if eq .Values.defaultScheduler.version "v1.22" -}}
 {{- "kubescheduler.config.k8s.io/v1beta2" -}}
 {{- else -}}
 {{- "kubescheduler.config.k8s.io/v1beta3" -}}
