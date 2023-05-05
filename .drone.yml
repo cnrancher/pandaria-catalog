@@ -22,11 +22,11 @@ steps:
     - push
     - tag
     - pull_request
-- name: annotation-check
+- name: check
   pull: always
-  image: golang:1.19.4
+  image: registry.suse.com/bci/golang:1.19
   commands:
-    - annotation-check/check.sh
+    - check/check.sh
   when:
     event:
     - push
