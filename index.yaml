@@ -305,9 +305,9 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.6.12-0'
     apiVersion: v1
     appVersion: 0.1.2
-    created: "2023-04-27T10:16:50.588792+08:00"
+    created: "2023-05-11T23:18:08.491322+08:00"
     description: Provides gpu management for Rancher2.x
-    digest: 5e46d1d4b8b626a0bfcc8867eaef19b95606e509b9a9a963469e96a99f91a592
+    digest: 44e1beb7d44df1e9d8b0fec7f89f241149d10eddef51acb7bb7ae707b6e6919a
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
