@@ -5,20 +5,28 @@ import (
 	"fmt"
 	"os"
 
+	nested "github.com/antonfisher/nested-logrus-formatter"
+	hangarUtils "github.com/cnrancher/hangar/pkg/utils"
 	"github.com/cnrancher/pandaria-catalog/check/pkg/checker"
 	"github.com/cnrancher/pandaria-catalog/check/pkg/utils"
 	"github.com/sirupsen/logrus"
 )
 
 var (
-	cmdDebug bool
+	cmdDebug       bool
+	rancherVersion string
 )
 
 func main() {
+	logrus.SetFormatter(&nested.Formatter{
+		HideKeys:        false,
+		TimestampFormat: "15:04:05", // hour, time, sec only
+	})
 	flag.BoolVar(&cmdDebug, "debug", false, "Enable the debug output")
+	flag.StringVar(&rancherVersion, "version", "v2.7", "Rancher Version, v2.7 or v2.6")
 	flag.Usage = func() {
 		logrus.Infof("Usage:   ./check [OPTIONS] <path>")
-		logrus.Infof("Example: ./check --debug ./charts")
+		logrus.Infof("Example: ./check --debug --version=v2.7 ./charts")
 		logrus.Infof("Available options:")
 		flag.PrintDefaults()
 	}
@@ -27,7 +35,14 @@ func main() {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
 
+	if v, err := hangarUtils.EnsureSemverValid(rancherVersion); err != nil {
+		logrus.Fatalf("invalid version: %v", rancherVersion)
+	} else {
+		rancherVersion = v
+	}
+
 	if len(flag.Args()) == 0 {
+		logrus.Error("project dir not specified")
 		flag.Usage()
 		return
 	}
@@ -38,7 +53,7 @@ func main() {
 	os.Remove(utils.ImageCheckFailedFile)
 	os.Remove(utils.SystemDefaultRegistryCheckFailed)
 
-	checker := checker.NewChecker(flag.Args()[0])
+	checker := checker.NewChecker(flag.Args()[0], rancherVersion)
 	if err := checker.Check(); err != nil {
 		logrus.Fatal(err)
 	}
