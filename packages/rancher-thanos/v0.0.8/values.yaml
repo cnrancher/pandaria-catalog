@@ -7,7 +7,7 @@ ui:
   replicaCount: 1
   image:
     repository: cnrancher/global-monitoring-ui
-    tag: 0.1.2
+    tag: 0.1.3
     pullPolicy: IfNotPresent
   defaultApiToken: true
   apiToken: ""
