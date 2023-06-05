@@ -1,0 +1,14 @@
+{{- $files := .Files.Glob "files/rancher-ssl-certificate-monitor.json" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: cattle-dashboards
+  name: rancher-blackbox-exporter-dashboards
+  labels:
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    grafana_dashboard: "1"
+data:
+{{- range $path, $fileContents := $files }}
+  ssl-certificate-monitor.json: {{ $.Files.Get $path | toJson }}
+{{- end }}
