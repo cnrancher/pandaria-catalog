@@ -10,3 +10,14 @@ Expand the name of the chart.
 {{- "" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "linux-node-tolerations" -}}
+- key: "cattle.io/os"
+  value: "linux"
+  effect: "NoSchedule"
+  operator: "Equal"
+{{- end -}}
+
+{{- define "linux-node-selector" -}}
+kubernetes.io/os: linux
+{{- end -}}
