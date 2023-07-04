@@ -2,21 +2,26 @@ package chartpackages
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/cnrancher/hangar/pkg/rancher/chartimages"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
+	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/repo"
 )
 
 // Package represents the configuration of a particular forked Helm chart
 type Package struct {
-	Name           string `yaml:"name"`
+	URL            string `yaml:"url,omitempty"`
+	Name           string `yaml:"name,omitempty"`
 	Version        string `yaml:"version,omitempty"`
-	PackageVersion *int   `yaml:"packageVersion"`
+	PackageVersion *int   `yaml:"packageVersion,omitempty"`
 	DoNotRelease   bool   `yaml:"doNotRelease,omitempty"`
+	WorkingDir     string `yaml:"workingDir,omitempty"`
 }
 
 func BuildIndex(dir string) (*repo.IndexFile, error) {
@@ -30,23 +35,41 @@ func BuildIndex(dir string) (*repo.IndexFile, error) {
 		if !i.IsDir() {
 			return nil
 		}
-		if _, err := os.Stat(filepath.Join(p, "package.yaml")); err == nil {
-			pkg, err := decodePackageYaml(filepath.Join(p, "package.yaml"))
-			if err != nil {
-				logrus.Warnf("decodePackageYaml: %v", err)
-				return nil
-			}
-			if skipPackage(pkg) {
-				logrus.Debugf("chart packages skip pkg %v", p)
-				return filepath.SkipDir
-			}
+		if _, err := os.Stat(filepath.Join(p, "package.yaml")); err != nil {
+			return nil
+		}
+		pkg, err := decodePackageYaml(filepath.Join(p, "package.yaml"))
+		if err != nil {
+			logrus.Warnf("decodePackageYaml: %v", err)
+			return nil
+		}
+		if skipPackage(pkg) {
+			logrus.Debugf("chart packages skip pkg %v", p)
+			return filepath.SkipDir
 		}
 
-		metadata, err := chartimages.LoadMetadata(p)
-		if err != nil {
-			return err
+		var metadata *chart.Metadata
+		if pkg.URL == "" || pkg.URL == "local" {
+			metadata, err = chartimages.LoadMetadata(filepath.Join(p, pkg.WorkingDir))
+			if err != nil {
+				return err
+			}
+		} else {
+			client := http.Client{
+				Timeout: time.Second * 5,
+			}
+			resp, err := client.Get(pkg.URL)
+			if err != nil {
+				return fmt.Errorf("failed to get %q: %w", pkg.URL, err)
+			}
+			defer resp.Body.Close()
+			metadata, err = LoadMetadataTgz(resp.Body)
+			if err != nil {
+				return err
+			}
 		}
 		if metadata == nil {
+			logrus.Warnf("failed to get chart metadata: %+v", pkg)
 			return nil
 		}
 
