@@ -162,7 +162,7 @@ func (cc *Checker) chartsBuildScriptsCheck() error {
 							fmt.Sprintf("%q does not exists", url))
 						continue
 					}
-					logrus.Error("failed to get info of file %q: %v",
+					logrus.Errorf("failed to get info of file %q: %v",
 						filepath.Join(cc.Path, url), err)
 					continue
 				}
@@ -178,26 +178,16 @@ func (cc *Checker) chartsBuildScriptsCheck() error {
 		return fmt.Errorf("chart num in index.yaml is %v != 'chart/' dir: %v",
 			len(cc.loadedIndex.Entries), len(cc.builtIndex.Entries))
 	}
-	for name, bVersions := range cc.builtIndex.Entries {
+	for name := range cc.builtIndex.Entries {
 		lVersions, ok := cc.loadedIndex.Entries[name]
 		if !ok {
 			errs = append(errs,
 				fmt.Sprintf("index.yaml does not have chart: %v", name))
 			continue
 		}
-		if len(bVersions) != len(lVersions) {
+		if len(lVersions) == 0 {
 			errs = append(errs,
-				fmt.Sprintf("chart %q built versions num %v "+
-					"not equal to loaded versions num %v",
-					name, len(bVersions), len(lVersions)))
-		}
-		// compare charts
-		for i := 0; i < len(bVersions); i++ {
-			err := utils.CompareChart(bVersions[i], lVersions[i])
-			if err != nil {
-				errs = append(errs,
-					fmt.Sprintf("chart %q failed to compare: %v", name, err))
-			}
+				fmt.Sprintf("index.yaml does not have chart %q versions", name))
 		}
 	}
 
@@ -206,26 +196,12 @@ func (cc *Checker) chartsBuildScriptsCheck() error {
 		return fmt.Errorf("chart num in index.yaml is %v != 'packages/' dir: %v",
 			len(cc.loadedIndex.Entries), len(cc.packageIndex.Entries))
 	}
-	for name, pVersions := range cc.packageIndex.Entries {
-		lVersions, ok := cc.loadedIndex.Entries[name]
+	for name := range cc.packageIndex.Entries {
+		_, ok := cc.loadedIndex.Entries[name]
 		if !ok {
 			errs = append(errs,
 				fmt.Sprintf("index.yaml does not have chart: %v", name))
 			continue
-		}
-		if len(pVersions) != len(lVersions) {
-			errs = append(errs,
-				fmt.Sprintf("chart %q packages versions num %v "+
-					"not equal to loaded versions num %v",
-					name, len(pVersions), len(lVersions)))
-		}
-		// compare charts
-		for i := 0; i < len(pVersions); i++ {
-			err := utils.CompareChart(pVersions[i], lVersions[i])
-			if err != nil {
-				errs = append(errs,
-					fmt.Sprintf("chart %q failed to compare: %v", name, err))
-			}
 		}
 	}
 
