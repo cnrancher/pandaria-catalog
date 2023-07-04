@@ -1,19 +1,11 @@
-FROM registry.suse.com/bci/golang:1.17
+FROM registry.suse.com/bci/golang:1.19
 
-ARG http_proxy=$http_proxy
-ENV http_proxy=$http_proxy
-
-# Create a directory for running scripts.
 RUN mkdir -p /dapper
 ENV DAPPER_SOURCE /dapper
-ENV DAPPER_CP .
 WORKDIR ${DAPPER_SOURCE}
 
 # Install dependencies.
-RUN zypper -n install make wget curl tar
-
-# Unset proxy.
-ENV http_proxy=
+RUN zypper -n install make wget curl tar patch && zypper clean
 
 # Validation.
 CMD make pull-scripts && make validate
