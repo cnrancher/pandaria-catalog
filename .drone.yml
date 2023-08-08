@@ -8,66 +8,65 @@ platform:
   arch: amd64
 
 steps:
-- name: validate
-  pull: always
-  image: rancher/dapper:v0.6.0
-  commands:
-    - dapper -f Dockerfile.dapper
-  privileged: true
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-  when:
-    event:
-    - push
-    - tag
-    - pull_request
-- name: check
-  pull: always
-  image: registry.suse.com/bci/golang:1.19
-  commands:
-    - check/check.sh
-  when:
-    event:
-    - push
-    - pull_request
-    branch:
-    - dev/*
-    - release/*
-- name: upload-helm-repo
-  pull: always
-  image: rancher/dapper:v0.6.0
-  environment:
-    ALIYUN_ACCESS_KEY_ID:
-      from_secret: aliyun_access_id
-    ALIYUN_SECRET_ACCESS_KEY:
-      from_secret: aliyun_access_secret
-    ALIYUN_BUCKET: oss://pandaria-catalog
-    ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
-    VERSION_FOLDER_ACCESS: public-read
-    LOGO_FOLDER_ACCESS: public-read
-    OSSUTIL_VERSION: "1.7.13"
-    LOGO_FOLDER: assets/logo
-  commands:
-    - scripts/aliyun-oss-sync
-  privileged: true
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-  when:
-    event:
-    - push
-    - tag
-    branch:
-    - dev/*
-    - release/*
-    repo:
-    - cnrancher/pandaria-catalog
+  - name: validate
+    image: rancher/dapper:v0.6.0
+    commands:
+      - dapper -f Dockerfile.dapper make validate
+    privileged: true
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+        - tag
+        - pull_request
+  - name: check
+    image: rancher/dapper:v0.6.0
+    commands:
+      - dapper -f Dockerfile.dapper check/check.sh
+    privileged: true
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+        - tag
+        - pull_request
+  - name: upload-helm-repo
+    image: rancher/dapper:v0.6.0
+    environment:
+      ALIYUN_ACCESS_KEY_ID:
+        from_secret: aliyun_access_id
+      ALIYUN_SECRET_ACCESS_KEY:
+        from_secret: aliyun_access_secret
+      ALIYUN_BUCKET: oss://pandaria-catalog
+      ALIYUN_ENDPOINT: http://oss-cn-hangzhou.aliyuncs.com/
+      VERSION_FOLDER_ACCESS: public-read
+      LOGO_FOLDER_ACCESS: public-read
+      OSSUTIL_VERSION: "1.7.13"
+      LOGO_FOLDER: assets/logo
+    privileged: true
+    commands:
+      - dapper -f Dockerfile.dapper scripts/aliyun-oss-sync
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+        - tag
+      branch:
+        - dev/*
+        - release/*
+      repo:
+        - cnrancher/pandaria-catalog
 
 volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
+  - name: docker
+    host:
+      path: /var/run/docker.sock
 
 node:
   instance: agent-amd64
@@ -75,4 +74,4 @@ node:
 trigger:
   event:
     exclude:
-    - promote
+      - promote
