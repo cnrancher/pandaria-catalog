@@ -5,12 +5,12 @@
 **/charts/*.tgz
 
 # Binary files
-bin
+/bin/
 
 # IDEA config files
 .idea
 
-# Vscode files
+# VSCode files
 .vscode
 
 # Temp dapper files

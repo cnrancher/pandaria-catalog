@@ -4,12 +4,6 @@ set -euo pipefail
 
 cd $(dirname $0)/
 
-if type zypper &> /dev/null; then
-    zypper up -y && \
-    zypper in -y -f git && \
-    zypper clean
-fi
-
 RANCHER_VERSION=""
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 case $BRANCH_NAME in
@@ -20,7 +14,7 @@ case $BRANCH_NAME in
         RANCHER_VERSION="v2.6"
         ;;
     *)
-        echo "Could not get Rancher version from git branch"
+        echo "Could not get Rancher version from git branch [$BRANCH_NAME]"
         echo "Set Rancher version to v2.7"
         RANCHER_VERSION="v2.7"
         ;;
