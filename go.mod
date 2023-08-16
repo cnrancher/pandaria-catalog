@@ -8,6 +8,7 @@ require (
 	github.com/cnrancher/hangar v1.6.0
 	github.com/klauspost/pgzip v1.2.6-0.20220930104621-17e8dac29df8
 	github.com/rancher/hull v0.0.0-20230424152137-627ef5347afd
+	github.com/rancher/wrangler v1.0.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/mod v0.12.0
@@ -116,7 +117,6 @@ require (
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/rancher/lasso v0.0.0-20221202205459-e7138f16489c // indirect
-	github.com/rancher/wrangler v1.0.0 // indirect
 	github.com/rubenv/sql-migrate v1.3.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
