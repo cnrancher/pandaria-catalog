@@ -34,6 +34,19 @@ steps:
         - push
         - tag
         - pull_request
+  - name: hull-test
+    image: rancher/dapper:v0.6.0
+    commands:
+      - dapper -f Dockerfile.dapper scripts/hull-test
+    privileged: true
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    when:
+      event:
+        - push
+        - tag
+        - pull_request
   - name: upload-helm-repo
     image: rancher/dapper:v0.6.0
     environment:

@@ -4,6 +4,7 @@ annotations:
   catalog.cattle.io/kube-version: '>=1.18.0-0'
   catalog.cattle.io/namespace: kube-system
   catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
   catalog.cattle.io/rancher-version: '>= 2.6.3-rc1'
   catalog.cattle.io/release-name: rancher-macvlan
   catalog.cattle.io/type: cluster-tool
