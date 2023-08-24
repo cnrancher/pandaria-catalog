@@ -11,7 +11,7 @@
    catalog.cattle.io/permits-os: linux
    catalog.cattle.io/provides-gvr: cceclusterconfigs.cce.pandaria.io/v1
 -  catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
-+  catalog.cattle.io/rancher-version: '>= 2.7.5-0 < 2.8.0-0'
++  catalog.cattle.io/rancher-version: '>= 2.7.6-0 < 2.8.0-0'
    catalog.cattle.io/release-name: rancher-cce-operator
    catalog.cattle.io/scope: management
  apiVersion: v2
