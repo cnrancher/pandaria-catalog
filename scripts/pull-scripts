@@ -25,13 +25,13 @@ else
     BINARY_NAME=charts-build-scripts-${ARCH}
 fi
 curl -s -L ${CHARTS_BUILD_SCRIPTS_REPO%.git}/releases/download/${CHARTS_BUILD_SCRIPT_VERSION}/${BINARY_NAME} --output bin/charts-build-scripts
-if ! [[ -f bin/charts-build-scripts ]] || [[ $(cat bin/charts-build-scripts) == "Not Found" ]]; then 
-    rm bin/charts-build-scripts; 
-    
+if ! [[ -f bin/charts-build-scripts ]] || [[ $(cat bin/charts-build-scripts) == "Not Found" ]]; then
+    rm bin/charts-build-scripts;
+
     # Fall back to old process
     echo "Building binary locally..."
     rm -rf charts-build-scripts
-    git clone --depth 1 --branch $CHARTS_BUILD_SCRIPT_VERSION $CHARTS_BUILD_SCRIPTS_REPO 2>/dev/null
+    git clone --depth 1 --branch $CHARTS_BUILD_SCRIPT_VERSION $CHARTS_BUILD_SCRIPTS_REPO charts-build-scripts 2>/dev/null
 
     cd charts-build-scripts
     VERSION_OVERRIDE=${CHARTS_BUILD_SCRIPT_VERSION} ./scripts/build
