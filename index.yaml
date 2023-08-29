@@ -358,6 +358,23 @@ entries:
     urls:
     - assets/rancher-aks-operator-crd/rancher-aks-operator-crd-100.0.5+up1.0.6.tgz
     version: 100.0.5+up1.0.6
+  rancher-blackbox-exporter:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: rancher-blackbox-exporter
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    created: "2023-06-05T17:58:57.575928+08:00"
+    description: Blackbox Exporter for Prometheus
+    digest: f047f7c1c04e7f632033dc1982218dd67712f85d9acb4bcaf79f4a718dcd2e67
+    keywords:
+    - prometheus
+    name: rancher-blackbox-exporter
+    urls:
+    - assets/rancher-blackbox-exporter/rancher-blackbox-exporter-0.0.1.tgz
+    version: 0.0.1
   rancher-gpu-management:
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.18.0-0'

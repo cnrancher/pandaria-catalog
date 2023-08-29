@@ -1,0 +1,21 @@
+enabled: false
+image:
+  repository: "cnrancher/mirrored-prom-blackbox-exporter"
+  tag: v0.24.0
+replicas: 1 
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+nodeSelector: {}
+tolerations: {}
+affinity: {} 
+port: 9115
+staticUrl:
+- https://kubernetes.default.svc:443
+
+global:
+  systemDefaultRegistry: ""
