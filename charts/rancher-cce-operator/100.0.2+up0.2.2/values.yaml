@@ -5,7 +5,7 @@ global:
 cceOperator:
   image:
     repository: cnrancher/cce-operator
-    tag: v0.0.1
+    tag: v0.2.2
 
 httpProxy: ""
 httpsProxy: ""
