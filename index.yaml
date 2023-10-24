@@ -476,6 +476,30 @@ entries:
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/provides-gvr: cceclusterconfigs.cce.pandaria.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.9.0-0'
+      catalog.cattle.io/release-name: rancher-cce-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 0.4.2
+    created: "2023-10-24T13:55:04.669972+08:00"
+    description: A Helm chart for provisioning CCE clusters
+    digest: 0be46aca53b94746a5c7f939cdb7e8fe33ca95aefa774e5319641a9c1d27ba85
+    home: https://github.com/cnrancher/cce-operator
+    name: rancher-cce-operator
+    sources:
+    - https://github.com/cnrancher/cce-operator
+    urls:
+    - assets/rancher-cce-operator/rancher-cce-operator-103.0.0+up0.4.2.tgz
+    version: 103.0.0+up0.4.2
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-cce-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.20.0-0 < 1.27.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/provides-gvr: cceclusterconfigs.cce.pandaria.io/v1
       catalog.cattle.io/rancher-version: '>= 2.7.6-0 < 2.8.0-0'
       catalog.cattle.io/release-name: rancher-cce-operator
       catalog.cattle.io/scope: management
@@ -516,6 +540,24 @@ entries:
     - assets/rancher-cce-operator/rancher-cce-operator-102.0.0+up0.1.1.tgz
     version: 102.0.0+up0.1.1
   rancher-cce-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.20.0-0 < 1.27.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.9.0-0'
+      catalog.cattle.io/release-name: rancher-cce-operator-crd
+    apiVersion: v2
+    appVersion: 0.4.2
+    created: "2023-10-24T13:55:05.303275+08:00"
+    description: CCE Operator CustomResourceDefinitions
+    digest: 4224e82fdee0abaddc0286102826fda72472e2c1bb2b8f1161a9a6ee259440ef
+    name: rancher-cce-operator-crd
+    urls:
+    - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-103.0.0+up0.4.2.tgz
+    version: 103.0.0+up0.4.2
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
