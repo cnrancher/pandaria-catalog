@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tke-config-operator
+  namespace: cattle-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ke.cattle.io/operator: tke
+  template:
+    metadata:
+      labels:
+        ke.cattle.io/operator: tke
+    spec:
+      serviceAccountName: tke-operator
+      containers:
+      - name: tke-operator
+        image: {{ template "system_default_registry" . }}{{ .Values.tkeOperator.image.repository }}:{{ .Values.tkeOperator.image.tag }}
+        imagePullPolicy: IfNotPresent
+        args:
+          {{- if .Values.lockName }}
+          - -lock_name={{ .Values.lockName }}
+          {{- end }}
+          {{- if .Values.lockNamespace }}
+          - -lock_namespace={{ .Values.lockNamespace }}
+          {{- end }}
+          {{- if .Values.qps }}
+          - -qps={{ .Values.qps }}
+          {{- end }}
+          {{- if .Values.burst }}
+          - -burst={{ .Values.burst }}
+          {{- end }}
+        env:
+        - name: HTTP_PROXY
+          value: {{ .Values.httpProxy }}
+        - name: HTTPS_PROXY
+          value: {{ .Values.httpsProxy }}
+        - name: NO_PROXY
+          value: {{ .Values.noProxy }}
+{{- if .Values.additionalTrustedCAs }}
+        volumeMounts:
+          - mountPath: /etc/ssl/certs/ca-additional.pem
+            name: tls-ca-additional-volume
+            subPath: ca-additional.pem
+            readOnly: true
+      volumes:
+        - name: tls-ca-additional-volume
+          secret:
+            defaultMode: 0400
+            secretName: tls-ca-additional
+{{- end }}
