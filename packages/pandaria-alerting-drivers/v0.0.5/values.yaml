@@ -1,7 +1,7 @@
 enabled: false
 image:
   repository: "cnrancher/webhook-receiver"
-  tag: v0.2.7-ent
+  tag: v0.2.7-ent2
 replicas: 1 
 resources:
   limits:
