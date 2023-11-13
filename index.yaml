@@ -668,6 +668,33 @@ entries:
       catalog.cattle.io/namespace: cattle-monitoring-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-gpu-monitoring
+      catalog.cattle.io/type: cluster-tool
+      catalog.cattle.io/upstream-version: 3.1.3
+    apiVersion: v2
+    appVersion: 3.1.3
+    created: "2023-11-13T16:25:22.588716+08:00"
+    description: Provides gpu monitoring depending on Rancher Prime Monitoring.
+    digest: 7f1842fe7a5508ca13567e58d7ff984eaea12429b654851445de438bc6c3ec73
+    home: https://github.com/nvidia/dcgm-exporter/
+    icon: https://assets.nvidiagrid.net/ngc/logos/DCGM.png
+    kubeVersion: '>= 1.20.0-0'
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-gpu-monitoring
+    type: application
+    urls:
+    - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.1.0.tgz
+    version: 0.1.0
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher GPU Monitoring
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
       catalog.cattle.io/rancher-version: '>= 2.7.2-0'
       catalog.cattle.io/release-name: rancher-gpu-monitoring
       catalog.cattle.io/type: cluster-tool
@@ -689,6 +716,35 @@ entries:
     - assets/rancher-gpu-monitoring/rancher-gpu-monitoring-0.0.1.tgz
     version: 0.0.1
   rancher-gpu-sharing:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher GPU Sharing
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-gpu
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-gpu-sharing
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 0.1.2
+    created: "2023-11-13T17:23:59.928405+08:00"
+    description: Provides gpu sharing by gpu memory for Rancher Prime
+    digest: 109fc5e1b579ae3c50c2f661b0983a6a9f0eba5f2209b39944ef93833a3785ea
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - gpu
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-gpu-sharing
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-sharing/rancher-gpu-sharing-0.1.0.tgz
+    version: 0.1.0
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher GPU Sharing
@@ -748,6 +804,21 @@ entries:
     - assets/rancher-gpu-sharing/rancher-gpu-sharing-0.0.1.tgz
     version: 0.0.1
   rancher-k8s-auditlog-collector:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
+    apiVersion: v2
+    appVersion: 2.0.9
+    created: "2023-11-13T17:26:36.769133+08:00"
+    description: collect k8s auditlog for rancher auditlog server
+    digest: a174e0edc006d93c04d94cbda70f003a60f4a7d033c59a23ef4825d6543eda9a
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    kubeVersion: '>= 1.20.0-0'
+    name: rancher-k8s-auditlog-collector
+    type: application
+    urls:
+    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.1.0.tgz
+    version: 0.1.0
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.20.0-0'
       catalog.cattle.io/rancher-version: '>= 2.7.0-0'
@@ -889,6 +960,40 @@ entries:
     - assets/rancher-macvlan/rancher-macvlan-0.8.0.tgz
     version: 0.8.0
   rancher-nvidia-k8s-device-plugin:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: nvidia-device-plugin
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-nvidia-k8s-device-plugin
+      catalog.cattle.io/type: cluster-tool
+      catalog.cattle.io/ui-component: rancher-nvidia-k8s-device-plugin
+      catalog.cattle.io/upstream-version: 0.13.0
+    apiVersion: v2
+    appVersion: 0.13.0
+    created: "2023-11-13T17:26:36.859713+08:00"
+    dependencies:
+    - alias: gfd
+      condition: gfd.enabled
+      name: gfd
+      repository: file://./charts/gfd
+    - alias: nfd
+      condition: nfd.enabled,gfd.enabled
+      name: nfd
+      repository: file://./charts/nfd
+    description: A Helm chart for the nvidia-device-plugin on Kubernetes
+    digest: 64f6ca4eb9a290f1931c339c1e796b4e7d9263f9b85869cef35b966c98b7f15d
+    home: https://github.com/NVIDIA/k8s-device-plugin
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    kubeVersion: '>= 1.20.0-0'
+    name: rancher-nvidia-k8s-device-plugin
+    type: application
+    urls:
+    - assets/rancher-nvidia-k8s-device-plugin/rancher-nvidia-k8s-device-plugin-0.1.0.tgz
+    version: 0.1.0
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
