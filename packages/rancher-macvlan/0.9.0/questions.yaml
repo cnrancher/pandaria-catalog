@@ -1,0 +1,68 @@
+rancher_min_version: 2.8.0-0
+categories:
+- Networking
+namespace: kube-system
+questions:
+- variable: privateRegistry.registryUrl
+  label: Private registry URL
+  description: "URL of private registry. Leave blank to apply system default registry."
+  group: "Basic Setup"
+  type: string
+  default: ""
+- variable: clusterType
+  description: "Please choose K3s when using K3s built-in flannel"
+  default: "Default"
+  type: enum
+  label: "Cluster Type"
+  group: "Basic Setup"
+  options:
+  - "Default"
+  - "K3s"
+- variable: multus.cniVersion
+  description: "CNI Version for multus"
+  default: "0.3.1"
+  type: enum
+  label: "CNI Version"
+  group: "CNI Plugin"
+  options:
+  - "0.4.0"
+  - "0.3.1"
+- variable: iface
+  description: "Automatic detection by default"
+  default: ""
+  type: string
+  label: "Networking Iface"
+  group: "CNI Plugin"
+- variable: podCIDR
+  default: "10.42.0.0/16"
+  description: "Same value with the Kubernetes config"
+  type: string
+  label: "Pod Networking CIDR"
+  group: "CNI Plugin"
+- variable: arpPolicy
+  default: "arping"
+  description: "The policy of sending Gratuitous ARP"
+  type: enum
+  label: "ARP Refresh Policy"
+  group: "CNI Plugin"
+  options:
+  - "arping"
+  - "arp_notify"
+- variable: proxyARP
+  default: "false"
+  description: "Enable or disable Proxy ARP on Pod nic"
+  type: boolean
+  label: "Proxy ARP"
+  group: "CNI Plugin"
+- variable: ncResources.limits.memory
+  default: "512Mi"
+  description: "Maximum amount of memory to allocate per network-controller pod"
+  type: string
+  label: Network Controller
+  group: "Resource Limits"
+- variable: nadcResources.limits.memory
+  default: "512Mi"
+  description: "Maximum amount of memory to allocate per kube-net-attach-def-controller pod"
+  type: string
+  label: Kube-net-attach-def Controller
+  group: "Resource Limits"
