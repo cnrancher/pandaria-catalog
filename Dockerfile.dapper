@@ -1,4 +1,4 @@
-FROM registry.suse.com/bci/golang:1.19
+FROM registry.suse.com/bci/golang:1.21
 
 RUN mkdir -p /source
 ENV DAPPER_ENV ALIYUN_ACCESS_KEY_ID ALIYUN_SECRET_ACCESS_KEY ALIYUN_BUCKET ALIYUN_ENDPOINT VERSION_FOLDER_ACCESS LOGO_FOLDER_ACCESS OSSUTIL_VERSION LOGO_FOLDER DRONE_COMMIT_BRANCH
@@ -6,7 +6,7 @@ ENV DAPPER_DOCKER_SOCKET true
 ENV DAPPER_SOURCE /source
 WORKDIR ${DAPPER_SOURCE}
 
-RUN zypper -n install make wget curl tar patch git && zypper clean
+RUN zypper -n install make wget curl tar patch git libbtrfs-devel libgpgme-devel device-mapper-devel && zypper clean
 
 # pre-copy/cache go.mod for pre-downloading dependencies
 # and only redownloading them in subsequent builds if they change

@@ -23,7 +23,7 @@ func main() {
 		TimestampFormat: "15:04:05", // hour, time, sec only
 	})
 	flag.BoolVar(&cmdDebug, "debug", false, "Enable the debug output")
-	flag.StringVar(&rancherVersion, "version", "v2.7", "Rancher Version, v2.7 or v2.6")
+	flag.StringVar(&rancherVersion, "version", "v2.7", "Rancher Major Minor Version, (example: v2.7)")
 	flag.Usage = func() {
 		logrus.Infof("Usage:   ./check [OPTIONS] <path>")
 		logrus.Infof("Example: ./check --debug --version=v2.7 ./charts")
