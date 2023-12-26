@@ -7,7 +7,7 @@ ui:
   replicaCount: 1
   image:
     repository: cnrancher/global-monitoring-ui
-    tag: 0.1.4
+    tag: 0.1.5
     pullPolicy: IfNotPresent
   defaultApiToken: true
   apiToken: ""
@@ -113,7 +113,7 @@ grafana:
   apiGroup: "monitoring.coreos.com"
   image:
     repository: cnrancher/mirrored-grafana-grafana
-    tag: 10.2.0
+    tag: 10.1.5
     pullPolicy: IfNotPresent
     proxy:
       repository: cnrancher/mirrored-nginx
