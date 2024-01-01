@@ -635,9 +635,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.1.3
-    created: "2023-12-07T09:14:55.228016+08:00"
+    created: "2024-01-01T16:26:56.52549+08:00"
     description: Provides gpu sharing by gpu memory for Rancher Prime
-    digest: bfb830a3256709527763729b8d34e2ec2c400dd382f42a7834ba3419e401cf2e
+    digest: 97252fdb0f6e27f80f56bbd8b080e28012bacf8773d08a71a082fe9f60e01487
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
