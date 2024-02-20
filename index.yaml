@@ -10,6 +10,25 @@ entries:
       catalog.cattle.io/release-name: pandaria-alerting-drivers
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
+    created: "2024-02-20T15:52:45.003431+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: 8dae470ceaac5531359818901bdfe640a86923725e962a221dea0e2d88b276a0
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-0.0.5.tgz
+    version: 0.0.5
+  - annotations:
+      catalog.cattle.io/display-name: Pandaria Alerting Drivers
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
     created: "2023-08-16T16:07:27.996301+08:00"
     description: Pandaria alerting drivers for Prometheus
     digest: 620fbc3f7cc1ff39877dc5ec3b04c0671edfe11b5800f01adab3766a1a0e08ee
@@ -1024,6 +1043,31 @@ entries:
       catalog.cattle.io/kube-version: '>= 1.20.0-0'
       catalog.cattle.io/rancher-version: '>= 2.6.0-0'
     apiVersion: v2
+    created: "2024-02-20T15:52:49.269904+08:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: file://./charts/grafana
+    - condition: thanos.enabled
+      name: thanos
+      repository: file://./charts/thanos
+    - condition: ui.enabled
+      name: ui
+      repository: file://./charts/ui
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: 5ba4a284a8be77b4377b93b8b9a246f027b5013c7a3da9b26ec86455e64b47ab
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-0.0.9.tgz
+    version: 0.0.9
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+    apiVersion: v2
     created: "2023-05-26T16:55:35.409229+08:00"
     dependencies:
     - condition: grafana.enabled
@@ -1134,6 +1178,29 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 1.0.1
+    created: "2024-02-20T15:52:49.376842+08:00"
+    description: A Helm chart for provisioning TKE clusters
+    digest: cc613a505387add83cfb8fd31e1d4b2fb714f3a5dde756a8e59402b115879af7
+    home: https://github.com/cnrancher/tke-operator
+    name: rancher-tke-operator
+    sources:
+    - https://github.com/cnrancher/tke-operator
+    urls:
+    - assets/rancher-tke-operator/rancher-tke-operator-101.0.0+up1.0.1.tgz
+    version: 101.0.0+up1.0.1
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-tke-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/provides-gvr: tkeclusterconfigs.tke.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-tke-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
+    appVersion: 1.0.1
     created: "2023-03-15T11:10:18.050273+08:00"
     description: A Helm chart for provisioning TKE clusters
     digest: 2abe924fa93bcb6488c0b11a784e42f95f1817b94e0188a088411cecdf0f4333
@@ -1145,6 +1212,23 @@ entries:
     - assets/rancher-tke-operator/rancher-tke-operator-100.0.0+up1.0.1.tgz
     version: 100.0.0+up1.0.1
   rancher-tke-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.18.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.8.0-0'
+      catalog.cattle.io/release-name: rancher-tke-operator-crd
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2024-02-20T15:52:49.455831+08:00"
+    description: TKE Operator CustomResourceDefinitions
+    digest: f4a59958bc5f10b5ab65a46155b9b71fb36de5d89093bdfb34cc85ec77b6db70
+    name: rancher-tke-operator-crd
+    urls:
+    - assets/rancher-tke-operator-crd/rancher-tke-operator-crd-101.0.0+up1.0.1.tgz
+    version: 101.0.0+up1.0.1
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
