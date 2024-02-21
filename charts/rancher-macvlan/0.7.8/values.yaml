@@ -1,0 +1,69 @@
+plugin: "Attaching Macvlan"
+
+iface: ""
+
+podCIDR: "10.42.0.0/16"
+
+arpPolicy: "arping"
+
+proxyARP: false
+
+clusterType: "Default"
+
+multus:
+  cniVersion: "0.3.1"
+
+canal:
+  vethmtu: "0"
+
+ncResources:
+  limits:
+    memory: 512Mi
+nadcResources:
+  limits:
+    memory: 512Mi
+
+image:
+  calicoCNI:
+    repository: cnrancher/mirrored-calico-cni
+    tag: v3.22.5
+  calicoFlexvol:
+    repository: cnrancher/mirrored-calico-pod2daemon-flexvol
+    tag: v3.22.5
+  calicoNode:
+    repository: cnrancher/mirrored-calico-node
+    tag: v3.22.5
+  calicoControllers:
+    repository: cnrancher/mirrored-calico-kube-controllers
+    tag: v3.22.5
+  flannel:
+    repository: rancher/mirrored-flannelcni-flannel
+    tag: v0.17.0
+  flannelCNIPlugins:
+    repository: rancher/mirrored-flannelcni-flannel-cni-plugin
+    tag: v1.0.1
+  hardenedCNIPlugins:
+    repository: cnrancher/hardened-cni-plugins
+    tag: v0.9.1-build20221122
+  multus:
+    repository: cnrancher/mirrored-multus-cni
+    tag: v3.7.1
+  networkController:
+    repository: cnrancher/network-controller
+    tag: v0.7.8
+  admission:
+    repository: cnrancher/network-admission-deploy
+    tag: v0.7.8
+  nadController:
+    repository: cnrancher/k8s-net-attach-def-controller
+    tag: v0.2.5
+  staticMacvlan:
+    repository: cnrancher/static-macvlan-cni
+    tag: v0.4.3
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+privateRegistry:
+  registryUrl: ~
