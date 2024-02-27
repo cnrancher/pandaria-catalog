@@ -21,7 +21,7 @@ nadcResources:
 image:
   multus:
     repository: cnrancher/hardened-multus-cni
-    tag: v4.0.2-rancher1
+    tag: v3.9.3-rancher4
   networkController:
     repository: cnrancher/network-controller
     tag: v0.9.1-rc1

@@ -71,7 +71,7 @@ metadata:
     "helm.sh/resource-policy": keep
 ---
 #
-# https://github.com/k8snetworkplumbingwg/multus-cni/blob/v4.0.2/deployments/multus-daemonset.yml
+# https://github.com/k8snetworkplumbingwg/multus-cni/blob/v3.9.2/deployments/multus-daemonset.yml
 #
 ---
 apiVersion: apps/v1
@@ -103,17 +103,15 @@ spec:
       - name: kube-multus
         image: {{ template "registry_url" . }}{{ .Values.image.multus.repository }}:{{ .Values.image.multus.tag }}
         imagePullPolicy: IfNotPresent
-        command: ["/thin_entrypoint"]
+        command: ["/entrypoint.sh"]
         args:
         - --multus-conf-file=auto
         - --cni-version={{ .Values.multus.cniVersion }}
-        - --multus-autoconfig-dir=/host/etc/cni/net.d
-        - --cni-conf-dir=/host/etc/cni/net.d
         - --multus-kubeconfig-file-host={{ template "multus_cniconf_kubeconfig" . }}
         lifecycle:
           preStop:
             exec:
-              command: ["/bin/sh", "-c", "rm -f /host/etc/cni/net.d/00-multus.con*"]
+              command: ["/bin/sh", "-c", "rm -f /host/etc/cni/net.d/00-multus.conf"]
         resources:
           requests:
             cpu: "100m"
