@@ -24,13 +24,13 @@ image:
     tag: v3.9.3-rancher4
   networkController:
     repository: cnrancher/network-controller
-    tag: v0.9.1-rc1
+    tag: v0.9.1
   admission:
     repository: cnrancher/network-admission-deploy
-    tag: v0.9.1-rc1
+    tag: v0.9.1
   nadController:
     repository: cnrancher/k8s-net-attach-def-controller
-    tag: v0.4.1-rc2
+    tag: v0.4.1
   staticMacvlan:
     repository: cnrancher/static-macvlan-cni
     tag: v0.6.0
