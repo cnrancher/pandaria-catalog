@@ -1,0 +1,14 @@
+apiVersion: v1
+description: The Macvlan Networking For Rancher2.x
+maintainers:
+- name: StarryWang
+  email: starry.wang@suse.com
+name: rancher-macvlan
+kubeVersion: ">1.16.0-0"
+sources:
+- https://github.com/cnrancher
+version: 0.6.12
+appVersion: "0.6.12"
+home: https://github.com/cnrancher
+keywords:
+- networking

@@ -6,3 +6,7 @@
 
 # Vscode files
 .vscode
+
+# charts-build-scripts
+/bin
+charts-build-scripts
