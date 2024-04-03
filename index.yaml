@@ -584,18 +584,47 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher GPU Sharing
-      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/kube-version: '>= 1.25.0-0'
       catalog.cattle.io/namespace: cattle-gpu
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.3-0 < 2.9.0-0'
       catalog.cattle.io/release-name: rancher-gpu-sharing
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.1.3
-    created: "2024-01-01T16:26:56.52549+08:00"
+    created: "2024-04-03T18:15:02.466511+08:00"
     description: Provides gpu sharing by gpu memory for Rancher Prime
-    digest: 97252fdb0f6e27f80f56bbd8b080e28012bacf8773d08a71a082fe9f60e01487
+    digest: 8b2d5b86dfe00244c3214b6ca75f82b706cab1297f67f0959b03800d8db8b940
+    home: https://github.com/cnrancher
+    icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
+    keywords:
+    - sharing
+    - gpu
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-gpu-sharing
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-gpu-sharing/rancher-gpu-sharing-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher GPU Sharing
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-gpu
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.8.3-0'
+      catalog.cattle.io/release-name: rancher-gpu-sharing
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 0.1.3
+    created: "2024-04-03T18:13:18.732726+08:00"
+    description: Provides gpu sharing by gpu memory for Rancher Prime
+    digest: 30bd72ff26c00c7ededa2b1156f34bbc2c689b97a4c2070edcd95bb527fc846d
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
