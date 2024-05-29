@@ -1,0 +1,75 @@
+--- charts-original/values.yaml
++++ charts/values.yaml
+@@ -8,9 +8,9 @@
+ bigip_login_secret: f5-bigip-ctlr-login
+ 
+ bigip_secret:
+-  create: false
+-  username:
+-  password:
++  create: true
++  username: ""
++  password: ""
+ 
+ rbac:
+   create: true
+@@ -24,7 +24,7 @@
+ namespace: kube-system
+ 
+ ingressClass:
+-  create: true
++  create: false
+   ingressClassName: f5
+   isDefaultIngressController: true
+ args:
+@@ -32,8 +32,8 @@
+   # NOTE: helm has difficulty with values using `-`; `_` are used for naming
+   # and are replaced with `-` during rendering.
+   # REQUIRED Params
+-  bigip_url: ~
+-  bigip_partition: f5-bigip-ctlr
++  bigip_url: ""
++  bigip_partition: ""
+   # OPTIONAL PARAMS -- uncomment and provide values for those you wish to use.
+   # verify_interval:
+   # node-poll_interval:
+@@ -48,13 +48,13 @@
+   # namespaces: ["foo", "bar"]
+   # namespace_label:
+   # node_label_selector:
+-  # pool_member_type:
++  pool_member_type: "nodeport" #cluster, nodeport, nodeportlocal, auto. auto mode is supported in CRD and NextGen mode only
+   # resolve_ingress_names:
+   # running_in_cluster:
+   # use_node_internal:
+   # use_secrets:
+-  # insecure: true
+-  # custom-resource-mode: true
++  insecure: true
++  custom-resource-mode: true
+   # log-as3-response: true
+   # gtm-bigip-password
+   # gtm-bigip-url
+@@ -62,11 +62,10 @@
+   # ipam : true
+ 
+ image:
+-  # Use the tag to target a specific version of the Controller
+-  user: f5networks
+-  repo: k8s-bigip-ctlr
+-  pullPolicy: Always
+-version: latest
++  repository: cnrancher/mirrored-f5networks-k8s-bigip-ctlr
++  pullPolicy: IfNotPresent
++  tag: 2.16.1
++
+ # affinity:
+ #   nodeAffinity:
+ #     requiredDuringSchedulingIgnoredDuringExecution:
+@@ -88,3 +87,6 @@
+ #   runAsUser: 1000
+ #   runAsGroup: 1000
+ #   privileged: true
++
++global:
++  systemDefaultRegistry: ""

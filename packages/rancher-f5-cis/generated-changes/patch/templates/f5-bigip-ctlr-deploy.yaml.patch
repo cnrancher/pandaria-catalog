@@ -1,0 +1,11 @@
+--- charts-original/templates/f5-bigip-ctlr-deploy.yaml
++++ charts/templates/f5-bigip-ctlr-deploy.yaml
+@@ -64,7 +64,7 @@
+         {{- end }}
+       containers:
+       - name: {{ template "f5-bigip-ctlr.name" . }}
+-        image: "{{ .Values.image.user }}/{{ .Values.image.repo }}:{{ .Values.version }}"
++        image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+         {{- if .Values.podSecurityContext }}
+         securityContext:
+ {{ toYaml .Values.podSecurityContext | indent 12 }}

@@ -1,0 +1,37 @@
+rancher_min_version: 2.8.4
+questions:
+- variable: args.bigip_url
+  default: ""
+  label: F5 BIG-IP URL
+  type: string
+  group: "Settings"
+  required: true
+- variable: args.bigip_partition
+  default: ""
+  label: F5 BIG-IP partition
+  type: string
+  group: "Settings"
+  required: true
+- variable: bigip_secret.username
+  default: ""
+  label: F5 BIG-IP Username
+  type: string
+  group: "Settings"
+  required: true
+- variable: bigip_secret.password
+  default: ""
+  label: F5 BIG-IP Password
+  type: string
+  group: "Settings"
+  required: true
+- variable: args.pool_member_type
+  default: "nodeport"
+  label: F5 CIS Pool Member Type
+  type: enum
+  group: "Settings"
+  required: true
+  options:
+    - cluster
+    - nodeport
+    - nodeportlocal
+    - auto
