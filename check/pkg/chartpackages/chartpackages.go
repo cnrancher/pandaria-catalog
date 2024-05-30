@@ -38,6 +38,10 @@ func BuildIndex(dir string) (*repo.IndexFile, error) {
 		if _, err := os.Stat(filepath.Join(p, "package.yaml")); err != nil {
 			return nil
 		}
+		chartYamlPatchFile := filepath.Join(p, "generated-changes", "patch", "Chart.yaml.patch")
+		if _, err := os.Stat(chartYamlPatchFile); err != nil {
+			chartYamlPatchFile = ""
+		}
 		pkg, err := decodePackageYaml(filepath.Join(p, "package.yaml"))
 		if err != nil {
 			logrus.Warnf("decodePackageYaml: %v", err)
@@ -63,7 +67,8 @@ func BuildIndex(dir string) (*repo.IndexFile, error) {
 				return fmt.Errorf("failed to get %q: %w", pkg.URL, err)
 			}
 			defer resp.Body.Close()
-			metadata, err = LoadMetadataTgz(resp.Body)
+
+			metadata, err = LoadMetadataTgz(resp.Body, chartYamlPatchFile)
 			if err != nil {
 				return err
 			}
