@@ -610,9 +610,9 @@ entries:
       catalog.cattle.io/release-name: rancher-f5-cis-crd
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2024-05-30T13:39:22.873669+08:00"
+    created: "2024-05-31T12:33:01.295427+08:00"
     description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
-    digest: b2b53681487c3a58fd3b1ab52ee434f162eb86f104d59702cc53fd19e70a9645
+    digest: 2b278a3a1fbc766e921d42b28470b3f60514caf04990d77a656025cef508f6f9
     home: https://github.com/F5Networks/k8s-bigip-ctlr
     icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
     keywords:
