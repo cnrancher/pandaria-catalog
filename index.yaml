@@ -580,10 +580,10 @@ entries:
       catalog.cattle.io/release-name: rancher-f5-cis
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2024-05-30T13:39:22.671969+08:00"
+    created: "2024-06-03T17:51:08.15999+08:00"
     description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
       (k8s-bigip-ctlr).
-    digest: 500a57a62ac519ffb504c09fe7a077a6be97d1a4690d227cd9da06bf3fb5f222
+    digest: ae2eefc88c909276093802349b5ce8c1be11fca411b34099687d93c616c16b90
     home: https://github.com/F5Networks/k8s-bigip-ctlr
     icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
     keywords:

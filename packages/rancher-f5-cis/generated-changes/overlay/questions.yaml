@@ -35,3 +35,10 @@ questions:
     - nodeport
     - nodeportlocal
     - auto
+  show_subquestion_if: "cluster"
+  subquestions:
+  - variable: args.flannel_name
+    default: ""
+    description: "Flannel Name"
+    type: string
+    label: Flannel Name
