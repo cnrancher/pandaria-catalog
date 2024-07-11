@@ -4121,7 +4121,7 @@ spec:
     spec:
       containers:
       - name: network-admission-deploy
-        image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.13
+        image: {{ template "system_default_registry" . }}cnrancher/network-admission-deploy:v0.6.14-rc1
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -4151,7 +4151,7 @@ spec:
       serviceAccountName: multus
       containers:
       - name: network-controller
-        image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.13
+        image: {{ template "system_default_registry" . }}cnrancher/network-controller:v0.6.14-rc1
         imagePullPolicy: IfNotPresent
         resources:
           limits:
