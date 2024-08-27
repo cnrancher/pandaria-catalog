@@ -849,6 +849,34 @@ entries:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher Macvlan
+      catalog.cattle.io/kube-version: '>=1.27.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: rancher-macvlan
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 0.10.0
+    created: "2024-08-27T17:12:28.244703281+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: 0ac11e96b0d689943b3644fb7913407ea51301a473ec747c953b3fa05eb0d380
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: '>=1.27.0-0'
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-0.10.0.tgz
+    version: 0.10.0
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher Macvlan
       catalog.cattle.io/kube-version: '>=1.23.0-0'
       catalog.cattle.io/namespace: kube-system
       catalog.cattle.io/os: linux
