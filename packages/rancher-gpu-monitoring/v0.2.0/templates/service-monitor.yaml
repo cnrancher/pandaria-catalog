@@ -1,0 +1,28 @@
+{{- if .Values.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "dcgm-exporter.fullname" . }}
+  namespace: {{ include "dcgm-exporter.namespace" . }}
+  labels:
+    {{- include "dcgm-exporter.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "dcgm-exporter"
+    {{- if .Values.serviceMonitor.additionalLabels }}
+    {{- toYaml .Values.serviceMonitor.additionalLabels | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "dcgm-exporter.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "dcgm-exporter"
+  namespaceSelector:
+    matchNames:
+    - "{{ include "dcgm-exporter.namespace" . }}"
+  endpoints:
+  - port: "metrics"
+    path: "/metrics"
+    interval: "{{ .Values.serviceMonitor.interval }}"
+    honorLabels: {{ .Values.serviceMonitor.honorLabels }}
+    relabelings:
+      {{ toYaml .Values.serviceMonitor.relabelings | nindent 6 }}
+{{- end -}}

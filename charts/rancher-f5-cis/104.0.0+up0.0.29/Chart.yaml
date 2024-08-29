@@ -1,0 +1,26 @@
+annotations:
+  catalog.cattle.io/auto-install: rancher-f5-cis-crd=match
+  catalog.cattle.io/certified: rancher
+  catalog.cattle.io/display-name: Rancher F5 CIS
+  catalog.cattle.io/kube-version: '>= 1.27.0-0'
+  catalog.cattle.io/namespace: kube-system
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+  catalog.cattle.io/release-name: rancher-f5-cis
+apiVersion: v2
+appVersion: 2.16.1
+description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
+  (k8s-bigip-ctlr).
+home: https://github.com/F5Networks/k8s-bigip-ctlr
+icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
+keywords:
+- f5
+- bigip
+maintainers:
+- email: hang.jiang@suse.com
+  name: jianghang8421
+name: rancher-f5-cis
+sources:
+- https://github.com/F5Networks/k8s-bigip-ctlr
+version: 104.0.0+up0.0.29
