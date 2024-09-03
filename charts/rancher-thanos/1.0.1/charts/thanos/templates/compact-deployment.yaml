@@ -1,0 +1,73 @@
+{{- if .Values.compact.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-compact-{{ .Release.Name }}
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    component: compact
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      chart: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+      component: compact
+  template:
+    metadata:
+      labels:
+        chart: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+        component: compact
+    spec:
+      containers:
+        - name: thanos
+          image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          - compact
+          - --objstore.config-file
+          - /etc/thanos/config.yaml
+          - --http-address
+          - 0.0.0.0:10902
+        {{- range .Values.compact.extraArgs }}
+          - {{ . }}
+        {{- end }}
+          - -w
+          ports:
+            - name: grpc
+              containerPort: 10901
+              protocol: TCP
+            - name: http
+              containerPort: 10902
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.compact.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /etc/thanos/config.yaml
+            name: objstore-config
+            subPath: config.yaml
+      nodeSelector:
+      {{- include "linux-node-selector" . | nindent 8 }}
+      {{- with .Values.compact.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.compact.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      tolerations:
+      {{- include "linux-node-tolerations" . | nindent 8 }}
+      {{- with .Values.compact.tolerations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - secret:
+          items:
+          - key: config.yaml
+            path: config.yaml
+          secretName: objstore-config-{{ .Release.Name }}
+        name: objstore-config
+{{- end }}
