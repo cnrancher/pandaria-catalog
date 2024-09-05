@@ -103,7 +103,7 @@ spec:
       - name: kube-multus
         image: {{ template "registry_url" . }}{{ .Values.image.multus.repository }}:{{ .Values.image.multus.tag }}
         imagePullPolicy: IfNotPresent
-        command: ["/entrypoint.sh"]
+        command: ["/thin_entrypoint"]
         args:
         - --multus-conf-file=auto
         - --cni-version={{ .Values.multus.cniVersion }}
