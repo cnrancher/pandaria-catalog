@@ -1,0 +1,102 @@
+#
+# https://github.com/k8snetworkplumbingwg/multus-cni/blob/v4.0.2/deployments/multus-daemonset.yml
+#
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rancher-flat-network-multus
+  annotations:
+    "helm.sh/resource-policy": keep
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: rancher-flat-network-multus
+  namespace: cattle-flat-network
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rancher-flat-network-multus
+  namespace: cattle-flat-network
+  annotations:
+    "helm.sh/resource-policy": keep
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rancher-flat-network-multus-ds
+  namespace: cattle-flat-network
+  labels:
+    tier: node
+    app: rancher-flat-network-multus
+    name: rancher-flat-network-multus
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      name: rancher-flat-network-multus
+  template:
+    metadata:
+      labels:
+        tier: node
+        app: rancher-flat-network-multus
+        name: rancher-flat-network-multus
+    spec:
+      hostNetwork: true
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      - operator: Exists
+        effect: NoExecute
+      serviceAccountName: rancher-flat-network-multus
+      initContainers:
+      - name: init-multus-config
+        image: {{ template "system_default_registry" . }}{{ .Values.deploy.image.repository }}:{{ .Values.deploy.image.tag }}
+        imagePullPolicy: {{ .Values.deploy.image.pullPolicy }}
+        command: ["/entrypoint.sh"]
+        volumeMounts:
+        - name: cni
+          mountPath: /host/etc/cni/net.d
+        env:
+        - name: IS_MULTUS_INIT_CONTAINER
+          value: "true"
+      containers:
+      - name: rancher-flat-network-multus
+        image: {{ template "system_default_registry" . }}{{ .Values.multus.image.repository }}:{{ .Values.multus.image.tag }}
+        imagePullPolicy: {{ .Values.multus.image.pullPolicy }}
+        command: ["/thin_entrypoint"]
+        args:
+        - "--multus-conf-file=auto"
+        - --cni-version={{ .Values.multus.cni.version }}
+        - "--multus-autoconfig-dir=/host/etc/cni/net.d"
+        - "--cni-conf-dir=/host/etc/cni/net.d"
+        - --multus-kubeconfig-file-host={{ template "multus_cniconf_kubeconfig" . }}
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "64Mi"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: cni
+          mountPath: /host/etc/cni/net.d
+        - name: cnibin
+          mountPath: /host/opt/cni/bin
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: cni
+          hostPath:
+            path: {{ template "multus_cniconf_host_path" . }}
+        - name: cnibin
+          hostPath:
+            path: {{ template "multus_cnibin_host_path" . }}
+      nodeSelector:
+        kubernetes.io/os: linux

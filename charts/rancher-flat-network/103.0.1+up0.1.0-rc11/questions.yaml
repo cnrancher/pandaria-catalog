@@ -1,0 +1,68 @@
+categories:
+- Networking
+namespace: cattle-flat-network
+questions:
+- variable: clusterType
+  description: "Set to 'K3s' if using K3s Cluster"
+  default: "Default"
+  type: enum
+  label: "Cluster Type"
+  group: "CNI Plugin"
+  options:
+  - "Default"
+  - "K3s"
+- variable: multus.cni.version
+  description: "CNI Version (K3s is '1.0.0', RKE2 is '0.3.1')"
+  default: "1.0.0"
+  type: enum
+  label: "CNI Version"
+  group: "CNI Plugin"
+  options:
+  - "1.0.0"
+  - "0.4.0"
+  - "0.3.1"
+- variable: arpPolicy
+  default: "arp_notify"
+  description: "The policy of sending Gratuitous ARP"
+  type: enum
+  label: "ARP Refresh Policy"
+  group: "CNI Plugin"
+  options:
+  - "arp_notify"
+  - "arping"
+- variable: proxyARP
+  default: "false"
+  description: "Enable or disable Proxy ARP on Pod nic"
+  type: boolean
+  label: "Proxy ARP"
+  group: "CNI Plugin"
+- variable: clusterCIDR
+  default: "10.42.0.0/16"
+  description: "Kubernetes config Cluster CIDR"
+  type: string
+  label: "Cluster CIDR"
+  group: "CNI Plugin"
+- variable: serviceCIDR
+  default: "10.43.0.0/16"
+  description: "Kubernetes config Service CIDR"
+  type: string
+  label: "Service CIDR"
+  group: "CNI Plugin"
+- variable: flatNetworkOperator.limits.memory
+  default: "512Mi"
+  description: "Memory limit for Operator pod"
+  type: string
+  label: FlatNetwork Operator
+  group: "Others"
+- variable: deploy.rolloutSchedule
+  default: "0 0 1 * *"
+  description: "Rollout tls secret every month: '0 0 1 * *'"
+  type: string
+  label: TLS Rollout Schedule
+  group: "Others"
+- variable: flatNetworkOperator.limits.cpu
+  default: "200m"
+  description: "CPU limit for Operator pod"
+  type: string
+  label: FlatNetwork Operator
+  group: "Others"
