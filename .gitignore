@@ -16,3 +16,7 @@
 # Temp dapper files
 *.dapper*
 !Dockerfile.dapper
+
+# Other files
+*.log
+tmp*
