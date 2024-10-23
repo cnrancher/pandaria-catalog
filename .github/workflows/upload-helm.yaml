@@ -1,0 +1,38 @@
+name: OSS Sync Helm
+
+on:
+  push:
+    branches:
+      - 'release/*'
+      - 'dev/*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref_name}}
+    - name: Setup Aliyun Credentials
+      id: setup-aliyun
+      uses: aliyun/configure-aliyun-credentials-action@v1
+      with:
+        role-to-assume: ${{ secrets.ROLES_TO_ASSUME }}
+        oidc-provider-arn: ${{ secrets.OIDC_PROVIDER_ARN }}
+        audience: 'github-actions'
+    - name: Upload Helm Repo
+      env:
+        ALIYUN_BUCKET: oss://pandaria-catalog
+        ALIYUN_ENDPOINT: https://oss-cn-hangzhou.aliyuncs.com/
+        ALIYUN_ACCESS_KEY_ID: ${{ steps.setup-aliyun.outputs.aliyun-access-key-id }}
+        ALIYUN_ACCESS_KEY_SECRET: ${{ steps.setup-aliyun.outputs.aliyun-access-key-secret }}
+        ALIYUN_SECURITY_TOKEN: ${{ steps.setup-aliyun.outputs.aliyun-security-token }}
+        VERSION_FOLDER_ACCESS: public-read
+        LOGO_FOLDER_ACCESS: public-read
+        OSSUTIL_VERSION: "1.7.19"
+        LOGO_FOLDER: assets/logo
+      run: |
+        scripts/aliyun-oss-sync
