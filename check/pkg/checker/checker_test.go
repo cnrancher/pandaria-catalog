@@ -4,7 +4,6 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cnrancher/hangar/pkg/utils"
 	"github.com/sirupsen/logrus"
 )
 
@@ -14,7 +13,7 @@ func init() {
 }
 
 func Test_annotationCheck(t *testing.T) {
-	p, _ := utils.GetAbsPath("../../../")
+	p := "../../../"
 	logrus.Infof("chart path: %v", p)
 	checker := NewChecker(p, "v2.7")
 	if err := checker.init(); err != nil {
@@ -28,7 +27,7 @@ func Test_annotationCheck(t *testing.T) {
 }
 
 func Test_imageCheck(t *testing.T) {
-	p, _ := utils.GetAbsPath("../../../")
+	p := "../../../"
 	logrus.Infof("chart path: %v", p)
 	checker := NewChecker(p, "v2.7")
 	if err := checker.init(); err != nil {
@@ -42,7 +41,7 @@ func Test_imageCheck(t *testing.T) {
 }
 
 func Test_systemDefaultRegistryCheck(t *testing.T) {
-	p, _ := utils.GetAbsPath("../../../")
+	p := "../../../"
 	logrus.Infof("chart path: %v", p)
 	checker := NewChecker(p, "v2.7")
 	if err := checker.init(); err != nil {

@@ -89,11 +89,6 @@ func (cc *Checker) Check() error {
 		return fmt.Errorf("checker program only supports v2.7 & v2.6")
 	}
 
-	var err error
-	if cc.Path, err = hangarUtils.GetAbsPath(cc.Path); err != nil {
-		return err
-	}
-
 	if err := cc.init(); err != nil {
 		return err
 	}
@@ -253,11 +248,11 @@ func (cc *Checker) annotationCheck() error {
 	}
 
 	if len(rvList) != 0 {
-		hangarUtils.SaveSlice(utils.NoRancherVersionFile, rvList)
+		utils.SaveSlice(utils.NoRancherVersionFile, rvList)
 		annotationCheckFailed = true
 	}
 	if len(kvList) != 0 {
-		hangarUtils.SaveSlice(utils.NoKubeVersionFile, kvList)
+		utils.SaveSlice(utils.NoKubeVersionFile, kvList)
 		annotationCheckFailed = true
 	}
 	if annotationCheckFailed {
@@ -332,7 +327,7 @@ func (cc *Checker) imageCheck() error {
 		}
 	}
 	if len(failedList) != 0 {
-		hangarUtils.SaveSlice(utils.ImageCheckFailedFile, failedList)
+		utils.SaveSlice(utils.ImageCheckFailedFile, failedList)
 		return fmt.Errorf("chart image check failed")
 	}
 	logrus.Infof("image check passed")
@@ -445,7 +440,7 @@ func (cc *Checker) systemDefaultRegistryCheck() error {
 	}
 
 	if len(failedList) != 0 {
-		hangarUtils.SaveSlice(
+		utils.SaveSlice(
 			utils.SystemDefaultRegistryCheckFailed, failedList)
 		return fmt.Errorf("systemDefaultRegistry check failed")
 	}

@@ -1,20 +1,25 @@
-#!/bin/sh
+#!/bin/bash
+
+set -euo pipefail
+cd $(dirname $0)/../
+
 
 # Get the folder of Aliyun OSS bucket from Git branch name.
 # e.g. branch name: `dev/v2.6` -> folder name: `dev-v2.6`, branch: `release/v2.6` -> folder: `release-v2.6`
-if [[ -z "${DRONE_COMMIT_BRANCH}" ]]; then
-    echo "ERROR: this script needs to run in drone pipeline."
+if [[ -z "${GITHUB_REF:-}" ]]; then
+    echo "ERROR: this script needs to run in CI pipeline."
     exit 1
 else
-    echo "---- DRONE_COMMIT_BRANCH: ${DRONE_COMMIT_BRANCH}"
+    echo "---- GITHUB_REF: ${GITHUB_REF}"
     echo "---- Checking git branch format"
-    if echo "${DRONE_COMMIT_BRANCH}" | grep "dev/\|release/"; then
-        echo "---- Git branch format valid."
+    BRANCH=${GITHUB_REF#refs/heads/}
+    if echo "${BRANCH}" | grep "dev/\|release/"; then
+        echo "---- Git branch: ${BRANCH}"
     else
-        echo "---- Invalid git branch format: ${DRONE_COMMIT_BRANCH}"
+        echo "---- Invalid git branch format: ${BRANCH}"
         exit 1
     fi
-    VERSION_FOLDER="$(echo ${DRONE_COMMIT_BRANCH} | tr / -)"
+    VERSION_FOLDER="$(echo ${BRANCH} | tr / -)"
     echo "---- VERSION_FOLDER: ${VERSION_FOLDER}"
     if [[ -z "${VERSION_FOLDER}" ]]; then
         echo "ERROR: failed to get VERSION_FOLDER"
@@ -23,26 +28,34 @@ else
 fi
 
 echo "---- Downloading ossutil"
-wget -O /bin/ossutil "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil32"
-chmod 755 /bin/ossutil
+wget -O ossutil.zip "https://gosspublic.alicdn.com/ossutil/${OSSUTIL_VERSION}/ossutil-v${OSSUTIL_VERSION}-linux-amd64.zip"
+unzip ./ossutil.zip
+sudo cp ./ossutil-v*/ossutil /bin/
+sudo chmod 755 /bin/ossutil
 
 echo "---- Configuring ossutil"
-ossutil config -e "${ALIYUN_ENDPOINT}" -i "${ALIYUN_ACCESS_KEY_ID}" -k "${ALIYUN_SECRET_ACCESS_KEY}"
+ossutil config \
+    --endpoint "${ALIYUN_ENDPOINT}" \
+    --access-key-id "${ALIYUN_ACCESS_KEY_ID}" \
+    --access-key-secret "${ALIYUN_ACCESS_KEY_SECRET}" \
+    --sts-token "${ALIYUN_SECURITY_TOKEN}"
 
-echo "---- Removing existing asset files"
-ossutil rm -rf "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
+echo "---- Check ossutil"
+ossutil ls -d "${ALIYUN_BUCKET}"
 
 echo "---- Creating folders"
-ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" || echo "---- assets folder already exists" # Recreate the folder just deleted
+ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" || echo "---- assets folder already exists" # Ensure assets folder exists
 ossutil mkdir "${ALIYUN_BUCKET}/${LOGO_FOLDER}/" || echo "---- logo folder already exists" # Ensure LOGO folder exists
 
-echo "---- Copy asset files"
-ossutil cp -rf "./assets" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets/"
-ossutil cp -f "./index.yaml" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
+echo "---- Sync chart files"
+ossutil sync -f --delete --update --acl ${VERSION_FOLDER_ACCESS} "./assets" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets/"
+ossutil cp -f "./index.yaml" --acl ${VERSION_FOLDER_ACCESS} "${ALIYUN_BUCKET}/${VERSION_FOLDER}/"
 
-echo "---- Copy LOGO files"
-ossutil cp -rf "./assets/logo" "${ALIYUN_BUCKET}/${LOGO_FOLDER}/"
+echo "---- Sync LOGO files"
+ossutil sync -f --update --acl ${LOGO_FOLDER_ACCESS} "./assets/logo" "${ALIYUN_BUCKET}/${LOGO_FOLDER}/"
 
-echo '---- Set ACL for file'
-ossutil set-acl ${ALIYUN_BUCKET}/${VERSION_FOLDER} ${VERSION_FOLDER_ACCESS} -rf
-ossutil set-acl ${ALIYUN_BUCKET}/${LOGO_FOLDER} ${LOGO_FOLDER_ACCESS} -rf
+echo '---- Result'
+ossutil ls "${ALIYUN_BUCKET}/${VERSION_FOLDER}"
+
+echo
+echo "Done"
