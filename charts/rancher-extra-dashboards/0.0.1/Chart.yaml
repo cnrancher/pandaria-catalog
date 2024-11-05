@@ -1,0 +1,13 @@
+annotations:
+  catalog.cattle.io/kube-version: '>= 1.20.0-0'
+  catalog.cattle.io/namespace: cattle-monitoring-system
+  catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+  catalog.cattle.io/release-name: rancher-extra-dashboards
+  catalog.cattle.io/type: cluster-tool
+apiVersion: v2
+description: Extra Dashboards for Grafana
+keywords:
+- prometheus
+- grafana
+name: rancher-extra-dashboards
+version: 0.0.1
