@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    chart: {{ .Chart.Name }}
+    release: rancher-monitoring
+spec:
+  jobName: {{ .Chart.Name }}-probe
+  module: http_2xx
+  prober:
+    path: /probe
+    scheme: http
+    url: {{ .Chart.Name }}.{{ .Release.Namespace }}.svc:{{ .Values.port }}
+  targets:
+    staticConfig:
+      static:
+      {{- range .Values.staticUrl }}
+      - {{ . }}
+      {{- end }}

@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      chart: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+  endpoints:
+  - interval: 30s
+    params:
+      module:
+        - http_2xx
+      target:
+        - prometheus.io
+    path: /probe
+    port: http
+    scheme: http
