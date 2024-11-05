@@ -752,6 +752,24 @@ entries:
     urls:
     - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-103.0.0+up0.4.2.tgz
     version: 103.0.0+up0.4.2
+  rancher-extra-dashboards:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.20.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/rancher-version: '>= 2.6.0-0'
+      catalog.cattle.io/release-name: rancher-extra-dashboards
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    created: "2024-11-06T10:56:26.280991+08:00"
+    description: Extra Dashboards for Grafana
+    digest: 91fc600eeee012b579696cda46d32e41a5c2b08ce13d2de877b070412a2c72ae
+    keywords:
+    - prometheus
+    - grafana
+    name: rancher-extra-dashboards
+    urls:
+    - assets/rancher-extra-dashboards/rancher-extra-dashboards-0.0.1.tgz
+    version: 0.0.1
   rancher-f5-cis:
   - annotations:
       catalog.cattle.io/auto-install: rancher-f5-cis-crd=match

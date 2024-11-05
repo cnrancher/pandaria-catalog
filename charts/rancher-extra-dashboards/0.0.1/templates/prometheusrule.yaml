@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  groups:
+    - name: ssl_expiry
+      rules:
+      - alert: Ssl Cert Will Expire in 30 days
+        annotations:
+          summary: "SSL certificate will expire soon on (instance {{`{{`}} $labels.instance {{`}}`}})"
+          description: "SSL certificate expires in 30 days\n  VALUE = {{`{{`}} $value {{`}}`}}\n  LABELS: {{`{{`}} $labels {{`}}`}}"
+        expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 30
+        for: 300s
+        labels:
+          severity: warning
