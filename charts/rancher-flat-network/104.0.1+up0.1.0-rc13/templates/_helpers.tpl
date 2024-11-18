@@ -30,7 +30,7 @@ Expand the name of the chart.
 
 {{- define "multus_cnibin_host_path" -}}
 {{- if eq .Values.clusterType "K3s" -}}
-/var/lib/rancher/k3s/data/current/bin
+/var/lib/rancher/k3s/data/cni
 {{- else -}}
 /opt/cni/bin
 {{- end -}}

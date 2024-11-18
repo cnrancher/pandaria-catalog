@@ -76,6 +76,10 @@ spec:
         - "--multus-autoconfig-dir=/host/etc/cni/net.d"
         - "--cni-conf-dir=/host/etc/cni/net.d"
         - --multus-kubeconfig-file-host={{ template "multus_cniconf_kubeconfig" . }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/bash", "-c", "rm -f /host/etc/cni/net.d/00-multus.conf*"]
         resources:
           requests:
             cpu: "100m"

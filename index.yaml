@@ -791,18 +791,18 @@ entries:
       catalog.cattle.io/auto-install: rancher-flat-network-crd=match
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher FlatNetwork V2
-      catalog.cattle.io/kube-version: '>= 1.25.0-0'
+      catalog.cattle.io/kube-version: '>= 1.28.0-0'
       catalog.cattle.io/namespace: cattle-flat-network
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.8.0-alpha'
+      catalog.cattle.io/rancher-version: '>= 2.9.3-alpha'
       catalog.cattle.io/release-name: rancher-flat-network
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
-    appVersion: 0.1.0-rc11
-    created: "2024-10-22T15:33:36.465148277+08:00"
+    appVersion: 0.1.0-rc13
+    created: "2024-11-18T16:13:25.787679+08:00"
     description: Helm chart for managing rancher flat-network pods
-    digest: e445bb6f1ddaf88ec03dc41861d415441f9f8be77b49454396edb038c1cc9ef3
+    digest: ee6f58d813cc4b81c3b79355a424025328185eb53d4abf7ae33b1d24340d48d9
     home: https://github.com/cnrancher/rancher-flat-network
     maintainers:
     - email: starry.wang@suse.com
@@ -811,23 +811,23 @@ entries:
     sources:
     - https://github.com/cnrancher/rancher-flat-network
     urls:
-    - assets/rancher-flat-network/rancher-flat-network-103.0.1+up0.1.0-rc11.tgz
-    version: 103.0.1+up0.1.0-rc11
+    - assets/rancher-flat-network/rancher-flat-network-104.0.1+up0.1.0-rc13.tgz
+    version: 104.0.1+up0.1.0-rc13
   rancher-flat-network-crd:
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/kube-version: '>= 1.25.0-0'
+      catalog.cattle.io/kube-version: '>= 1.28.0-0'
       catalog.cattle.io/namespace: cattle-flat-network
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.8.0-alpha'
+      catalog.cattle.io/rancher-version: '>= 2.9.3-alpha'
       catalog.cattle.io/release-name: rancher-flat-network-crd
     apiVersion: v2
-    appVersion: 0.1.0-rc11
-    created: "2024-10-22T15:33:05.890098112+08:00"
+    appVersion: 0.1.0-rc13
+    created: "2024-11-18T16:13:32.723391+08:00"
     description: Rancher FlatNetwork CustomResourceDefinitions
-    digest: e449d9e6633a44271710bd40b63b5d9e76b72235d3847bd5cd83f6a861fce019
+    digest: 076f059a7126e3a424a7705b0593b57934a70f9c1f564c861dceb42acd200446
     home: https://github.com/cnrancher/rancher-flat-network
     maintainers:
     - email: starry.wang@suse.com
@@ -836,8 +836,8 @@ entries:
     sources:
     - https://github.com/cnrancher/rancher-flat-network
     urls:
-    - assets/rancher-flat-network-crd/rancher-flat-network-crd-103.0.1+up0.1.0-rc11.tgz
-    version: 103.0.1+up0.1.0-rc11
+    - assets/rancher-flat-network-crd/rancher-flat-network-crd-104.0.1+up0.1.0-rc13.tgz
+    version: 104.0.1+up0.1.0-rc13
   rancher-gpu-monitoring:
   - annotations:
       catalog.cattle.io/certified: rancher

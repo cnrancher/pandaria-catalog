@@ -52,17 +52,17 @@ questions:
   default: "512Mi"
   description: "Memory limit for Operator pod"
   type: string
-  label: FlatNetwork Operator
+  label: FlatNetwork Operator Memory Limit
+  group: "Others"
+- variable: flatNetworkOperator.limits.cpu
+  default: "100m"
+  description: "CPU limit for Operator pod"
+  type: string
+  label: FlatNetwork Operator CPU Limit
   group: "Others"
 - variable: deploy.rolloutSchedule
   default: "0 0 1 * *"
-  description: "Rollout tls secret every month: '0 0 1 * *'"
+  description: "Rollout webhook tls secret every month: '0 0 1 * *'"
   type: string
-  label: TLS Rollout Schedule
-  group: "Others"
-- variable: flatNetworkOperator.limits.cpu
-  default: "200m"
-  description: "CPU limit for Operator pod"
-  type: string
-  label: FlatNetwork Operator
+  label: Webhook TLS Rollout Schedule
   group: "Others"

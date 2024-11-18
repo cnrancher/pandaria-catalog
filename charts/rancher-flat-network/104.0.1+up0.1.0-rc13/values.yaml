@@ -20,7 +20,7 @@ flatNetworkOperator:
     cpu: "100m"
   image:
     repository: "cnrancher/rancher-flat-network-operator"
-    tag: "v0.1.0-rc11"
+    tag: "v0.1.0-rc13"
     pullPolicy: IfNotPresent
 
 # Configuration for rancher-flat-network-deploy
@@ -30,14 +30,14 @@ deploy:
   rolloutSchedule: "0 0 1 * *"
   image:
     repository: "cnrancher/rancher-flat-network-deploy"
-    tag: "v0.1.0-rc11"
+    tag: "v0.1.0-rc13"
     pullPolicy: IfNotPresent
 
 # Configuration for rancher-flat-network-cni
 flatNetworkCNI:
   image:
     repository: "cnrancher/rancher-flat-network-cni"
-    tag: "v0.1.0-rc11"
+    tag: "v0.1.0-rc13"
     pullPolicy: IfNotPresent
 
 # Configuration for multus-cni
