@@ -1,0 +1,30 @@
+apiVersion: "hami.pandaria.com/v1"
+kind: ResourceType
+metadata:
+  name: rancher-hami-resourcetypes
+spec:
+  resourceTypes:
+    - {{ .Values.resourceName }}
+    - {{ .Values.resourceMem }}
+    - {{ .Values.resourceCores }}
+    - {{ .Values.resourceMemPercentage }}
+    - {{ .Values.resourcePriority }}
+    - {{ .Values.mluResourceName }}
+    - {{ .Values.mluResourceMem }}
+    - {{ .Values.mluResourceCores }}
+    - {{ .Values.dcuResourceName }}
+    - {{ .Values.dcuResourceMem }}
+    - {{ .Values.dcuResourceCores }}
+    - {{ .Values.iluvatarResourceName }}
+    - {{ .Values.iluvatarResourceMem }}
+    - {{ .Values.iluvatarResourceCore }}
+    {{- if .Values.devices.ascend.enabled }}
+    {{- range .Values.devices.ascend.customresources }}
+    - {{ . }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.devices.mthreads.enabled }}
+    {{- range .Values.devices.mthreads.customresources }}
+    - {{ . }}
+    {{- end }}
+    {{- end }}

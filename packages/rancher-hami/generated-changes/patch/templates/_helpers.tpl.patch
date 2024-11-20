@@ -1,0 +1,38 @@
+--- charts-original/templates/_helpers.tpl
++++ charts/templates/_helpers.tpl
+@@ -85,3 +85,35 @@
+ imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 2 }}
+ {{- end }}
+ 
++{{/*
++    Resolve the tag for kubeScheduler.
++*/}}
++{{- define "resolvedKubeSchedulerTag" -}}
++{{- if .Values.scheduler.kubeScheduler.image.tag }}
++{{- .Values.scheduler.kubeScheduler.image.tag | trim -}}
++{{- else }}
++{{- include "strippedKubeVersion" . | trim -}}
++{{- end }}
++{{- end }}
++
++
++{{/*
++    Remove the part after the `+` in the Kubernetes version string.
++    v1.31.1+k3s1 -> v1.31.1
++    v1.31.1 -> v1.31.1
++*/}}
++{{- define "strippedKubeVersion" -}}
++{{- $parts := split "+" .Capabilities.KubeVersion.Version -}}
++{{- print $parts._0 -}}
++{{- end -}}
++
++{{/*
++Get Rancher system-default-registry
++*/}}
++{{- define "system_default_registry" -}}
++{{- if .Values.global.systemDefaultRegistry -}}
++{{- printf "%s/" .Values.global.systemDefaultRegistry -}}
++{{- else -}}
++{{- "" -}}
++{{- end -}}
++{{- end -}}

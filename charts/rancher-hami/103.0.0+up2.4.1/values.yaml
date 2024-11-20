@@ -1,0 +1,179 @@
+# Default values for hami-vgpu.
+
+nameOverride: ""
+fullnameOverride: ""
+imagePullSecrets: [ ]
+version: "v2.4.1"
+
+#Nvidia GPU Parameters
+resourceName: "nvidia.com/gpu"
+resourceMem: "nvidia.com/gpumem"
+resourceMemPercentage: "nvidia.com/gpumem-percentage"
+resourceCores: "nvidia.com/gpucores"
+resourcePriority: "nvidia.com/priority"
+
+#MLU Parameters
+mluResourceName: "cambricon.com/vmlu"
+mluResourceMem: "cambricon.com/mlu.smlu.vmemory"
+mluResourceCores: "cambricon.com/mlu.smlu.vcore"
+
+#Hygon DCU Parameters
+dcuResourceName: "hygon.com/dcunum"
+dcuResourceMem: "hygon.com/dcumem"
+dcuResourceCores: "hygon.com/dcucores"
+
+#Iluvatar GPU Parameters
+iluvatarResourceName: "iluvatar.ai/vgpu"
+iluvatarResourceMem: "iluvatar.ai/vcuda-memory"
+iluvatarResourceCore: "iluvatar.ai/vcuda-core"
+
+schedulerName: "hami-scheduler"
+
+podSecurityPolicy:
+  enabled: false
+
+global:
+  gpuHookPath: /usr/local
+  labels: {}
+  annotations: {}
+  managedNodeSelectorEnable: false
+  managedNodeSelector:
+    usage: "gpu"
+  systemDefaultRegistry: ""
+
+
+scheduler:
+  # @param nodeName defines the node name and the nvidia-vgpu-scheduler-scheduler will schedule to the node.
+  # if we install the nvidia-vgpu-scheduler-scheduler as default scheduler, we need to remove the k8s default
+  # scheduler pod from the cluster first, we must specify node name to skip the schedule workflow.
+  nodeName: ""
+  #nodeLabelSelector:
+  #  "gpu": "on"
+  overwriteEnv: "false"
+  defaultSchedulerPolicy:
+    nodeSchedulerPolicy: binpack
+    gpuSchedulerPolicy: spread
+  metricsBindAddress: ":9395"
+  livenessProbe: false
+  leaderElect: true
+  kubeScheduler:
+    # @param enabled indicate whether to run kube-scheduler container in the scheduler pod, it's true by default.
+    enabled: true
+    image: 
+      repository: cnrancher/mirrored-projecthami-kube-scheduler
+    imagePullPolicy: IfNotPresent
+    extraNewArgs:
+      - --config=/config/config.yaml
+      - -v=4
+    extraArgs:
+      - --policy-config-file=/config/config.json
+      - -v=4
+  extender:
+    image: 
+      repository: cnrancher/mirrored-projecthami-hami
+      tag: "v2.4.1"
+    imagePullPolicy: IfNotPresent
+    extraArgs:
+      - --debug
+      - -v=4
+  podAnnotations: {}
+  tolerations: []
+  #serviceAccountName: "hami-vgpu-scheduler-sa"
+  admissionWebhook:
+    customURL:
+      enabled: false
+      # must be an endpoint using https.
+      # should generate host certs here
+      host: 127.0.0.1 # hostname or ip, can be your node'IP if you want to use https://<nodeIP>:<schedulerPort>/<path>
+      port: 31998
+      path: /webhook
+    whitelistNamespaces:
+    # Specify the namespaces that the webhook will not be applied to.
+      # - default
+      # - kube-system
+      # - istio-system
+    reinvocationPolicy: Never
+    failurePolicy: Ignore
+  patch:
+    image: 
+      repository: cnrancher/mirrored-jettech-kube-webhook-certgen
+      tag: v1.5.2
+    imageNew: 
+      repository: cnrancher/mirrored-liangjw-kube-webhook-certgen
+      tag: v1.1.1
+    imagePullPolicy: IfNotPresent
+    priorityClassName: ""
+    podAnnotations: {}
+    nodeSelector: {}
+    tolerations: []
+    runAsUser: 2000
+  service:
+    httpPort: 443
+    schedulerPort: 31998
+    monitorPort: 31993
+    labels: {}
+    annotations: {}
+
+devicePlugin:
+  image: 
+    repository: cnrancher/mirrored-projecthami-hami
+    tag: "v2.4.1"
+  monitorimage: 
+    repository: cnrancher/mirrored-projecthami-hami
+    tag: "v2.4.1"
+  monitorctrPath: /usr/local/vgpu/containers
+  imagePullPolicy: IfNotPresent
+  runtimeClassName: ""
+  migStrategy: "none"
+  disablecorelimit: "false"
+  extraArgs:
+    - -v=false
+  
+  service:
+    httpPort: 31992
+    
+  pluginPath: /var/lib/kubelet/device-plugins
+  libPath: /usr/local/vgpu
+
+  podAnnotations: {}
+  nvidianodeSelector:
+    gpu: "on"
+  tolerations: []
+
+devices:
+  mthreads:
+    enabled: false
+    customresources:
+      - mthreads.com/vgpu
+  ascend:
+    enabled: false
+    image: ""
+    imagePullPolicy: IfNotPresent
+    extraArgs: []
+    nodeSelector:
+      ascend: "on"
+    tolerations: []
+    customresources:
+      - huawei.com/Ascend910A
+      - huawei.com/Ascend910A-memory
+      - huawei.com/Ascend910B
+      - huawei.com/Ascend910B-memory
+      - huawei.com/Ascend310P
+      - huawei.com/Ascend310P-memory
+
+hami-webui:
+  enabled: true
+  image:
+    frontend:
+      repository: liuyan/hami-webui-fe-oss
+      tag: "v1.0.3-fix"
+    backend:
+      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
+      tag: "v1.0.3"
+  externalPrometheus:
+    enabled: true # only support rancher monitoring, this must be true
+    address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
+  dcgm-exporter:
+    image:
+      repository: cnrancher/mirrored-nvidia-dcgm-exporter
+      tag: 3.3.7-3.5.0-ubuntu22.04

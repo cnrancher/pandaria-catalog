@@ -1,0 +1,22 @@
+--- charts-original/charts/hami-webui/templates/deployment.yaml
++++ charts/charts/hami-webui/templates/deployment.yaml
+@@ -29,7 +29,7 @@
+         - name: {{ .Chart.Name }}-fe-oss
+           securityContext:
+             {{- toYaml .Values.securityContext | nindent 12 }}
+-          image: "{{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag | default .Chart.AppVersion }}"
++          image: "{{ template "system_default_registry" . }}{{ .Values.image.frontend.repository }}:{{ .Values.image.frontend.tag | default .Chart.AppVersion }}"
+           imagePullPolicy: {{ .Values.image.frontend.pullPolicy }}
+           env:
+             {{- toYaml .Values.env.frontend | nindent 12 }}
+\ No newline at end of file
+@@ -46,7 +46,7 @@
+         - name: {{ .Chart.Name }}-be-oss
+           securityContext:
+                   {{- toYaml .Values.securityContext | nindent 12 }}
+-          image: "{{ .Values.image.backend.repository }}:{{ .Values.image.backend.tag | default .Chart.AppVersion }}"
++          image: "{{ template "system_default_registry" . }}{{ .Values.image.backend.repository }}:{{ .Values.image.backend.tag | default .Chart.AppVersion }}"
+           imagePullPolicy: {{ .Values.image.backend.pullPolicy }}
+           env:
+             {{- toYaml .Values.env.backend | nindent 12 }}
+\ No newline at end of file
