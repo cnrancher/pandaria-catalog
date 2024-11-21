@@ -8,7 +8,7 @@ annotations:
   catalog.cattle.io/rancher-version: '>= 2.8.0-alpha'
   catalog.cattle.io/release-name: rancher-flat-network-crd
 apiVersion: v2
-appVersion: 0.1.0-rc14
+appVersion: 0.1.0-rc16
 description: Rancher FlatNetwork CustomResourceDefinitions
 home: https://github.com/cnrancher/rancher-flat-network
 maintainers:
@@ -17,4 +17,4 @@ maintainers:
 name: rancher-flat-network-crd
 sources:
 - https://github.com/cnrancher/rancher-flat-network
-version: 0.1.0-rc14
+version: 0.1.0-rc16
