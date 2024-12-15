@@ -742,6 +742,36 @@ entries:
       catalog.cattle.io/namespace: kube-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
+      catalog.cattle.io/release-name: rancher-f5-cis
+    apiVersion: v2
+    appVersion: 2.16.1
+    created: "2024-12-16T00:28:43.543512+08:00"
+    description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
+      (k8s-bigip-ctlr).
+    digest: caf04beee34ce6866fb8ee014003f0692a039419ae509975c6731e1d528fe229
+    home: https://github.com/F5Networks/k8s-bigip-ctlr
+    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
+    keywords:
+    - f5
+    - bigip
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-f5-cis
+    sources:
+    - https://github.com/F5Networks/k8s-bigip-ctlr
+    urls:
+    - assets/rancher-f5-cis/rancher-f5-cis-105.0.0+up0.0.29.tgz
+    version: 105.0.0+up0.0.29
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-f5-cis-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher F5 CIS
+      catalog.cattle.io/kube-version: '>= 1.27.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
       catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: rancher-f5-cis
     apiVersion: v2
@@ -795,6 +825,34 @@ entries:
     - assets/rancher-f5-cis/rancher-f5-cis-103.0.0+up0.0.29.tgz
     version: 103.0.0+up0.0.29
   rancher-f5-cis-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher F5 CIS CRD
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.27.0-0'
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
+      catalog.cattle.io/release-name: rancher-f5-cis-crd
+    apiVersion: v2
+    appVersion: 2.16.1
+    created: "2024-12-16T00:28:43.683437+08:00"
+    description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
+    digest: 98c3cd73bbe61c0b4d9fbb4576e3c10a29febaf7ae3b2a7236fd2938752fd346
+    home: https://github.com/F5Networks/k8s-bigip-ctlr
+    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
+    keywords:
+    - f5
+    - bigip
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-f5-cis-crd
+    sources:
+    - https://github.com/F5Networks/k8s-bigip-ctlr
+    urls:
+    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-105.0.0+up0.0.29.tgz
+    version: 105.0.0+up0.0.29
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher F5 CIS CRD
@@ -1182,6 +1240,21 @@ entries:
     - assets/rancher-gpu-sharing/rancher-gpu-sharing-0.0.1.tgz
     version: 0.0.1
   rancher-k8s-auditlog-collector:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.27.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
+    apiVersion: v2
+    appVersion: 2.0.9
+    created: "2024-12-16T00:28:46.621718+08:00"
+    description: collect k8s auditlog for rancher auditlog server
+    digest: a178b010d68b79a6446daa1c8200374bdaa3eca9dab82a385d737bf0cb58b31b
+    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
+    kubeVersion: '>= 1.27.0-0'
+    name: rancher-k8s-auditlog-collector
+    type: application
+    urls:
+    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.3.0.tgz
+    version: 0.3.0
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.27.0-0'
       catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'

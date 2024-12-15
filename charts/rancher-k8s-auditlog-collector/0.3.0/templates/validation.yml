@@ -1,0 +1,23 @@
+{{- if eq .Values.clusterid "" }}
+{{- $error := "" }}
+{{- $error = printf "%s\n clusterid must be set." $error }}
+{{- fail $error }}
+{{- end }}
+
+{{- if eq .Values.auditlogServerHost "" }}
+{{- $error := "" }}
+{{- $error = printf "%s\n auditlog server host must be set." $error }}
+{{- fail $error }}
+{{- end }}
+
+{{- if eq .Values.auditlogServerPort "" }}
+{{- $error := "" }}
+{{- $error = printf "%s\n auditlog server port must be set." $error }}
+{{- fail $error }}
+{{- end }}
+
+{{- if and (ne .Values.mode "file") (ne .Values.mode "webhook")}}
+{{- $error := "" }}
+{{- $error = printf "%s\n modemust be file or webhook." $error }}
+{{- fail $error }}
+{{- end }}
