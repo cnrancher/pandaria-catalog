@@ -1,5 +1,6 @@
 annotations:
   catalog.cattle.io/certified: rancher
+  catalog.cattle.io/deprecated: "true"
   catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
   catalog.cattle.io/kube-version: '>= 1.20.0-0'
   catalog.cattle.io/namespace: nvidia-device-plugin
@@ -21,6 +22,7 @@ dependencies:
   condition: nfd.enabled,gfd.enabled
   name: nfd
   repository: file://./charts/nfd
+deprecated: true
 description: A Helm chart for the nvidia-device-plugin on Kubernetes
 home: https://github.com/NVIDIA/k8s-device-plugin
 icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png

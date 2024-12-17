@@ -1,5 +1,6 @@
 annotations:
   catalog.cattle.io/certified: rancher
+  catalog.cattle.io/deprecated: "true"
   catalog.cattle.io/display-name: Rancher GPU Monitoring
   catalog.cattle.io/kube-version: '>= 1.20.0-0'
   catalog.cattle.io/namespace: cattle-monitoring-system
@@ -11,6 +12,7 @@ annotations:
   catalog.cattle.io/upstream-version: 3.1.3
 apiVersion: v2
 appVersion: 3.1.3
+deprecated: true
 description: Provides gpu monitoring depending on Rancher Prime Monitoring.
 home: https://github.com/nvidia/dcgm-exporter/
 icon: https://assets.nvidiagrid.net/ngc/logos/DCGM.png

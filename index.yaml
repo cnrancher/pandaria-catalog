@@ -648,6 +648,7 @@ entries:
   rancher-gpu-monitoring:
   - annotations:
       catalog.cattle.io/certified: rancher
+      catalog.cattle.io/deprecated: "true"
       catalog.cattle.io/display-name: Rancher GPU Monitoring
       catalog.cattle.io/kube-version: '>= 1.20.0-0'
       catalog.cattle.io/namespace: cattle-monitoring-system
@@ -659,9 +660,10 @@ entries:
       catalog.cattle.io/upstream-version: 3.1.3
     apiVersion: v2
     appVersion: 3.1.3
-    created: "2023-11-13T16:25:22.588716+08:00"
+    created: "2024-12-17T14:34:14.15187+08:00"
+    deprecated: true
     description: Provides gpu monitoring depending on Rancher Prime Monitoring.
-    digest: 7f1842fe7a5508ca13567e58d7ff984eaea12429b654851445de438bc6c3ec73
+    digest: 90c1de296b98200621fb58955a9535c535f34e4cf30019241f147032aec5b6a0
     home: https://github.com/nvidia/dcgm-exporter/
     icon: https://assets.nvidiagrid.net/ngc/logos/DCGM.png
     kubeVersion: '>= 1.20.0-0'
@@ -703,6 +705,7 @@ entries:
   rancher-gpu-sharing:
   - annotations:
       catalog.cattle.io/certified: rancher
+      catalog.cattle.io/deprecated: "true"
       catalog.cattle.io/display-name: Rancher GPU Sharing
       catalog.cattle.io/kube-version: '>= 1.25.0-0'
       catalog.cattle.io/namespace: cattle-gpu
@@ -713,9 +716,10 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.1.3
-    created: "2024-04-03T18:15:02.466511+08:00"
+    created: "2024-12-17T14:13:56.851093+08:00"
+    deprecated: true
     description: Provides gpu sharing by gpu memory for Rancher Prime
-    digest: 8b2d5b86dfe00244c3214b6ca75f82b706cab1297f67f0959b03800d8db8b940
+    digest: 7c5ca5e5ae914d15444449378752d6fd25776c74fd93debedf3c23f9f08de523
     home: https://github.com/cnrancher
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     keywords:
@@ -925,6 +929,7 @@ entries:
   rancher-nvidia-k8s-device-plugin:
   - annotations:
       catalog.cattle.io/certified: rancher
+      catalog.cattle.io/deprecated: "true"
       catalog.cattle.io/display-name: NVIDIA k8s-device-plugin
       catalog.cattle.io/kube-version: '>= 1.20.0-0'
       catalog.cattle.io/namespace: nvidia-device-plugin
@@ -937,7 +942,7 @@ entries:
       catalog.cattle.io/upstream-version: 0.13.0
     apiVersion: v2
     appVersion: 0.13.0
-    created: "2023-11-13T17:26:36.859713+08:00"
+    created: "2024-12-17T14:34:14.331895+08:00"
     dependencies:
     - alias: gfd
       condition: gfd.enabled
@@ -947,8 +952,9 @@ entries:
       condition: nfd.enabled,gfd.enabled
       name: nfd
       repository: file://./charts/nfd
+    deprecated: true
     description: A Helm chart for the nvidia-device-plugin on Kubernetes
-    digest: 64f6ca4eb9a290f1931c339c1e796b4e7d9263f9b85869cef35b966c98b7f15d
+    digest: 5ba730bd500ae22fc10cf43e02555f411a192c7b605ff7f647b60757c5adfbe8
     home: https://github.com/NVIDIA/k8s-device-plugin
     icon: https://raw.githubusercontent.com/jianghang8421/gpu-device-plugin-charts/master/nvidia_logo.png
     kubeVersion: '>= 1.20.0-0'
