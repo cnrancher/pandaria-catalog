@@ -1,0 +1,16 @@
+global:
+  systemDefaultRegistry: ""
+
+tkeOperator:
+  image:
+    repository: cnrancher/tke-operator
+    tag: v2.10.1-ent
+
+httpProxy: ""
+httpsProxy: ""
+noProxy: ""
+additionalTrustedCAs: false
+lockName: ""
+lockNamespace: ""
+qps: ""
+burst: ""
