@@ -1,0 +1,20 @@
+--- charts-original/templates/scheduler/deployment.yaml
++++ charts/templates/scheduler/deployment.yaml
+@@ -33,7 +33,7 @@
+       containers:
+       {{- if .Values.scheduler.kubeScheduler.enabled }}
+         - name: kube-scheduler
+-          image: {{ .Values.scheduler.kubeScheduler.image }}:{{ .Capabilities.KubeVersion.Version }}
++          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.kubeScheduler.image.repository }}:{{ include "resolvedKubeSchedulerTag" . }}"
+           imagePullPolicy: {{ .Values.scheduler.kubeScheduler.imagePullPolicy | quote }}
+           command:
+             - kube-scheduler
+@@ -67,7 +67,7 @@
+             timeoutSeconds: 15
+           {{- end }}
+         - name: vgpu-scheduler-extender
+-          image: {{ .Values.scheduler.extender.image }}:{{ .Values.version }}
++          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.extender.image.repository }}:{{ .Values.scheduler.extender.image.tag }}"
+           imagePullPolicy: {{ .Values.scheduler.extender.imagePullPolicy | quote }}
+           env:
+           {{- if .Values.global.managedNodeSelectorEnable }}

@@ -1070,6 +1070,38 @@ entries:
     urls:
     - assets/rancher-gpu-sharing/rancher-gpu-sharing-0.0.1.tgz
     version: 0.0.1
+  rancher-hami:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher HAMi
+      catalog.cattle.io/kube-version: '>= 1.27.0-0'
+      catalog.cattle.io/namespace: hami
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.9.4-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: rancher-hami
+    apiVersion: v2
+    appVersion: 2.4.1
+    created: "2024-12-23T12:33:39.848452+08:00"
+    dependencies:
+    - condition: hami-webui.enabled
+      name: hami-webui
+      repository: file://./charts/hami-webui
+      version: 1.0.3
+    description: Heterogeneous AI Computing Virtualization Middleware
+    digest: 8f5b464f2671008a4160bae50501fdfe5448e52e03f0d49a70bdf1999cbdf4c0
+    keywords:
+    - vgpu
+    - gpu
+    kubeVersion: '>= 1.27.0'
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-hami
+    type: application
+    urls:
+    - assets/rancher-hami/rancher-hami-104.0.0+up2.4.1.tgz
+    version: 104.0.0+up2.4.1
   rancher-k8s-auditlog-collector:
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.27.0-0'
