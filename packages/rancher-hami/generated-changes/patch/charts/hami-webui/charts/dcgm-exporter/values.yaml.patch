@@ -1,0 +1,9 @@
+--- charts-original/charts/hami-webui/charts/dcgm-exporter/values.yaml
++++ charts/charts/hami-webui/charts/dcgm-exporter/values.yaml
+@@ -154,3 +154,6 @@
+ 
+ # Path to the kubelet socket for /pod-resources
+ kubeletPath: "/var/lib/kubelet/pod-resources"
++
++global:
++  systemDefaultRegistry: ""

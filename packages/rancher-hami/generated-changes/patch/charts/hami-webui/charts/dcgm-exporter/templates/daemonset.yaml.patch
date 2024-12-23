@@ -1,0 +1,14 @@
+--- charts-original/charts/hami-webui/charts/dcgm-exporter/templates/daemonset.yaml
++++ charts/charts/hami-webui/charts/dcgm-exporter/templates/daemonset.yaml
+@@ -91,9 +91,9 @@
+         securityContext:
+           {{- toYaml .Values.securityContext | nindent 10 }}
+         {{- if .Values.image.tag }}
+-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
++        image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+         {{- else }}
+-        image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
++        image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+         {{- end }}
+         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+         args:

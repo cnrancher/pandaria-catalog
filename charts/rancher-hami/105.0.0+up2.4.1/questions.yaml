@@ -1,0 +1,119 @@
+questions:
+# device plugin configurations
+- variable: devicePlugin.runtimeClassName
+  type: string
+  label: RuntimeClassName
+  group: "Device Plugin Config"
+- variable: devicePlugin.migStrategy
+  description: '"none" for ignoring MIG features or "mixed" for allocating MIG device by seperate resources. Default "none"'
+  type: enum
+  default: "none"
+  options:
+    - none
+    - mixed
+  label: MIG Strategy
+  group: "Device Plugin Config"
+- variable: devicePlugin.image.repository
+  description: "Device Plugin image repository"
+  type: string
+  label: Device Plugin Image Repository
+  group: "Device Plugin Config"
+- variable: devicePlugin.image.tag
+  description: "Device Plugin image tag."
+  type: string
+  label: Device Plugin Image Tag
+  group: "Device Plugin Config"
+
+# hami-webui configurations
+- variable: hami-webui.enabled
+  default: true
+  description: "Enable HAMi WebUI"
+  type: boolean
+  label: Enable HAMi WebUI
+  group: "HAMi WebUI"
+  show_subquestion_if: true
+  subquestions:
+  - variable: hami-webui.image.frontend.repository
+    description: "HAMi webui image repository"
+    type: string
+    label: HAMi webui Image Repository
+  - variable: hami-webui.image.frontend.tag
+    description: "HAMi webui image tag"
+    type: string
+    label: HAMi webui Image Tag
+
+# scheduler configurations
+- variable: defaultSchedulerPolicy.nodeSchedulerPolicy
+  description: "Default value is binpack, representing the GPU node scheduling policy. binpack means trying to allocate tasks to the same GPU node as much as possible, while spread means trying to allocate tasks to different GPU nodes as much as possible."
+  type: enum
+  default: "binpack"
+  options:
+    - binpack
+    - spread
+  label: Node Scheduler Policy
+  group: "Scheduler Config"
+- variable: defaultSchedulerPolicy.gpuSchedulerPolicy
+  description: "Default value is spread, representing the GPU scheduling policy. binpack means trying to allocate tasks to the same GPU as much as possible, while spread means trying to allocate tasks to different GPUs as much as possible."
+  type: enum
+  default: "spread"
+  options:
+    - binpack
+    - spread
+  label: GPU Scheduler Policy
+  group: "Scheduler Config"
+
+- variable: scheduler.kubeScheduler.enabled
+  default: true
+  description: "Enable run kube-scheduler container in the scheduler pod"
+  type: boolean
+  label: Run Kube Scheduler in the scheduler pod
+  group: "Scheduler Config"
+  show_subquestion_if: true
+  subquestions:
+  - variable: scheduler.kubeScheduler.image.repository
+    default: "cnrancher/mirrored-projecthami-kube-scheduler"
+    description: "Kube Scheduler image repository"
+    type: string
+    label: Kube Scheduler Image Repository
+  - variable: scheduler.kubeScheduler.image.tag
+    default: ""
+    description: "Kube Scheduler image tag. Default is empty and will use the k8s cluster version."
+    type: string
+    label: Kube Scheduler Image Tag
+- variable: scheduler.extender.image.repository
+  description: "Scheduler extender image repository"
+  type: string
+  label: Scheduler extender Image Repository
+  group: "Scheduler Config"
+- variable: scheduler.extender.image.tag
+  description: "Scheduler extender image tag."
+  type: string
+  label: Scheduler extender Image Tag
+  group: "Scheduler Config"
+
+# nvidia configurations
+- variable: resourceName
+  description: "NVIDIA Resource Name"
+  type: string
+  label: NVIDIA Resource Name
+  group: "Resource Name"
+- variable: resourceMem
+  description: "NVIDIA Memory Resource Name"
+  type: string
+  label: NVIDIA Memory Resource Name
+  group: "Resource Name"
+- variable: resourceMemPercentage
+  description: "NVIDIA Memory Percentage Resource Name"
+  type: string
+  label: NVIDIA Memory Percentage Resource Name
+  group: "Resource Name"
+- variable: resourceCores
+  description: "NVIDIA Cores Resource Name"
+  type: string
+  label: NVIDIA Cores Resource Name
+  group: "Resource Name"
+- variable: resourcePriority
+  description: "NVIDIA Priority Resource Name"
+  type: string
+  label: NVIDIA Priority Resource Name
+  group: "Resource Name"

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hami-vgpu.scheduler" . }}
+  labels:
+    app.kubernetes.io/component: hami-scheduler
+    {{- include "hami-vgpu.labels" . | nindent 4 }}
+    {{- if .Values.scheduler.service.labels }}
+    {{ toYaml .Values.scheduler.service.labels | indent 4 }}
+    {{- end }}
+  {{- if .Values.scheduler.service.annotations }}
+  annotations: {{ toYaml .Values.scheduler.service.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: {{ .Values.scheduler.service.httpPort }}
+      targetPort: 443
+      nodePort: {{ .Values.scheduler.service.schedulerPort }}
+      protocol: TCP
+    - name: monitor
+      port: {{ .Values.scheduler.service.monitorPort }}
+      targetPort: 9395
+      nodePort: {{ .Values.scheduler.service.monitorPort }}
+      protocol: TCP
+  selector:
+    app.kubernetes.io/component: hami-scheduler
+    {{- include "hami-vgpu.selectorLabels" . | nindent 4 }}
+

@@ -1,0 +1,82 @@
+--- charts-original/values.yaml
++++ charts/values.yaml
+@@ -39,6 +39,7 @@
+   managedNodeSelectorEnable: false
+   managedNodeSelector:
+     usage: "gpu"
++  systemDefaultRegistry: ""
+ 
+ 
+ scheduler:
+@@ -58,7 +59,8 @@
+   kubeScheduler:
+     # @param enabled indicate whether to run kube-scheduler container in the scheduler pod, it's true by default.
+     enabled: true
+-    image: registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler
++    image: 
++      repository: cnrancher/mirrored-projecthami-kube-scheduler
+     imagePullPolicy: IfNotPresent
+     extraNewArgs:
+       - --config=/config/config.yaml
+@@ -67,7 +69,9 @@
+       - --policy-config-file=/config/config.json
+       - -v=4
+   extender:
+-    image: "projecthami/hami"
++    image: 
++      repository: cnrancher/mirrored-projecthami-hami
++      tag: "v2.4.1"
+     imagePullPolicy: IfNotPresent
+     extraArgs:
+       - --debug
+@@ -91,8 +95,12 @@
+     reinvocationPolicy: Never
+     failurePolicy: Ignore
+   patch:
+-    image: docker.io/jettech/kube-webhook-certgen:v1.5.2
+-    imageNew: liangjw/kube-webhook-certgen:v1.1.1
++    image: 
++      repository: cnrancher/mirrored-jettech-kube-webhook-certgen
++      tag: v1.5.2
++    imageNew: 
++      repository: cnrancher/mirrored-liangjw-kube-webhook-certgen
++      tag: v1.1.1
+     imagePullPolicy: IfNotPresent
+     priorityClassName: ""
+     podAnnotations: {}
+@@ -107,8 +115,12 @@
+     annotations: {}
+ 
+ devicePlugin:
+-  image: "projecthami/hami"
+-  monitorimage: "projecthami/hami"
++  image: 
++    repository: cnrancher/mirrored-projecthami-hami
++    tag: "v2.4.1"
++  monitorimage: 
++    repository: cnrancher/mirrored-projecthami-hami
++    tag: "v2.4.1"
+   monitorctrPath: /usr/local/vgpu/containers
+   imagePullPolicy: IfNotPresent
+   runtimeClassName: ""
+@@ -148,3 +160,20 @@
+       - huawei.com/Ascend910B-memory
+       - huawei.com/Ascend310P
+       - huawei.com/Ascend310P-memory
++
++hami-webui:
++  enabled: true
++  image:
++    frontend:
++      repository: liuyan/hami-webui-fe-oss
++      tag: "v1.0.3-fix"
++    backend:
++      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
++      tag: "v1.0.3"
++  externalPrometheus:
++    enabled: true # only support rancher monitoring, this must be true
++    address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
++  dcgm-exporter:
++    image:
++      repository: cnrancher/mirrored-nvidia-dcgm-exporter
++      tag: 3.3.7-3.5.0-ubuntu22.04

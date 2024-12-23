@@ -1,0 +1,37 @@
+--- charts-original/charts/hami-webui/values.yaml
++++ charts/charts/hami-webui/values.yaml
+@@ -130,29 +130,10 @@
+   nodeSelector:
+     gpu: "on"
+ 
+-kube-prometheus-stack:
+-  enabled: false
+-  crds:
+-    enabled: false
+-  defaultRules:
+-    create: false
+-  alertmanager:
+-    enabled: false
+-  grafana:
+-    enabled: false
+-  kubernetesServiceMonitors:
+-    enabled: false
+-  nodeExporter:
+-    enabled: false
+-  prometheusOperator:
+-    enabled: false
+-  prometheus:
+-    prometheusSpec:
+-      serviceMonitorSelector:
+-        matchLabels:
+-          jobRelease: hami-webui-prometheus
+-
+ externalPrometheus:
+   enabled: false
+   # If externalPrometheus.enabled is true, this address will be used
+-  address: "http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090"
+\ No newline at end of file
++  address: "http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090"
++
++global:
++  systemDefaultRegistry: ""

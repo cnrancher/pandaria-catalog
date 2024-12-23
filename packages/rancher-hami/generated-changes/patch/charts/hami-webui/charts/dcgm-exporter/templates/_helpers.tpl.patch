@@ -1,0 +1,17 @@
+--- charts-original/charts/hami-webui/charts/dcgm-exporter/templates/_helpers.tpl
++++ charts/charts/hami-webui/charts/dcgm-exporter/templates/_helpers.tpl
+@@ -73,3 +73,14 @@
+     {{ default "default" .Values.serviceAccount.name }}
+ {{- end -}}
+ {{- end -}}
++
++{{/*
++Get Rancher system-default-registry
++*/}}
++{{- define "system_default_registry" -}}
++{{- if .Values.global.systemDefaultRegistry -}}
++{{- printf "%s/" .Values.global.systemDefaultRegistry -}}
++{{- else -}}
++{{- "" -}}
++{{- end -}}
++{{- end -}}

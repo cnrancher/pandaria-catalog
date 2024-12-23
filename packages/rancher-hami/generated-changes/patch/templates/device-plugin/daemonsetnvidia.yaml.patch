@@ -1,0 +1,20 @@
+--- charts-original/templates/device-plugin/daemonsetnvidia.yaml
++++ charts/templates/device-plugin/daemonsetnvidia.yaml
+@@ -36,7 +36,7 @@
+       hostNetwork: true
+       containers:
+         - name: device-plugin
+-          image: {{ .Values.devicePlugin.image }}:{{ .Values.version }}
++          image: "{{ template "system_default_registry" . }}{{ .Values.devicePlugin.image.repository }}:{{ .Values.devicePlugin.image.tag }}"
+           imagePullPolicy: {{ .Values.devicePlugin.imagePullPolicy | quote }}
+           lifecycle:
+             postStart:
+@@ -79,7 +79,7 @@
+               mountPath: /device-config.yaml
+               subPath: device-config.yaml
+         - name: vgpu-monitor
+-          image: {{ .Values.devicePlugin.image }}:{{ .Values.version }}
++          image: "{{ template "system_default_registry" . }}{{ .Values.devicePlugin.image.repository }}:{{ .Values.devicePlugin.image.tag }}"
+           imagePullPolicy: {{ .Values.devicePlugin.imagePullPolicy | quote }}
+           command: ["vGPUmonitor"]
+           securityContext:
