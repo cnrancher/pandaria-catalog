@@ -1,5 +1,14 @@
 --- charts-original/charts/hami-webui/charts/dcgm-exporter/values.yaml
 +++ charts/charts/hami-webui/charts/dcgm-exporter/values.yaml
+@@ -13,7 +13,7 @@
+ # limitations under the License.
+ 
+ image:
+-  repository: nvcr.io/nvidia/k8s/dcgm-exporter
++  repository: cnrancher/mirrored-nvidia-dcgm-exporter
+   pullPolicy: IfNotPresent
+   # Image tag defaults to AppVersion, but you can use the tag key
+   # for the image tag, e.g:
 @@ -154,3 +154,6 @@
  
  # Path to the kubelet socket for /pod-resources

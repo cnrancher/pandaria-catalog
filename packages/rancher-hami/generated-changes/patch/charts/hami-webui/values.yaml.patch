@@ -1,5 +1,21 @@
 --- charts-original/charts/hami-webui/values.yaml
 +++ charts/charts/hami-webui/values.yaml
+@@ -6,12 +6,12 @@
+ 
+ image:
+   frontend:
+-    repository: projecthami/hami-webui-fe-oss
++    repository: cnrancher/hami-webui-fe-oss
+     pullPolicy: IfNotPresent
+     # Overrides the image tag whose default is the chart appVersion.
+-    tag: "v1.0.3"
++    tag: "v1.0.3-fix"
+   backend:
+-    repository: projecthami/hami-webui-be-oss
++    repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
+     pullPolicy: IfNotPresent
+     tag: "v1.0.3"
+ 
 @@ -130,29 +130,10 @@
    nodeSelector:
      gpu: "on"

@@ -165,7 +165,7 @@ hami-webui:
   enabled: true
   image:
     frontend:
-      repository: liuyan/hami-webui-fe-oss
+      repository: cnrancher/hami-webui-fe-oss
       tag: "v1.0.3-fix"
     backend:
       repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
