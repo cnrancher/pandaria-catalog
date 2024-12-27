@@ -162,7 +162,6 @@ devices:
       - huawei.com/Ascend310P-memory
 
 hami-webui:
-  enabled: true
   image:
     frontend:
       repository: cnrancher/hami-webui-fe-oss
@@ -177,3 +176,18 @@ hami-webui:
     image:
       repository: cnrancher/mirrored-nvidia-dcgm-exporter
       tag: 3.3.7-3.5.0-ubuntu22.04
+    runtimeClassName: ""
+
+rancherImages:
+  k8s-1-28:
+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
+    tag: "v1.28.15"
+  k8s-1-29:
+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
+    tag: "v1.29.12"
+  k8s-1-30:
+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
+    tag: "v1.30.8"
+  k8s-1-31:
+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
+    tag: "v1.31.4"

@@ -10,8 +10,7 @@ annotations:
 apiVersion: v2
 appVersion: 2.4.1
 dependencies:
-- condition: hami-webui.enabled
-  name: hami-webui
+- name: hami-webui
   repository: file://./charts/hami-webui
   version: 1.0.3
 description: Heterogeneous AI Computing Virtualization Middleware
