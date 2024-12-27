@@ -2,6 +2,8 @@ apiVersion: "hami.pandaria.com/v1"
 kind: ResourceType
 metadata:
   name: rancher-hami-resourcetypes
+  labels:
+    hami.pandaria.com/installed-by-chart: "true"
 spec:
   resourceTypes:
     - {{ .Values.resourceName }}
@@ -28,3 +30,25 @@ spec:
     - {{ . }}
     {{- end }}
     {{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: rancher-hami-resourcetypes-view-role
+rules:
+- apiGroups: ["hami.pandaria.com"]
+  resources: ["resourcetypes"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rancher-hami-resourcetypes-view-role-binding
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: rancher-hami-resourcetypes-view-role
+  apiGroup: rbac.authorization.k8s.io

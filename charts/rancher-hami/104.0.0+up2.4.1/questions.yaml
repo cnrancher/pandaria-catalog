@@ -1,9 +1,19 @@
 questions:
 # device plugin configurations
-- variable: devicePlugin.runtimeClassName
-  type: string
-  label: RuntimeClassName
+- variable: useRuntimeClass
+  default: false
+  description: "Use runtime class"
+  type: boolean
+  label: Use runtime class
   group: "Device Plugin Config"
+  show_subquestion_if: true
+  subquestions:
+  - variable: devicePlugin.runtimeClassName
+    type: string
+    description: "Set runtimeClassName for device plugin if runtime class is used for container runtime."
+    label: RuntimeClassName
+    required: true
+    group: "Device Plugin Config"
 - variable: devicePlugin.migStrategy
   description: '"none" for ignoring MIG features or "mixed" for allocating MIG device by seperate resources. Default "none"'
   type: enum
@@ -25,25 +35,34 @@ questions:
   group: "Device Plugin Config"
 
 # hami-webui configurations
-- variable: hami-webui.enabled
-  default: true
-  description: "Enable HAMi WebUI"
+- variable: useRuntimeClass
+  default: false
+  description: "Use runtime class"
   type: boolean
-  label: Enable HAMi WebUI
+  label: Use runtime class
   group: "HAMi WebUI"
   show_subquestion_if: true
   subquestions:
-  - variable: hami-webui.image.frontend.repository
-    description: "HAMi webui image repository"
+  - variable: hami-webui.dcgm-exporter.runtimeClassName
     type: string
-    label: HAMi webui Image Repository
-  - variable: hami-webui.image.frontend.tag
-    description: "HAMi webui image tag"
-    type: string
-    label: HAMi webui Image Tag
+    description: "Set runtimeClassName for dcgm-exporter if runtime class is used for container runtime."
+    label: RuntimeClassName
+    required: true
+    group: "HAMi WebUI"
+
+- variable: hami-webui.image.frontend.repository
+  description: "HAMi webui image repository"
+  type: string
+  label: HAMi webui Image Repository
+  group: "HAMi WebUI"
+- variable: hami-webui.image.frontend.tag
+  description: "HAMi webui image tag"
+  type: string
+  label: HAMi webui Image Tag
+  group: "HAMi WebUI"
 
 # scheduler configurations
-- variable: defaultSchedulerPolicy.nodeSchedulerPolicy
+- variable: scheduler.defaultSchedulerPolicy.nodeSchedulerPolicy
   description: "Default value is binpack, representing the GPU node scheduling policy. binpack means trying to allocate tasks to the same GPU node as much as possible, while spread means trying to allocate tasks to different GPU nodes as much as possible."
   type: enum
   default: "binpack"
@@ -52,7 +71,7 @@ questions:
     - spread
   label: Node Scheduler Policy
   group: "Scheduler Config"
-- variable: defaultSchedulerPolicy.gpuSchedulerPolicy
+- variable: scheduler.defaultSchedulerPolicy.gpuSchedulerPolicy
   description: "Default value is spread, representing the GPU scheduling policy. binpack means trying to allocate tasks to the same GPU as much as possible, while spread means trying to allocate tasks to different GPUs as much as possible."
   type: enum
   default: "spread"
@@ -62,24 +81,19 @@ questions:
   label: GPU Scheduler Policy
   group: "Scheduler Config"
 
-- variable: scheduler.kubeScheduler.enabled
-  default: true
-  description: "Enable run kube-scheduler container in the scheduler pod"
-  type: boolean
-  label: Run Kube Scheduler in the scheduler pod
+- variable: scheduler.kubeScheduler.image.repository
+  default: "cnrancher/mirrored-projecthami-kube-scheduler"
+  description: "Kube Scheduler image repository"
+  type: string
+  label: Kube Scheduler Image Repository
   group: "Scheduler Config"
-  show_subquestion_if: true
-  subquestions:
-  - variable: scheduler.kubeScheduler.image.repository
-    default: "cnrancher/mirrored-projecthami-kube-scheduler"
-    description: "Kube Scheduler image repository"
-    type: string
-    label: Kube Scheduler Image Repository
-  - variable: scheduler.kubeScheduler.image.tag
-    default: ""
-    description: "Kube Scheduler image tag. Default is empty and will use the k8s cluster version."
-    type: string
-    label: Kube Scheduler Image Tag
+- variable: scheduler.kubeScheduler.image.tag
+  default: ""
+  description: "Kube Scheduler image tag. Default is empty and will use the k8s cluster version."
+  type: string
+  label: Kube Scheduler Image Tag
+  group: "Scheduler Config"
+
 - variable: scheduler.extender.image.repository
   description: "Scheduler extender image repository"
   type: string
