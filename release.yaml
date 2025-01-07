@@ -2,3 +2,7 @@ rancher-cce-operator-crd:
   - 105.0.0+up0.6.0-beta.1
 rancher-cce-operator:
   - 105.0.0+up0.6.0-beta.1
+rancher-flat-network:
+  - 105.0.0+up0.1.1-beta.3
+rancher-flat-network-crd:
+  - 105.0.0+up0.1.1-beta.3

@@ -10,7 +10,7 @@ annotations:
   catalog.cattle.io/release-name: rancher-flat-network
   catalog.cattle.io/type: cluster-tool
 apiVersion: v2
-appVersion: 0.1.1-beta.3
+appVersion: 0.1.1
 description: Helm chart for managing rancher flat-network pods
 home: https://github.com/cnrancher/rancher-flat-network
 maintainers:
@@ -19,4 +19,4 @@ maintainers:
 name: rancher-flat-network
 sources:
 - https://github.com/cnrancher/rancher-flat-network
-version: 105.0.0+up0.1.1-beta.3
+version: 105.0.0+up0.1.1
