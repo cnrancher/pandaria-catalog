@@ -470,17 +470,17 @@ entries:
       catalog.cattle.io/release-name: rancher-cce-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
-    appVersion: 0.6.0-beta.1
-    created: "2024-11-28T15:34:05.867644+08:00"
+    appVersion: 0.6.1
+    created: "2025-01-07T15:17:19.567396784+08:00"
     description: A Helm chart for provisioning CCE clusters
-    digest: cd698e6bd4f220708c4f0cfba1da6763412ed853a868ea0c896c3485c0de214f
+    digest: 1b96a8a66e6c072649ac6a8c03a7110ee9299d0f5faaa7286fe99befa95dbe5c
     home: https://github.com/cnrancher/cce-operator
     name: rancher-cce-operator
     sources:
     - https://github.com/cnrancher/cce-operator
     urls:
-    - assets/rancher-cce-operator/rancher-cce-operator-105.0.0+up0.6.0-beta.1.tgz
-    version: 105.0.0+up0.6.0-beta.1
+    - assets/rancher-cce-operator/rancher-cce-operator-105.0.0+up0.6.1.tgz
+    version: 105.0.0+up0.6.1
   - annotations:
       catalog.cattle.io/auto-install: rancher-cce-operator-crd=match
       catalog.cattle.io/certified: rancher
@@ -636,14 +636,14 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
       catalog.cattle.io/release-name: rancher-cce-operator-crd
     apiVersion: v2
-    appVersion: 0.6.0-beta.1
-    created: "2024-11-28T15:34:07.065576+08:00"
+    appVersion: 0.6.1
+    created: "2025-01-07T15:17:20.486565048+08:00"
     description: CCE Operator CustomResourceDefinitions
-    digest: 878a425d0875ee878bc1d5779f3918e1e0ecf81c6793bbb6f528f9e5fa26793b
+    digest: e1befc8918604cd396f00e1261104229773a841bf323b387ba50858b1131e45c
     name: rancher-cce-operator-crd
     urls:
-    - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-105.0.0+up0.6.0-beta.1.tgz
-    version: 105.0.0+up0.6.0-beta.1
+    - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-105.0.0+up0.6.1.tgz
+    version: 105.0.0+up0.6.1
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"

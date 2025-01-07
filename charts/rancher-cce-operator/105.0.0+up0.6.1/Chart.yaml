@@ -11,10 +11,10 @@ annotations:
   catalog.cattle.io/release-name: rancher-cce-operator
   catalog.cattle.io/scope: management
 apiVersion: v2
-appVersion: 0.6.0-beta.1
+appVersion: 0.6.1
 description: A Helm chart for provisioning CCE clusters
 home: https://github.com/cnrancher/cce-operator
 name: rancher-cce-operator
 sources:
 - https://github.com/cnrancher/cce-operator
-version: 105.0.0+up0.6.0-beta.1
+version: 105.0.0+up0.6.1
