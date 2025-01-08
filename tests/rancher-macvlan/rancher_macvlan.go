@@ -221,7 +221,7 @@ var suite = test.Suite{
 					var (
 						MultusCniconfHostPathK3s     = "/var/lib/rancher/k3s/agent/etc/cni/net.d"
 						MultusCniconfHostPathDefault = "/etc/cni/net.d"
-						MultusCnibinHostPathK3s      = "/var/lib/rancher/k3s/data/current/bin"
+						MultusCnibinHostPathK3s      = "/var/lib/rancher/k3s/data/cni"
 						MultusCnibinHostPathDefault  = "/opt/cni/bin"
 					)
 					for _, v := range podTemplateSpec.Spec.Volumes {
