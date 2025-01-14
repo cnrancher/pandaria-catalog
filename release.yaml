@@ -8,3 +8,4 @@ rancher-flat-network-crd:
   - 105.0.0+up0.1.1-beta.3
 rancher-macvlan:
   - 0.11.0
+  - 0.11.1
