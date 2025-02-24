@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: 1.0.3
+dependencies:
+- condition: dcgm-exporter.enabled
+  name: dcgm-exporter
+  repository: https://nvidia.github.io/dcgm-exporter/helm-charts
+  version: 3.5.0
+description: A Helm chart for Kubernetes
+name: hami-webui
+type: application
+version: 1.0.3

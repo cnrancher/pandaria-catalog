@@ -68,7 +68,7 @@
 +  image:
 +    frontend:
 +      repository: cnrancher/hami-webui-fe-oss
-+      tag: "v1.0.3-fix"
++      tag: "v1.0.3-fix2"
 +    backend:
 +      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
 +      tag: "v1.0.3"
