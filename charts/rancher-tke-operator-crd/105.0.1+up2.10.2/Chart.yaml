@@ -10,4 +10,4 @@ apiVersion: v2
 appVersion: 2.10.1
 description: TKE Operator CustomResourceDefinitions
 name: rancher-tke-operator-crd
-version: 106.0.0+up2.10.2
+version: 105.0.1+up2.10.2

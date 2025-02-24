@@ -16,4 +16,4 @@ home: https://github.com/cnrancher/tke-operator
 name: rancher-tke-operator
 sources:
 - https://github.com/cnrancher/tke-operator
-version: 106.0.0+up2.10.2
+version: 105.0.1+up2.10.2
