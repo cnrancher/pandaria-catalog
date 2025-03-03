@@ -144,9 +144,9 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 2.10.2
-    created: "2025-02-24T10:58:45.717465+08:00"
+    created: "2025-03-03T18:04:10.919275+08:00"
     description: A Helm chart for provisioning ACK clusters
-    digest: fde5121b3dbba9b4c76310b399784a6cfa5c4a19517b2c23f64f60b25af704d3
+    digest: a72d333422f4a44ff95883c4eff4b12ab37a2cf3c268ef6b9162ce84f87cec2a
     home: https://github.com/cnrancher/ack-operator
     name: rancher-ack-operator
     sources:
@@ -1645,9 +1645,9 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 2.10.1
-    created: "2025-02-24T11:06:21.657733+08:00"
+    created: "2025-03-03T18:04:19.960859+08:00"
     description: A Helm chart for provisioning TKE clusters
-    digest: 76ba0c4507240ee1e062765434102272c9bd5289f94f1960234f0fa1b509ea16
+    digest: 4445d4167d7291f34034f0e880c9f87429b0193a2be77fa756da8e60feb46d98
     home: https://github.com/cnrancher/tke-operator
     name: rancher-tke-operator
     sources:
@@ -1781,7 +1781,7 @@ entries:
       catalog.cattle.io/release-name: rancher-tke-operator-crd
     apiVersion: v2
     appVersion: 2.10.1
-    created: "2025-02-24T11:06:21.771793+08:00"
+    created: "2025-03-03T18:22:48.294134+08:00"
     description: TKE Operator CustomResourceDefinitions
     digest: a3e6596ab432a9e1e7b0d4370ae6e7a914d03e78efa5ea319a7b2399e4295e73
     name: rancher-tke-operator-crd
