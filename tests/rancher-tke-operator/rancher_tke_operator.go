@@ -1,6 +1,8 @@
 package rancher_tke_operator
 
 import (
+	"strings"
+
 	"github.com/cnrancher/pandaria-catalog/tests/common"
 	"github.com/rancher/hull/pkg/chart"
 	"github.com/rancher/hull/pkg/checker"
@@ -10,7 +12,6 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"strings"
 )
 
 var ChartPath = utils.MustGetLatestChartVersionPathFromIndex("index.yaml", "rancher-tke-operator", true)
@@ -89,10 +90,10 @@ var suite = test.Suite{
 				Set("burst", "test-burst"),
 		},
 		{
-			Name: "Set Values.global.systemDefaultRegistry",
+			Name: "Set Values.global.cattle.systemDefaultRegistry",
 
 			TemplateOptions: chart.NewTemplateOptions(DefaultReleaseName, DefaultNamespace).
-				SetValue("global.systemDefaultRegistry", "test-registry"),
+				SetValue("global.cattle.systemDefaultRegistry", "test-registry"),
 		},
 	},
 
@@ -105,7 +106,7 @@ var suite = test.Suite{
 			Name:   "All Workload Container Should Have SystemDefaultRegistryPrefix",
 			Checks: common.AllContainerImagesShouldHaveSystemDefaultRegistryPrefix,
 			Covers: []string{
-				"Values.global.systemDefaultRegistry",
+				"Values.global.cattle.systemDefaultRegistry",
 			},
 		},
 		{
@@ -114,7 +115,7 @@ var suite = test.Suite{
 			Covers: []string{
 				".Values.tkeOperator.image.repository",
 				".Values.tkeOperator.image.tag",
-				".Values.global.systemDefaultRegistry",
+				".Values.global.cattle.systemDefaultRegistry",
 			},
 			Checks: test.Checks{
 				checker.PerWorkload(func(tc *checker.TestContext, obj metav1.Object, podTemplateSpec corev1.PodTemplateSpec) {
