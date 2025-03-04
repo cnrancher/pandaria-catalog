@@ -10,6 +10,8 @@
 - [ ] 支持 `systemDefaultRegistry` 设置，`values.yaml` 定义了：
     ```yaml
     global:
+      systemDefaultRegistry: ""
+      cattle:
         systemDefaultRegistry: ""
     ```
 - [ ] 容器镜像格式为 Manifest List。

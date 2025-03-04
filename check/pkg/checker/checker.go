@@ -273,11 +273,11 @@ func (cc *Checker) imageCheck() error {
 			continue
 		}
 		lv := versions[0]
-		hidden, ok := lv.Annotations[utils.HiddenAnnotationKey]
-		if ok && hidden == "true" {
-			logrus.Infof("skip hidden charts: %v:%v", lv.Name, lv.Version)
-			continue
-		}
+		// hidden, ok := lv.Annotations[utils.HiddenAnnotationKey]
+		// if ok && hidden == "true" {
+		// 	logrus.Infof("skip hidden charts: %v:%v", lv.Name, lv.Version)
+		// 	continue
+		// }
 		if len(lv.URLs) == 0 {
 			logrus.Warnf("url of %q is empty", lv.Name)
 			continue
@@ -344,11 +344,11 @@ func (cc *Checker) systemDefaultRegistryCheck() error {
 			continue
 		}
 		lv := versions[0]
-		hidden, ok := lv.Annotations[utils.HiddenAnnotationKey]
-		if ok && hidden == "true" {
-			logrus.Infof("skip hidden charts: %v:%v", lv.Name, lv.Version)
-			continue
-		}
+		// hidden, ok := lv.Annotations[utils.HiddenAnnotationKey]
+		// if ok && hidden == "true" {
+		// 	logrus.Infof("skip hidden charts: %v:%v", lv.Name, lv.Version)
+		// 	continue
+		// }
 		msg := fmt.Sprintf("%s:%s", lv.Name, lv.Version)
 		values, err := cc.getChartValues(lv.URLs[0])
 		if err != nil {
@@ -357,7 +357,7 @@ func (cc *Checker) systemDefaultRegistryCheck() error {
 			continue
 		}
 		if len(values) == 0 {
-			logrus.Warnf("%q does not have values.yaml", msg)
+			logrus.Infof("SKIP: %q does not have values.yaml", msg)
 			continue
 		}
 		tmplString, err := cc.getChartHelperTemplate(lv.URLs[0])

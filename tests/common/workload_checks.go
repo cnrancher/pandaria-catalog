@@ -120,8 +120,12 @@ var AllContainerImagesShouldHaveSystemDefaultRegistryPrefix = test.Checks{
 
 func GetSystemDefaultRegistry(tc *checker.TestContext) string {
 	systemDefaultRegistry, _ := checker.RenderValue[string](tc, ".Values.global.systemDefaultRegistry")
+	if systemDefaultRegistry == "" {
+		systemDefaultRegistry, _ = checker.RenderValue[string](tc, ".Values.global.cattle.systemDefaultRegistry")
+	}
 	if systemDefaultRegistry != "" {
 		systemDefaultRegistry += "/"
+		return systemDefaultRegistry
 	}
-	return systemDefaultRegistry
+	return ""
 }

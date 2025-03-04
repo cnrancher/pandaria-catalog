@@ -85,9 +85,9 @@ var suite = test.Suite{
 				Set("burst", "test-burst"),
 		},
 		{
-			Name: "Set Values.global.systemDefaultRegistry",
+			Name: "Set Values.global.cattle.systemDefaultRegistry",
 			TemplateOptions: chart.NewTemplateOptions(DefaultReleaseName, DefaultNamespace).
-				SetValue("global.systemDefaultRegistry", "test-registry"),
+				SetValue("global.cattle.systemDefaultRegistry", "test-registry"),
 		},
 	},
 	NamedChecks: []test.NamedCheck{
@@ -95,14 +95,14 @@ var suite = test.Suite{
 			Name:   "All Workloads Have Service Account",
 			Checks: common.AllWorkloadsHaveServiceAccount,
 			Covers: []string{
-				"Values.global.systemDefaultRegistry",
+				"Values.global.cattle.systemDefaultRegistry",
 			},
 		},
 		{
 			Name:   "All Workload Container Should Have SystemDefaultRegistryPrefix",
 			Checks: common.AllContainerImagesShouldHaveSystemDefaultRegistryPrefix,
 			Covers: []string{
-				"Values.global.systemDefaultRegistry",
+				"Values.global.cattle.systemDefaultRegistry",
 			},
 		},
 		{
@@ -110,7 +110,7 @@ var suite = test.Suite{
 			Covers: []string{
 				".Values.ackOperator.image.repository",
 				".Values.ackOperator.image.tag",
-				".Values.global.systemDefaultRegistry",
+				".Values.global.cattle.systemDefaultRegistry",
 			},
 			Checks: test.Checks{
 				checker.PerWorkload(func(tc *checker.TestContext, obj metav1.Object, podTemplateSpec corev1.PodTemplateSpec) {
