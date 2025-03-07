@@ -184,10 +184,10 @@ rancherImages:
     tag: "v1.28.15"
   k8s-1-29:
     repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-    tag: "v1.29.12"
+    tag: "v1.29.13"
   k8s-1-30:
     repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-    tag: "v1.30.8"
+    tag: "v1.30.9"
   k8s-1-31:
     repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-    tag: "v1.31.4"
+    tag: "v1.31.5"
