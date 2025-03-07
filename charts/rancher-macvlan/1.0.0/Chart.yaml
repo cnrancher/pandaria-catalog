@@ -21,4 +21,4 @@ maintainers:
 name: rancher-macvlan
 sources:
 - https://github.com/cnrancher
-version: 1.0.0-rc2
+version: 1.0.0
