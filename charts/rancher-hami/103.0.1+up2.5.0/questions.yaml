@@ -61,6 +61,17 @@ questions:
   label: HAMi webui Image Tag
   group: "HAMi WebUI"
 
+- variable: hami-webui.image.backend.repository
+  description: "HAMi webui backend image repository"
+  type: string
+  label: HAMi webui backend Image Repository
+  group: "HAMi WebUI"
+- variable: hami-webui.image.backend.tag
+  description: "HAMi webui backend image tag"
+  type: string
+  label: HAMi webui backend Image Tag
+  group: "HAMi WebUI"
+
 # scheduler configurations
 - variable: scheduler.defaultSchedulerPolicy.nodeSchedulerPolicy
   description: "Default value is binpack, representing the GPU node scheduling policy. binpack means trying to allocate tasks to the same GPU node as much as possible, while spread means trying to allocate tasks to different GPU nodes as much as possible."
