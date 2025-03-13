@@ -27,9 +27,9 @@ jobs:
       env:
         ALIYUN_BUCKET: oss://pandaria-catalog
         ALIYUN_ENDPOINT: https://oss-cn-hangzhou.aliyuncs.com/
-        ALIYUN_ACCESS_KEY_ID: ${{ steps.setup-aliyun.outputs.aliyun-access-key-id }}
-        ALIYUN_ACCESS_KEY_SECRET: ${{ steps.setup-aliyun.outputs.aliyun-access-key-secret }}
-        ALIYUN_SECURITY_TOKEN: ${{ steps.setup-aliyun.outputs.aliyun-security-token }}
+        ALIYUN_ACCESS_KEY_ID: ${{ env.ALIBABA_CLOUD_ACCESS_KEY_ID }}
+        ALIYUN_ACCESS_KEY_SECRET: ${{ env.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+        ALIYUN_SECURITY_TOKEN: ${{ env.ALIBABA_CLOUD_SECURITY_TOKEN }}
         VERSION_FOLDER_ACCESS: public-read
         LOGO_FOLDER_ACCESS: public-read
         OSSUTIL_VERSION: "1.7.19"
