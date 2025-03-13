@@ -219,10 +219,10 @@ hami-webui:
   image:
     frontend:
       repository: cnrancher/hami-webui-fe-oss
-      tag: "v1.0.3-fix2"
+      tag: "v1.0.3-fix3"
     backend:
-      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
-      tag: "v1.0.3"
+      repository: cnrancher/hami-webui-be-oss
+      tag: "v1.0.3-fix3"
   externalPrometheus:
     enabled: true # only support rancher monitoring, this must be true
     address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"

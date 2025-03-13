@@ -51,14 +51,25 @@ questions:
     group: "HAMi WebUI"
 
 - variable: hami-webui.image.frontend.repository
-  description: "HAMi webui image repository"
+  description: "HAMi webui frontend image repository"
   type: string
-  label: HAMi webui Image Repository
+  label: HAMi webui frontend Image Repository
   group: "HAMi WebUI"
 - variable: hami-webui.image.frontend.tag
-  description: "HAMi webui image tag"
+  description: "HAMi webui frontend image tag"
   type: string
-  label: HAMi webui Image Tag
+  label: HAMi webui frontend Image Tag
+  group: "HAMi WebUI"
+
+- variable: hami-webui.image.backend.repository
+  description: "HAMi webui backend image repository"
+  type: string
+  label: HAMi webui backend Image Repository
+  group: "HAMi WebUI"
+- variable: hami-webui.image.backend.tag
+  description: "HAMi webui backend image tag"
+  type: string
+  label: HAMi webui backend Image Tag
   group: "HAMi WebUI"
 
 # scheduler configurations
