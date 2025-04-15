@@ -5,7 +5,7 @@ global:
 tkeOperator:
   image:
     repository: cnrancher/tke-operator
-    tag: v2.10.2-ent
+    tag: v2.11.1-ent
 
 httpProxy: ""
 httpsProxy: ""
