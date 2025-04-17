@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cce-config-operator
+  namespace: cattle-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      ke.cattle.io/operator: cce
+  template:
+    metadata:
+      labels:
+        ke.cattle.io/operator: cce
+    spec:
+      nodeSelector: {{ include "linux-node-selector" . | nindent 8 }}
+{{- if .Values.nodeSelector }}
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+      tolerations: {{ include "linux-node-tolerations" . | nindent 8 }}
+{{- if .Values.tolerations }}
+{{ toYaml .Values.tolerations | indent 8 }}
+{{- end }}
+      serviceAccountName: cce-operator
+      {{- if .Values.priorityClassName }}
+      priorityClassName: "{{.Values.priorityClassName}}"
+      {{- end }}
+      securityContext:
+        fsGroup: 1007
+        runAsUser: 1007
+      containers:
+      - name: cce-operator
+        image: {{ template "system_default_registry" . }}{{ .Values.cceOperator.image.repository }}:{{ .Values.cceOperator.image.tag }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: HTTP_PROXY
+          value: {{ .Values.httpProxy }}
+        - name: HTTPS_PROXY
+          value: {{ .Values.httpsProxy }}
+        - name: NO_PROXY
+          value: {{ .Values.noProxy }}
+
