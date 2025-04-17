@@ -1,0 +1,30 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: rancher-flat-network-subnets-validating-config
+  labels:
+    app: rancher-flat-network-operator
+webhooks:
+  - name: rancher-flat-network-subnets-validating-config.cattle-flat-network.svc.cluster.local
+    failurePolicy: Ignore
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: 5
+    clientConfig:
+      service:
+        name: rancher-flat-network-webhook-svc
+        namespace: cattle-flat-network
+        path: "/validate"
+    rules:
+      - operations: [ "CREATE", "UPDATE" ]
+        apiGroups: [ "flatnetwork.pandaria.io" ]
+        apiVersions: [ "v1" ]
+        resources: [ "flatnetworksubnets" ]
+      - operations: [ "CREATE", "UPDATE" ]
+        apiGroups: [ "apps" ]
+        apiVersions: [ "v1" ]
+        resources: [ "deployments", "daemonsets", "statefulsets" ]
+      - operations: [ "CREATE", "UPDATE" ]
+        apiGroups: [ "batch" ]
+        apiVersions: [ "v1", "v1beta1" ]
+        resources: [ "cronjobs", "jobs" ]
