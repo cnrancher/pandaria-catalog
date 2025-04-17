@@ -1,0 +1,49 @@
+# Run webhook deploy when chart installed
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rancher-flat-network-tls-rollout
+  namespace: cattle-flat-network
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      labels:
+        app: rancher-flat-network-tls-rollout
+    spec:
+      serviceAccountName: rancher-flat-network-multus
+      restartPolicy: OnFailure
+      containers:
+      - image: {{ template "system_default_registry" . }}{{ .Values.deploy.image.repository }}:{{ .Values.deploy.image.tag }}
+        name: rancher-flat-network-deploy
+        imagePullPolicy: {{ .Values.deploy.image.pullPolicy }}
+        env:
+        - name: ROLLOUT_FLATNETWORK_DEPLOYMENT
+          value: "true"
+
+---
+# Run webhook deploy every month to renew certificate.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: rancher-flat-network-tls-rollout
+  namespace: cattle-flat-network
+spec:
+  schedule: "{{ .Values.deploy.rolloutSchedule }}"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      template:
+        metadata:
+          labels:
+            app: rancher-flat-network-webhook-rollout
+        spec:
+          serviceAccountName: rancher-flat-network-multus
+          restartPolicy: OnFailure
+          containers:
+          - image: {{ template "system_default_registry" . }}{{ .Values.deploy.image.repository }}:{{ .Values.deploy.image.tag }}
+            name: rancher-flat-network-tls-rollout
+            imagePullPolicy: {{ .Values.deploy.image.pullPolicy }}
+            env:
+            - name: ROLLOUT_FLATNETWORK_DEPLOYMENT
+              value: "true"
