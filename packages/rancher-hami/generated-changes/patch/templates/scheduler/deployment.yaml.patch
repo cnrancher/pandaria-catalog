@@ -4,12 +4,12 @@
        containers:
        {{- if .Values.scheduler.kubeScheduler.enabled }}
          - name: kube-scheduler
--          image: {{ .Values.scheduler.kubeScheduler.image }}:{{ .Capabilities.KubeVersion.Version }}
+-          image: "{{ .Values.scheduler.kubeScheduler.image }}:{{ include "resolvedKubeSchedulerTag" . }}"
 +          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.kubeScheduler.image.repository }}:{{ include "resolvedKubeSchedulerTag" . }}"
            imagePullPolicy: {{ .Values.scheduler.kubeScheduler.imagePullPolicy | quote }}
            command:
              - kube-scheduler
-@@ -67,7 +67,7 @@
+@@ -69,7 +69,7 @@
              timeoutSeconds: 15
            {{- end }}
          - name: vgpu-scheduler-extender
