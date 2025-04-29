@@ -1420,13 +1420,13 @@ entries:
       catalog.cattle.io/release-name: rancher-hami
     apiVersion: v2
     appVersion: 2.5.0
-    created: "2025-04-18T11:02:11.305395+08:00"
+    created: "2025-04-29T15:56:21.023727+08:00"
     dependencies:
     - name: hami-webui
       repository: file://./charts/hami-webui
       version: 1.0.3
     description: Heterogeneous AI Computing Virtualization Middleware
-    digest: 8d1bbcdb0da36885c25bfc3a6449fb63dd5c6386fb82069f5d53124b44c8a35e
+    digest: 1ddc6730061c8ccbc527fdd469151216d1e4b2b5525826d5a3a9b87771b9221c
     keywords:
     - vgpu
     - gpu
