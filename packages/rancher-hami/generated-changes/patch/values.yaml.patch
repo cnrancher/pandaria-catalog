@@ -61,7 +61,7 @@
    monitorctrPath: /usr/local/vgpu/containers
    imagePullPolicy: IfNotPresent
    deviceSplitCount: 10
-@@ -202,3 +214,34 @@
+@@ -202,3 +214,20 @@
        - huawei.com/Ascend910B4-memory
        - huawei.com/Ascend310P
        - huawei.com/Ascend310P-memory
@@ -82,17 +82,3 @@
 +      repository: cnrancher/mirrored-nvidia-dcgm-exporter
 +      tag: 3.3.7-3.5.0-ubuntu22.04
 +    runtimeClassName: ""
-+
-+rancherImages:
-+  k8s-1-28:
-+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-+    tag: "v1.28.15"
-+  k8s-1-29:
-+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-+    tag: "v1.29.15"
-+  k8s-1-30:
-+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-+    tag: "v1.30.11"
-+  k8s-1-31:
-+    repository: "cnrancher/mirrored-projecthami-kube-scheduler"
-+    tag: "v1.31.7"
