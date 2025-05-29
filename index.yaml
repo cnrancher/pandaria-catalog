@@ -1188,6 +1188,37 @@ entries:
       catalog.cattle.io/namespace: hami
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.9.10-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: rancher-hami
+    apiVersion: v2
+    appVersion: 2.5.2
+    created: "2025-05-29T17:01:42.101531+08:00"
+    dependencies:
+    - condition: hami-webui.enabled
+      name: hami-webui
+      repository: file://./charts/hami-webui
+      version: 1.0.5
+    description: Heterogeneous AI Computing Virtualization Middleware
+    digest: af6c32c843ae4f1a12008bb332468074cca4d15b117336e43dffbffec5387856
+    keywords:
+    - vgpu
+    - gpu
+    kubeVersion: '>= 1.27.0'
+    maintainers:
+    - email: hang.jiang@suse.com
+      name: jianghang8421
+    name: rancher-hami
+    type: application
+    urls:
+    - assets/rancher-hami/rancher-hami-104.0.3+up2.5.2.tgz
+    version: 104.0.3+up2.5.2
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher HAMi
+      catalog.cattle.io/kube-version: '>= 1.27.0-0'
+      catalog.cattle.io/namespace: hami
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
       catalog.cattle.io/rancher-version: '>= 2.9.4-0 < 2.10.0-0'
       catalog.cattle.io/release-name: rancher-hami
     apiVersion: v2
