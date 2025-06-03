@@ -3,7 +3,7 @@
 @@ -31,9 +31,9 @@
        containers:
          - name: patch
-           {{- if ge (.Capabilities.KubeVersion.Minor | int) 22 }}
+           {{- if ge (regexReplaceAll "[^0-9]" .Capabilities.KubeVersion.Minor "" | int) 22 }}
 -          image: {{ .Values.scheduler.patch.imageNew }}
 +          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.patch.imageNew.repository }}:{{ .Values.scheduler.patch.imageNew.tag }}"
            {{- else }}
