@@ -27,7 +27,7 @@
 -    image: "projecthami/hami"
 +    image: 
 +      repository: cnrancher/mirrored-projecthami-hami
-+      tag: "v2.5.0"
++      tag: "v2.5.2"
      imagePullPolicy: IfNotPresent
      resources: {}
        # If you do want to specify resources, uncomment the following lines, adjust them as necessary,
@@ -54,10 +54,10 @@
 -  monitorimage: "projecthami/hami"
 +  image: 
 +    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.5.0"
++    tag: "v2.5.2"
 +  monitorimage: 
 +    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.5.0"
++    tag: "v2.5.2"
    monitorctrPath: /usr/local/vgpu/containers
    imagePullPolicy: IfNotPresent
    deviceSplitCount: 10
@@ -70,10 +70,10 @@
 +  image:
 +    frontend:
 +      repository: cnrancher/hami-webui-fe-oss
-+      tag: "v1.0.3-fix3"
++      tag: "v1.0.5-fix"
 +    backend:
 +      repository: cnrancher/hami-webui-be-oss
-+      tag: "v1.0.3-fix3"
++      tag: "v1.0.5-fix"
 +  externalPrometheus:
 +    enabled: true # only support rancher monitoring, this must be true
 +    address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
