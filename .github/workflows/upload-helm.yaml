@@ -17,6 +17,7 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.ref_name}}
     - name: Upload Helm Repo
+      if: ${{ github.repository == 'cnrancher/pandaria-catalog' }}
       env:
         ALIYUN_BUCKET: oss://pandaria-catalog
         ALIYUN_ENDPOINT: https://oss-cn-hangzhou.aliyuncs.com/

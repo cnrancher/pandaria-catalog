@@ -1,0 +1,31 @@
+name: Publish to Release
+on:
+  workflow_dispatch:
+    inputs:
+      VERSION:
+        description: 'Rancher major version (v2.11)'
+        default: 'v2.11'
+        type: string
+        required: true
+jobs:
+  publish-to-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: "dev/${{ github.event.inputs.VERSION }}"
+          fetch-depth: 0
+      - name: Sync repository
+        env:
+          VERSION: ${{ github.event.inputs.VERSION }}
+        run: |
+          set -x
+          git remote -v
+          git branch -r
+          git checkout -t origin/release/${VERSION}
+          git rebase dev/${VERSION}
+          git push origin release/${VERSION}
