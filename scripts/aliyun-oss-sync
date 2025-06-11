@@ -34,11 +34,15 @@ sudo cp ./ossutil-v*/ossutil /bin/
 sudo chmod 755 /bin/ossutil
 
 echo "---- Configuring ossutil"
+STS_TOKEN_OPTION=""
+if [[ ! -z "${ALIYUN_SECURITY_TOKEN}" ]]; then
+    STS_TOKEN_OPTION="--sts-token ${ALIYUN_SECURITY_TOKEN}"
+fi
 ossutil config \
     --endpoint "${ALIYUN_ENDPOINT}" \
     --access-key-id "${ALIYUN_ACCESS_KEY_ID}" \
     --access-key-secret "${ALIYUN_ACCESS_KEY_SECRET}" \
-    --sts-token "${ALIYUN_SECURITY_TOKEN}"
+    ${STS_TOKEN_OPTION}
 
 echo "---- Check ossutil"
 ossutil ls -d "${ALIYUN_BUCKET}"

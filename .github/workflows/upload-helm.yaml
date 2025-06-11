@@ -16,20 +16,13 @@ jobs:
       with:
         fetch-depth: 0
         ref: ${{ github.ref_name}}
-    - name: Setup Aliyun Credentials
-      id: setup-aliyun
-      uses: aliyun/configure-aliyun-credentials-action@v1
-      with:
-        role-to-assume: ${{ secrets.ROLES_TO_ASSUME }}
-        oidc-provider-arn: ${{ secrets.OIDC_PROVIDER_ARN }}
-        audience: 'github-actions'
     - name: Upload Helm Repo
       env:
         ALIYUN_BUCKET: oss://pandaria-catalog
         ALIYUN_ENDPOINT: https://oss-cn-hangzhou.aliyuncs.com/
-        ALIYUN_ACCESS_KEY_ID: ${{ env.ALIBABA_CLOUD_ACCESS_KEY_ID }}
-        ALIYUN_ACCESS_KEY_SECRET: ${{ env.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
-        ALIYUN_SECURITY_TOKEN: ${{ env.ALIBABA_CLOUD_SECURITY_TOKEN }}
+        ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
+        ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+        ALIYUN_SECURITY_TOKEN: ""
         VERSION_FOLDER_ACCESS: public-read
         LOGO_FOLDER_ACCESS: public-read
         OSSUTIL_VERSION: "1.7.19"
