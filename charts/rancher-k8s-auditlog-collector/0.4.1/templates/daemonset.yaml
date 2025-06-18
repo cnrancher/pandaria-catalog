@@ -1,0 +1,41 @@
+{{- if eq .Values.mode "file" }}
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: rancher-k8s-auditlog-fluentbit-file
+spec:
+  selector:
+    matchLabels:
+      app: rancher-k8s-auditlog-fluentbit-file
+  template:
+    metadata:
+      labels:
+        app: rancher-k8s-auditlog-fluentbit-file
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+    spec:
+      volumes:
+      - name: fluentbit-config
+        configMap:
+          name: rancher-k8s-auditlog-fluentbit-config
+      - name: kubeapiserver-log
+        hostPath:
+          path: {{ .Values.apiserverLogPath }}
+          type: DirectoryOrCreate
+      containers:
+        - name: fluentbit
+          image: "{{ template "system_default_registry" . }}{{ .Values.fluentbit.image.repository }}:{{ .Values.fluentbit.image.tag }}"
+          args:
+          - /fluent-bit/bin/fluent-bit
+          - --config=/fluenbit-config/main.conf
+          volumeMounts:
+          - name: fluentbit-config
+            mountPath: /fluenbit-config
+          - name: kubeapiserver-log
+            mountPath: /var/log/kubernetes/audit/
+      {{- $nodeSelector := .Values.nodeSelector }}
+      {{- with $nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
