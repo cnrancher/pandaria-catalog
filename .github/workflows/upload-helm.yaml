@@ -5,6 +5,8 @@ on:
     branches:
       - 'release/*'
       - 'dev/*'
+  workflow_dispatch:
+
 jobs:
   release:
     runs-on: ubuntu-latest
