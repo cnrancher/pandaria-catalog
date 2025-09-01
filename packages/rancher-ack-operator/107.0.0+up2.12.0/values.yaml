@@ -1,0 +1,18 @@
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+ackOperator:
+  image:
+    repository: cnrancher/ack-operator
+    tag: v2.12.0-ent-rc1
+
+httpProxy: ""
+httpsProxy: ""
+noProxy: ""
+additionalTrustedCAs: false
+leaderElect: true
+lockName: ""
+lockNamespace: ""
+qps: ""
+burst: ""
