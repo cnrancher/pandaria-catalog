@@ -1,4 +1,0 @@
-You have deployed the Rancher CCE operator
-Version: {{ .Chart.AppVersion }}
-Description: This operator provisions CCE clusters
-from CCEClusterConfig CRs.
