@@ -262,14 +262,14 @@ entries:
       catalog.cattle.io/namespace: kube-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.11.0-0 < 2.12.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
       catalog.cattle.io/release-name: rancher-f5-cis
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2025-04-18T10:57:40.512413+08:00"
+    created: "2025-09-02T14:41:56.83933+08:00"
     description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
       (k8s-bigip-ctlr).
-    digest: 645f6310141794808260289c5f0bb2d7cbc74a04eb320dfe2247987c2071448f
+    digest: e3319603dfaedeb90e2e804748286ffb23225691d3919d80c2e2ea0c5dead461
     home: https://github.com/F5Networks/k8s-bigip-ctlr
     icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
     keywords:
@@ -282,98 +282,8 @@ entries:
     sources:
     - https://github.com/F5Networks/k8s-bigip-ctlr
     urls:
-    - assets/rancher-f5-cis/rancher-f5-cis-106.0.0+up0.0.29.tgz
-    version: 106.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/auto-install: rancher-f5-cis-crd=match
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/namespace: kube-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
-      catalog.cattle.io/release-name: rancher-f5-cis
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-12-16T00:28:43.543512+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
-      (k8s-bigip-ctlr).
-    digest: caf04beee34ce6866fb8ee014003f0692a039419ae509975c6731e1d528fe229
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis/rancher-f5-cis-105.0.0+up0.0.29.tgz
-    version: 105.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/auto-install: rancher-f5-cis-crd=match
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/namespace: kube-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
-      catalog.cattle.io/release-name: rancher-f5-cis
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-08-30T14:10:50.821557+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
-      (k8s-bigip-ctlr).
-    digest: 3fb93759d385abef107d39296b676f787c769de4bf8e1ef2cbfd646adaa06e1c
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis/rancher-f5-cis-104.0.0+up0.0.29.tgz
-    version: 104.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/auto-install: rancher-f5-cis-crd=match
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS
-      catalog.cattle.io/kube-version: '>= 1.25.0-0'
-      catalog.cattle.io/namespace: kube-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.8.4-0'
-      catalog.cattle.io/release-name: rancher-f5-cis
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-06-03T17:51:08.15999+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
-      (k8s-bigip-ctlr).
-    digest: ae2eefc88c909276093802349b5ce8c1be11fca411b34099687d93c616c16b90
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis/rancher-f5-cis-103.0.0+up0.0.29.tgz
-    version: 103.0.0+up0.0.29
+    - assets/rancher-f5-cis/rancher-f5-cis-107.0.0+up0.0.29.tgz
+    version: 107.0.0+up0.0.29
   rancher-f5-cis-crd:
   - annotations:
       catalog.cattle.io/certified: rancher
@@ -382,13 +292,13 @@ entries:
       catalog.cattle.io/kube-version: '>= 1.27.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.11.0-0 < 2.12.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
       catalog.cattle.io/release-name: rancher-f5-cis-crd
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2025-04-18T10:58:33.103981+08:00"
+    created: "2025-09-02T14:44:30.063264+08:00"
     description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
-    digest: 9744be5511e03d55a552b2fed410531ca46184a4f6619af5599f598e6abae749
+    digest: b8bff95ca1841f8f03a8841aa9913c0026e1ee91742cb1b2e0a94be68a3dfb98
     home: https://github.com/F5Networks/k8s-bigip-ctlr
     icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
     keywords:
@@ -401,92 +311,8 @@ entries:
     sources:
     - https://github.com/F5Networks/k8s-bigip-ctlr
     urls:
-    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-106.0.0+up0.0.29.tgz
-    version: 106.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS CRD
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
-      catalog.cattle.io/release-name: rancher-f5-cis-crd
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-12-16T00:28:43.683437+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
-    digest: 98c3cd73bbe61c0b4d9fbb4576e3c10a29febaf7ae3b2a7236fd2938752fd346
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis-crd
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-105.0.0+up0.0.29.tgz
-    version: 105.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS CRD
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
-      catalog.cattle.io/release-name: rancher-f5-cis-crd
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-08-30T14:10:50.986565+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
-    digest: 984d4b1891737ebc9433f61d12fc054eae1d2ba7d26a55ee616f6827fbc07e2f
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis-crd
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-104.0.0+up0.0.29.tgz
-    version: 104.0.0+up0.0.29
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher F5 CIS CRD
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/kube-version: '>= 1.25.0-0'
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.8.4-0'
-      catalog.cattle.io/release-name: rancher-f5-cis-crd
-    apiVersion: v2
-    appVersion: 2.16.1
-    created: "2024-05-31T12:33:01.295427+08:00"
-    description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
-    digest: 2b278a3a1fbc766e921d42b28470b3f60514caf04990d77a656025cef508f6f9
-    home: https://github.com/F5Networks/k8s-bigip-ctlr
-    icon: https://cdn.f5.com/websites/support/assets/images/logo.svg
-    keywords:
-    - f5
-    - bigip
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-f5-cis-crd
-    sources:
-    - https://github.com/F5Networks/k8s-bigip-ctlr
-    urls:
-    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-103.0.0+up0.0.29.tgz
-    version: 103.0.0+up0.0.29
+    - assets/rancher-f5-cis-crd/rancher-f5-cis-crd-107.0.0+up0.0.29.tgz
+    version: 107.0.0+up0.0.29
   rancher-flat-network:
   - annotations:
       catalog.cattle.io/auto-install: rancher-flat-network-crd=match
@@ -547,18 +373,18 @@ entries:
       catalog.cattle.io/namespace: hami
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.11.2-0 < 2.12.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
       catalog.cattle.io/release-name: rancher-hami
     apiVersion: v2
     appVersion: 2.5.2
-    created: "2025-06-03T11:56:22.083373+08:00"
+    created: "2025-09-02T14:47:55.011179+08:00"
     dependencies:
     - condition: hami-webui.enabled
       name: hami-webui
       repository: file://./charts/hami-webui
       version: 1.0.5
     description: Heterogeneous AI Computing Virtualization Middleware
-    digest: ee26a2e9c0aaf7d5972ab39b8ba8295bfbee586b9f8eeceff27f7fa5412e5895
+    digest: e4907de80c174ae5be925d0b2befba3c0f26660c87efa1f610977d3070104dca
     keywords:
     - vgpu
     - gpu
@@ -569,189 +395,24 @@ entries:
     name: rancher-hami
     type: application
     urls:
-    - assets/rancher-hami/rancher-hami-106.0.1+up2.5.2.tgz
-    version: 106.0.1+up2.5.2
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher HAMi
-      catalog.cattle.io/kube-version: '>= 1.28.0-0'
-      catalog.cattle.io/namespace: hami
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.11.0-0 < 2.12.0-0'
-      catalog.cattle.io/release-name: rancher-hami
-    apiVersion: v2
-    appVersion: 2.5.0
-    created: "2025-04-29T15:56:21.023727+08:00"
-    dependencies:
-    - name: hami-webui
-      repository: file://./charts/hami-webui
-      version: 1.0.3
-    description: Heterogeneous AI Computing Virtualization Middleware
-    digest: 1ddc6730061c8ccbc527fdd469151216d1e4b2b5525826d5a3a9b87771b9221c
-    keywords:
-    - vgpu
-    - gpu
-    kubeVersion: '>= 1.28.0'
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-hami
-    type: application
-    urls:
-    - assets/rancher-hami/rancher-hami-106.0.0+up2.5.0.tgz
-    version: 106.0.0+up2.5.0
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher HAMi
-      catalog.cattle.io/kube-version: '>= 1.28.0-0'
-      catalog.cattle.io/namespace: hami
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
-      catalog.cattle.io/release-name: rancher-hami
-    apiVersion: v2
-    appVersion: 2.4.1
-    created: "2025-03-07T16:43:11.22582+08:00"
-    dependencies:
-    - name: hami-webui
-      repository: file://./charts/hami-webui
-      version: 1.0.3
-    description: Heterogeneous AI Computing Virtualization Middleware
-    digest: 6b7189ce6e681deba5ae5df05c4a2f757bef1e943113da499f5b67f5b5384532
-    keywords:
-    - vgpu
-    - gpu
-    kubeVersion: '>= 1.28.0'
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-hami
-    type: application
-    urls:
-    - assets/rancher-hami/rancher-hami-105.0.1+up2.4.1.tgz
-    version: 105.0.1+up2.4.1
-  - annotations:
-      catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Rancher HAMi
-      catalog.cattle.io/kube-version: '>= 1.28.0-0'
-      catalog.cattle.io/namespace: hami
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
-      catalog.cattle.io/release-name: rancher-hami
-    apiVersion: v2
-    appVersion: 2.4.1
-    created: "2024-12-27T16:25:43.442938+08:00"
-    dependencies:
-    - name: hami-webui
-      repository: file://./charts/hami-webui
-      version: 1.0.3
-    description: Heterogeneous AI Computing Virtualization Middleware
-    digest: b31c93f1ab31acd9986ac183e59b307ed92c8a6f9e0762d11a3849876a0aa3c4
-    keywords:
-    - vgpu
-    - gpu
-    kubeVersion: '>= 1.28.0'
-    maintainers:
-    - email: hang.jiang@suse.com
-      name: jianghang8421
-    name: rancher-hami
-    type: application
-    urls:
-    - assets/rancher-hami/rancher-hami-105.0.0+up2.4.1.tgz
-    version: 105.0.0+up2.4.1
+    - assets/rancher-hami/rancher-hami-107.0.0+up2.5.2.tgz
+    version: 107.0.0+up2.5.2
   rancher-k8s-auditlog-collector:
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.11.0-0 < 2.12.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
     apiVersion: v2
-    appVersion: 2.0.9
-    created: "2025-04-18T10:59:53.582455+08:00"
+    appVersion: 2.2.3
+    created: "2025-09-02T15:56:19.42516+08:00"
     description: collect k8s auditlog for rancher auditlog server
-    digest: 2b043f3ef7bcb29a12fc0637a739dc7c4206d640340a44a280ab2ed76d8e34a1
+    digest: 74e3bb0cd915f8fc26e2d31ce69677778d6083f34d10e9e411a1199d57ac4cf9
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
     kubeVersion: '>= 1.27.0-0'
     name: rancher-k8s-auditlog-collector
     type: application
     urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.4.0.tgz
-    version: 0.4.0
-  - annotations:
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.10.0-0 < 2.11.0-0'
-    apiVersion: v2
-    appVersion: 2.0.9
-    created: "2024-12-16T00:28:46.621718+08:00"
-    description: collect k8s auditlog for rancher auditlog server
-    digest: a178b010d68b79a6446daa1c8200374bdaa3eca9dab82a385d737bf0cb58b31b
-    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
-    kubeVersion: '>= 1.27.0-0'
-    name: rancher-k8s-auditlog-collector
-    type: application
-    urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.3.0.tgz
-    version: 0.3.0
-  - annotations:
-      catalog.cattle.io/kube-version: '>= 1.27.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
-    apiVersion: v2
-    appVersion: 2.0.9
-    created: "2024-08-29T15:44:47.184375+08:00"
-    description: collect k8s auditlog for rancher auditlog server
-    digest: 943affae0e318d130db817ff89c45788e2116537d7deabfa5b6c0735f9da3b71
-    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
-    kubeVersion: '>= 1.27.0-0'
-    name: rancher-k8s-auditlog-collector
-    type: application
-    urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.2.0.tgz
-    version: 0.2.0
-  - annotations:
-      catalog.cattle.io/kube-version: '>= 1.20.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.8.0-0'
-    apiVersion: v2
-    appVersion: 2.0.9
-    created: "2023-11-13T17:26:36.769133+08:00"
-    description: collect k8s auditlog for rancher auditlog server
-    digest: a174e0edc006d93c04d94cbda70f003a60f4a7d033c59a23ef4825d6543eda9a
-    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
-    kubeVersion: '>= 1.20.0-0'
-    name: rancher-k8s-auditlog-collector
-    type: application
-    urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.1.0.tgz
-    version: 0.1.0
-  - annotations:
-      catalog.cattle.io/kube-version: '>= 1.20.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.7.0-0'
-    apiVersion: v2
-    appVersion: 2.0.9
-    created: "2023-03-24T11:39:08.923328+08:00"
-    description: collect k8s auditlog for rancher auditlog server
-    digest: ce0f6f1bee693b75183582958e2544002e63b184e616c5eea3a6a633d50d0dda
-    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
-    kubeVersion: '>= 1.20.0-0'
-    name: rancher-k8s-auditlog-collector
-    type: application
-    urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.0.2.tgz
-    version: 0.0.2
-  - annotations:
-      catalog.cattle.io/kube-version: '>= 1.20.0-0'
-      catalog.cattle.io/rancher-version: '>= 2.7.0-0'
-    apiVersion: v2
-    appVersion: 1.8.13
-    created: "2023-01-04T15:15:12.236364+08:00"
-    description: collect k8s auditlog for rancher auditlog server
-    digest: 878e8d3a952c6d30ff813cece33a9757c5f4d52482b973f66735df24936960f9
-    icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
-    kubeVersion: '>= 1.18.0-0'
-    name: rancher-k8s-auditlog-collector
-    type: application
-    urls:
-    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.0.1.tgz
-    version: 0.0.1
+    - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.5.0.tgz
+    version: 0.5.0
   rancher-macvlan:
   - annotations:
       catalog.cattle.io/certified: rancher
