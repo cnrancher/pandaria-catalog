@@ -1,4 +1,0 @@
-You have deployed the Rancher ack operator
-Version: {{ .Chart.AppVersion }}
-Description: This operator provisions ack clusters
-from ackClusterConfig CRs.
