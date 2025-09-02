@@ -10,7 +10,7 @@
    catalog.cattle.io/os: linux
    catalog.cattle.io/permits-os: linux
 -  catalog.cattle.io/rancher-version: '>= 2.8.0-alpha'
-+  catalog.cattle.io/rancher-version: '>= 2.11.0-alpha'
++  catalog.cattle.io/rancher-version: '>= 2.12.0-alpha'
    catalog.cattle.io/release-name: rancher-flat-network
    catalog.cattle.io/type: cluster-tool
  apiVersion: v2
