@@ -228,9 +228,9 @@ entries:
       catalog.cattle.io/release-name: rancher-cce-operator-crd
     apiVersion: v2
     appVersion: 0.8.0-beta.1
-    created: "2025-09-02T12:23:13.679605282+08:00"
+    created: "2025-09-02T12:31:48.669067123+08:00"
     description: CCE Operator CustomResourceDefinitions
-    digest: 0eae059c76a8e7ca365d60eb394fe77093af74090a95137e3dab687be1e35b01
+    digest: bfc41c36b66fec189f4ec1f7abeed328a74b71c73f1c24a901115d0a65143a40
     name: rancher-cce-operator-crd
     urls:
     - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-107.0.0+up0.8.0-beta.1.tgz
@@ -526,9 +526,9 @@ entries:
       catalog.cattle.io/release-name: rancher-flat-network-crd
     apiVersion: v2
     appVersion: 0.2.2-beta.1
-    created: "2025-09-02T12:19:39.890574193+08:00"
+    created: "2025-09-02T12:31:50.539993373+08:00"
     description: Rancher FlatNetwork CustomResourceDefinitions
-    digest: ddcfa657393c3ca4728c9dadc0044b95cfd7786d7e8c6c37b45951a6602f1f86
+    digest: 97c416a732b18d143ce8ce92156d1ab127d7dd5935532b02f25098b107b490e1
     home: https://github.com/cnrancher/rancher-flat-network
     maintainers:
     - email: starry.wang@suse.com
