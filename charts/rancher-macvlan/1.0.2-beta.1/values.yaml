@@ -1,0 +1,43 @@
+iface: ""
+
+podCIDR: "10.42.0.0/16"
+
+arpPolicy: "arping"
+
+proxyARP: false
+
+clusterType: "Default"
+
+multus:
+  cniVersion: "0.3.1"
+
+ncResources:
+  limits:
+    memory: 512Mi
+nadcResources:
+  limits:
+    memory: 512Mi
+
+image:
+  multus:
+    repository: cnrancher/hardened-multus-cni
+    tag: v4.2.2
+  networkController:
+    repository: cnrancher/network-controller
+    tag: "v1.0.2-beta.1"
+  admission:
+    repository: cnrancher/network-admission-deploy
+    tag: "v1.0.2-beta.1"
+  nadController:
+    repository: cnrancher/k8s-net-attach-def-controller
+    tag: "v1.0.2-beta.1"
+  staticMacvlan:
+    repository: cnrancher/static-macvlan-cni
+    tag: "v1.0.2-beta.1"
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+privateRegistry:
+  registryUrl: ~
