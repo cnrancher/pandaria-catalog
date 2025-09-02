@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-flat-network-operator
+  namespace: cattle-flat-network
+  labels:
+    app: rancher-flat-network-operator
+spec:
+  replicas: {{ .Values.flatNetworkOperator.replicas }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: rancher-flat-network-operator
+  template:
+    metadata:
+      namespace: cattle-flat-network
+      labels:
+        app: rancher-flat-network-operator
+    spec:
+      serviceAccountName: rancher-flat-network-multus
+      initContainers:
+      - name: wait-webhook-tls-deploy
+        image: {{ template "system_default_registry" . }}{{ .Values.deploy.image.repository }}:{{ .Values.deploy.image.tag }}
+        imagePullPolicy: {{ .Values.deploy.image.pullPolicy }}
+        env:
+        - name: IS_OPERATOR_INIT_CONTAINER
+          value: "true"
+      containers:
+      - name: rancher-flat-network-operator-container
+        image: {{ template "system_default_registry" . }}{{ .Values.flatNetworkOperator.image.repository }}:{{ .Values.flatNetworkOperator.image.tag }}
+        imagePullPolicy: {{ .Values.flatNetworkOperator.image.pullPolicy }}
+        env:
+        - name: CATTLE_RESYNC_DEFAULT
+          value: {{ .Values.flatNetworkOperator.cattleResyncDefault | quote }}
+        - name: CATTLE_DEV_MODE
+          value: {{ .Values.flatNetworkOperator.cattleDevMode | quote }}
+        - name: FLAT_NETWORK_CNI_ARP_POLICY
+          value: {{ .Values.arpPolicy | quote }}
+        - name: FLAT_NETWORK_CNI_PROXY_ARP
+          value: {{ .Values.proxyARP | quote }}
+        - name: FLAT_NETWORK_CLUSTER_CIDR
+          value: {{ .Values.clusterCIDR | quote }}
+        - name: FLAT_NETWORK_SERVICE_CIDR
+          value: {{ .Values.serviceCIDR | quote }}
+        resources:
+          limits:
+            memory: {{ .Values.flatNetworkOperator.limits.memory | quote }}
+            cpu: {{ .Values.flatNetworkOperator.limits.cpu | quote }}
+        volumeMounts:
+        - name: webhook-certs
+          mountPath: /etc/webhook/certs
+        startupProbe:
+          httpGet:
+            path: /ping
+            port: 443
+            scheme: HTTPS
+          failureThreshold: 10
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 443
+            scheme: HTTPS
+          failureThreshold: 10
+          periodSeconds: 5
+      volumes:
+      - name: webhook-certs
+        secret:
+          secretName: rancher-flat-network-webhook-certs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher-flat-network-webhook-svc
+  namespace: cattle-flat-network
+spec:
+  ports:
+  - port: 443
+    targetPort: 443
+  selector:
+    app: rancher-flat-network-operator
