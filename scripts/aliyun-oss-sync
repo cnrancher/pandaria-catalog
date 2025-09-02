@@ -34,11 +34,15 @@ sudo cp ./ossutil-v*/ossutil /bin/
 sudo chmod 755 /bin/ossutil
 
 echo "---- Configuring ossutil"
+STS_TOKEN_OPTION=""
+if [[ ! -z "${ALIYUN_SECURITY_TOKEN}" ]]; then
+    STS_TOKEN_OPTION="--sts-token ${ALIYUN_SECURITY_TOKEN}"
+fi
 ossutil config \
     --endpoint "${ALIYUN_ENDPOINT}" \
     --access-key-id "${ALIYUN_ACCESS_KEY_ID}" \
     --access-key-secret "${ALIYUN_ACCESS_KEY_SECRET}" \
-    --sts-token "${ALIYUN_SECURITY_TOKEN}"
+    ${STS_TOKEN_OPTION}
 
 echo "---- Check ossutil"
 ossutil ls -d "${ALIYUN_BUCKET}"
@@ -46,6 +50,18 @@ ossutil ls -d "${ALIYUN_BUCKET}"
 echo "---- Creating folders"
 ossutil mkdir "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets" || echo "---- assets folder already exists" # Ensure assets folder exists
 ossutil mkdir "${ALIYUN_BUCKET}/${LOGO_FOLDER}/" || echo "---- logo folder already exists" # Ensure LOGO folder exists
+
+# FYI: https://www.codesky.me/archives/oss-design-problem.wind
+# Replace '+' to '-' in Chart URL for compatible with Aliyun OSS Bucket
+echo "---- Format index.yaml file"
+sed -i '/^ *- assets\/.*\.tgz$/ s/+up/-up/g' ./index.yaml
+find . -name '*.tgz' -print0 | while IFS= read -rd $'\0' file; do
+    dst=$(echo "$file" | sed "s/+up/-up/g")
+    if [[ $file = $dst ]]; then
+        continue;
+    fi
+    mv -- "$file" "$dst"
+done
 
 echo "---- Sync chart files"
 ossutil sync -f --delete --update --acl ${VERSION_FOLDER_ACCESS} "./assets" "${ALIYUN_BUCKET}/${VERSION_FOLDER}/assets/"
