@@ -31,8 +31,8 @@ if [[ -z "$RANCHER_VERSION" ]]; then
             ;;
         *)
             echo "Could not get Rancher version from git branch [$BRANCH_NAME]"
-            echo "Set Rancher version to v2.11"
-            RANCHER_VERSION="v2.11"
+            echo "Set Rancher version to v2.12"
+            RANCHER_VERSION="v2.12"
             ;;
     esac
 fi
