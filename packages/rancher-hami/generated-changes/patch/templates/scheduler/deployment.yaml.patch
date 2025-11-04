@@ -1,6 +1,6 @@
 --- charts-original/templates/scheduler/deployment.yaml
 +++ charts/templates/scheduler/deployment.yaml
-@@ -33,7 +33,7 @@
+@@ -45,7 +45,7 @@
        containers:
        {{- if .Values.scheduler.kubeScheduler.enabled }}
          - name: kube-scheduler
@@ -9,7 +9,7 @@
            imagePullPolicy: {{ .Values.scheduler.kubeScheduler.imagePullPolicy | quote }}
            command:
              - kube-scheduler
-@@ -69,7 +69,7 @@
+@@ -81,7 +81,7 @@
              timeoutSeconds: 15
            {{- end }}
          - name: vgpu-scheduler-extender
