@@ -1,6 +1,6 @@
 --- charts-original/values.yaml
 +++ charts/values.yaml
-@@ -39,6 +39,7 @@
+@@ -45,6 +45,7 @@
    managedNodeSelectorEnable: false
    managedNodeSelector:
      usage: "gpu"
@@ -8,7 +8,7 @@
  
  
  scheduler:
-@@ -58,8 +59,9 @@
+@@ -66,8 +67,9 @@
    kubeScheduler:
      # @param enabled indicate whether to run kube-scheduler container in the scheduler pod, it's true by default.
      enabled: true
@@ -20,21 +20,21 @@
      imagePullPolicy: IfNotPresent
      resources: {}
        # If you do want to specify resources, uncomment the following lines, adjust them as necessary.
-@@ -77,7 +79,9 @@
+@@ -85,7 +87,9 @@
        - --policy-config-file=/config/config.json
        - -v=4
    extender:
 -    image: "projecthami/hami"
 +    image: 
 +      repository: cnrancher/mirrored-projecthami-hami
-+      tag: "v2.5.2"
++      tag: "v2.6.1"
      imagePullPolicy: IfNotPresent
      resources: {}
        # If you do want to specify resources, uncomment the following lines, adjust them as necessary,
-@@ -110,8 +114,12 @@
-     reinvocationPolicy: Never
-     failurePolicy: Ignore
+@@ -125,8 +129,12 @@
+   ## If true and certManager.enabled is false, Helm will automatically create a self-signed cert and secret for you.
    patch:
+     enabled: true
 -    image: docker.io/jettech/kube-webhook-certgen:v1.5.2
 -    imageNew: liangjw/kube-webhook-certgen:v1.1.1
 +    image: 
@@ -46,7 +46,7 @@
      imagePullPolicy: IfNotPresent
      priorityClassName: ""
      podAnnotations: {}
-@@ -126,8 +134,12 @@
+@@ -143,8 +151,12 @@
      annotations: {}
  
  devicePlugin:
@@ -54,14 +54,14 @@
 -  monitorimage: "projecthami/hami"
 +  image: 
 +    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.5.2"
++    tag: "v2.6.1"
 +  monitorimage: 
 +    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.5.2"
++    tag: "v2.6.1"
    monitorctrPath: /usr/local/vgpu/containers
    imagePullPolicy: IfNotPresent
    deviceSplitCount: 10
-@@ -202,3 +214,20 @@
+@@ -235,3 +247,20 @@
        - huawei.com/Ascend910B4-memory
        - huawei.com/Ascend310P
        - huawei.com/Ascend310P-memory

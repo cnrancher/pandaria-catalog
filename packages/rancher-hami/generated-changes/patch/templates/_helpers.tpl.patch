@@ -1,6 +1,6 @@
 --- charts-original/templates/_helpers.tpl
 +++ charts/templates/_helpers.tpl
-@@ -89,8 +89,8 @@
+@@ -100,8 +100,8 @@
      Resolve the tag for kubeScheduler.
  */}}
  {{- define "resolvedKubeSchedulerTag" -}}
@@ -11,7 +11,7 @@
  {{- else }}
  {{- include "strippedKubeVersion" . | trim -}}
  {{- end }}
-@@ -106,3 +106,14 @@
+@@ -117,3 +117,14 @@
  {{- define "strippedKubeVersion" -}}
  {{ regexReplaceAll "^(v[0-9]+\\.[0-9]+\\.[0-9]+)(.*)$" .Capabilities.KubeVersion.Version "$1" }}
  {{- end -}}

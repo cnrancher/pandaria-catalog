@@ -11,16 +11,16 @@
 +  catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
 +  catalog.cattle.io/release-name: rancher-hami
  apiVersion: v2
- appVersion: 2.5.2
+ appVersion: 2.6.1
  dependencies:
 @@ -9,12 +18,10 @@
  keywords:
  - vgpu
  - gpu
--kubeVersion: '>= 1.18.0'
+-kubeVersion: '>= 1.18.0-0'
 +kubeVersion: '>= 1.28.0'
  maintainers:
--- email: limengxuan@4paradigm.com
+-- email: archlitchi@gmail.com
 -  name: limengxuan
 -- email: xiaozhang0210@hotmail.com
 -  name: zhangxiao
@@ -29,4 +29,4 @@
 +  name: jianghang8421
 +name: rancher-hami
  type: application
- version: 2.5.2
+ version: 2.6.1
