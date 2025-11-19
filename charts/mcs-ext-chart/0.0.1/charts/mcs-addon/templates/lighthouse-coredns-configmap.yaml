@@ -1,0 +1,17 @@
+{{- if eq .Values.global.installationType "cluster" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lighthouse-coredns-config
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+data:
+  Corefile: |
+    clusterset.local:53 {
+      lighthouse
+      errors
+      health
+      ready
+      prometheus :9153
+      }
+{{- end }}

@@ -1,0 +1,76 @@
+{{- if eq .Values.global.installationType "cluster" }}
+{{- $_ := required "clusterID is required" .Values.clusterID }}
+{{- $componentName := "lighthouse-agent" }}
+{{- $context := dict "Chart" .Chart "componentName" $componentName }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mcs-addon.component_name" $context }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: {{ $componentName }}
+spec:
+  replicas: {{ .Values.lighthouseAgent.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mcs-addon.chart_labels" . | nindent 6 }}
+      component: {{ $componentName }}
+  template:
+    metadata:
+      labels:
+        {{- include "mcs-addon.chart_labels" . | nindent 8 }}
+        component: {{ $componentName }}
+    spec:
+      containers:
+        - name: {{ $componentName }}
+          env:
+            - name: SUBMARINER_DEBUG
+              value: {{ .Values.debug | quote }}
+            - name: SUBMARINER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: SUBMARINER_HALT_ON_CERT_ERROR
+              value: 'true'
+            - name: SUBMARINER_CLUSTERID
+              value: {{ .Values.clusterID }}
+            - name: BROKER_K8S_APISERVER
+              valueFrom:
+                secretKeyRef:
+                  name: broker-secret
+                  key: lighthouseApiServer
+            - name: BROKER_K8S_REMOTENAMESPACE
+              valueFrom:
+                secretKeyRef:
+                  name: broker-secret
+                  key: namespace
+            - name: BROKER_K8S_INSECURE
+              value: {{ .Values.dataPlane.insecure | quote }}
+            - name: BROKER_K8S_SECRET
+              value: broker-secret
+          image: {{ .Values.lighthouseAgent.image.repository }}:{{ .Values.lighthouseAgent.image.tag }}
+          imagePullPolicy: {{ .Values.lighthouseAgent.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.lighthouseAgent.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /run/secrets/submariner.io/broker-secret
+              name: agent-secret
+      nodeSelector:
+        {{- toYaml .Values.scheduling.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.scheduling.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.scheduling.affinity | nindent 8 }}
+      serviceAccountName: {{ template "mcs-addon.component_name" $context }}
+      volumes:
+        - secret:
+            defaultMode: 420
+            items:
+              - key: ca.crt
+                path: ca.crt
+              - key: token
+                path: token
+            secretName: broker-secret
+          name: agent-secret
+{{- end }}

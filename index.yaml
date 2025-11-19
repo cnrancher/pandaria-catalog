@@ -1,5 +1,34 @@
 apiVersion: v1
 entries:
+  mcs-ext-chart:
+  - annotations:
+      catalog.cattle.io/display-name: Multi-cluster Service Addon
+      catalog.cattle.io/kube-version: '>= 1.23.0-0'
+      catalog.cattle.io/namespace: mcs-addon-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'
+      catalog.cattle.io/ui-component: mcs-ext-chart
+    apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-12-25T16:35:26.875543+08:00"
+    dependencies:
+    - name: mcs-addon
+      repository: file://./charts/mcs-addon
+      version: 0.0.1
+    - name: mcs-addon-crd
+      repository: file://./charts/mcs-addon-crd
+      version: 0.0.1
+    - name: submariner-operator
+      repository: file://./charts/submariner-operator
+      version: 0.0.1
+    description: Multi-cluster Service Extension Chart
+    digest: db404a4832bbf8a573a74f5bc55ffddeeaaaef609fc579f6796e6ee3a3ca428c
+    icon: https://pub-68160d88f4744423960a290fc7a5031d.r2.dev/mcs-icon.png
+    name: mcs-ext-chart
+    urls:
+    - assets/mcs-ext-chart/mcs-ext-chart-0.0.1.tgz
+    version: 0.0.1
   pandaria-alerting-drivers:
   - annotations:
       catalog.cattle.io/display-name: Pandaria Alerting Drivers
@@ -10,7 +39,7 @@ entries:
       catalog.cattle.io/release-name: pandaria-alerting-drivers
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
-    created: "2025-12-15T11:42:44.593954+08:00"
+    created: "2025-12-16T18:02:37.008437+08:00"
     description: Pandaria alerting drivers for Prometheus
     digest: 72416ce26ee1260c5d672da1e08ea2b0bc07c3fd1638b8f8fac968ebcae54f07
     keywords:
@@ -53,7 +82,7 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2025-12-12T19:45:42.27891+08:00"
+    created: "2025-12-16T18:02:37.008952+08:00"
     description: A Helm chart for provisioning ACK clusters
     digest: cc075e9e83098e1d22aeed90f6a6431e6af16765bb1eff13c9f97d173d89639b
     home: https://github.com/cnrancher/ack-operator
@@ -97,7 +126,7 @@ entries:
       catalog.cattle.io/release-name: rancher-ack-operator-crd
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2025-12-12T13:41:03.517315+08:00"
+    created: "2025-12-16T18:02:37.009338+08:00"
     description: ACK Operator CustomResourceDefinitions
     digest: dd1f7f9ee980e837b4301585ec63d44eb0b5f9b76fb50c1e8d732bbbf5e1ee57
     name: rancher-ack-operator-crd
@@ -136,7 +165,7 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 0.9.0-beta.3
-    created: "2025-12-02T16:34:13.822821053+08:00"
+    created: "2025-12-16T18:02:37.009773+08:00"
     description: A Helm chart for provisioning CCE clusters
     digest: f7b48166c16cb8ec8f63aa2141dfc15b5706809b6ad23d827419f727c1ed7fb9
     home: https://github.com/cnrancher/cce-operator
@@ -182,7 +211,7 @@ entries:
       catalog.cattle.io/release-name: rancher-cce-operator-crd
     apiVersion: v2
     appVersion: 0.9.0-beta.3
-    created: "2025-12-02T16:34:14.430818725+08:00"
+    created: "2025-12-16T18:02:37.010143+08:00"
     description: CCE Operator CustomResourceDefinitions
     digest: 5033464e0bc231f8734e66de7683a81627b9bc7be265571e7b27039587dc0612
     name: rancher-cce-operator-crd
@@ -238,7 +267,7 @@ entries:
       catalog.cattle.io/release-name: rancher-f5-cis
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2025-12-05T16:57:20.023279+08:00"
+    created: "2025-12-16T18:02:37.011636+08:00"
     description: Deploy the F5 Networks BIG-IP Controller for Kubernetes and OpenShift
       (k8s-bigip-ctlr).
     digest: 25a4255e977967eb35af5f61482c9d0c1851b9c6c9a3413111b666f7b5ce8573
@@ -298,7 +327,7 @@ entries:
       catalog.cattle.io/release-name: rancher-f5-cis-crd
     apiVersion: v2
     appVersion: 2.16.1
-    created: "2025-12-05T16:58:25.928197+08:00"
+    created: "2025-12-16T18:02:37.012175+08:00"
     description: Deploy the F5 Networks BIG-IP Controller CRD for Kubernetes (k8s-bigip-ctlr).
     digest: 78bbc3a582d22b884089551212009ba44360606704cb505ee663a5e1f3bf79c6
     home: https://github.com/F5Networks/k8s-bigip-ctlr
@@ -357,7 +386,7 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.2.3-beta.1
-    created: "2025-12-05T10:59:28.987144337+08:00"
+    created: "2025-12-16T18:02:37.012811+08:00"
     description: Helm chart for managing rancher flat-network pods
     digest: 49727db635c597866784b4690c5ea867dd181f058653343f151cba880974838f
     home: https://github.com/cnrancher/rancher-flat-network
@@ -408,7 +437,7 @@ entries:
       catalog.cattle.io/release-name: rancher-flat-network-crd
     apiVersion: v2
     appVersion: 0.2.3-beta.1
-    created: "2025-12-05T10:59:29.380243681+08:00"
+    created: "2025-12-16T18:02:37.013231+08:00"
     description: Rancher FlatNetwork CustomResourceDefinitions
     digest: d86018acdb2d30db89eba260f975a0000451f5694be5c60e5b670cc3c6e05ecb
     home: https://github.com/cnrancher/rancher-flat-network
@@ -457,7 +486,7 @@ entries:
       catalog.cattle.io/release-name: rancher-hami
     apiVersion: v2
     appVersion: 2.6.1
-    created: "2025-12-05T17:01:12.087315+08:00"
+    created: "2025-12-16T18:02:37.017179+08:00"
     dependencies:
     - condition: hami-webui.enabled
       name: hami-webui
@@ -545,7 +574,7 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'
     apiVersion: v2
     appVersion: 2.2.3
-    created: "2025-12-05T16:59:48.915739+08:00"
+    created: "2025-12-16T18:02:37.01774+08:00"
     description: collect k8s auditlog for rancher auditlog server
     digest: 2aae1d56a2579e485dc06f249ae0115cac0d3cd2333b460106abbe67b318c5a0
     icon: https://raw.githubusercontent.com/fluent/fluentd-docs/master/public/logo/Fluentd_square.png
@@ -583,7 +612,7 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 1.0.2
-    created: "2025-12-05T10:59:30.341034894+08:00"
+    created: "2025-12-16T18:02:37.018328+08:00"
     description: The Macvlan Networking For Rancher2.x
     digest: 5536bb75652ca085a0c7e5523296568dfac106019e6573ccc0763b7f9c52dc36
     home: https://github.com/cnrancher
@@ -632,7 +661,7 @@ entries:
       catalog.cattle.io/kube-version: '>= 1.30.0-0 < 1.35.0-0'
       catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'
     apiVersion: v2
-    created: "2025-12-15T11:42:52.564568+08:00"
+    created: "2025-12-16T18:02:37.020733+08:00"
     dependencies:
     - condition: grafana.enabled
       name: grafana
@@ -698,7 +727,7 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2025-12-15T11:42:52.628577+08:00"
+    created: "2025-12-16T18:02:37.021224+08:00"
     description: A Helm chart for provisioning TKE clusters
     digest: a9745bf99f5b447028d321741fa620f0be88e16b5b21886305e69a7e27a9931b
     home: https://github.com/cnrancher/tke-operator
@@ -742,7 +771,7 @@ entries:
       catalog.cattle.io/release-name: rancher-tke-operator-crd
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2025-12-15T11:42:52.667958+08:00"
+    created: "2025-12-16T18:02:37.021612+08:00"
     description: TKE Operator CustomResourceDefinitions
     digest: be2f224fd8cb24632416002aeeaef4cacc7790a9831e1e09e59e3e434ebc749c
     name: rancher-tke-operator-crd
