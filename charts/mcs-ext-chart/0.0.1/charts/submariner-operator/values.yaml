@@ -1,0 +1,66 @@
+---
+# Cleanup settings for Helm hooks
+cleanupOnUninstall: true
+deleteCRDsOnUninstall: true
+
+# Cleanup timeout settings (in seconds)
+cleanupTimeout: 900                    # Submariner CR deletion timeout: 15 minutes
+
+# Kubectl image for cleanup hooks (must have shell and kubectl)
+kubectl:
+  repository: "registry.rancher.cn/cnrancher/mirrored-suse-kubectl"
+  tag: "latest"
+
+submariner:
+  clusterId: ""
+  token: ""
+  clusterCidr: ""
+  serviceCidr: ""
+  globalCidr: ""
+  clustersetIpCidr: ""
+  clustersetIpEnabled: false
+  loadBalancerEnabled: false
+  natEnabled: true
+  colorCodes: blue
+  debug: false
+  serviceDiscovery: true
+  cableDriver: "libreswan"
+  healthcheckEnabled: true
+  coreDNSCustomConfig: {}
+  images:
+    repository: cnrancher
+    tag: ""
+broker:
+  server: example.k8s.apiserver
+  token: test
+  namespace: xyz
+  insecure: false
+  ca: ""
+  globalnet: false
+# Images configuration
+# Override specific component images with custom repository paths
+images:
+  submariner-operator: registry.rancher.cn/cnrancher/mirrored-submariner-submariner-operator:0.20.2
+  submariner-gateway: registry.rancher.cn/cnrancher/mirrored-submariner-submariner-gateway:0.20.2
+  submariner-route-agent: registry.rancher.cn/cnrancher/mirrored-submariner-submariner-route-agent:0.20.2
+  lighthouse-agent: registry.rancher.cn/cnrancher/mirrored-submariner-lighthouse-agent:0.20.2
+  lighthouse-coredns: registry.rancher.cn/cnrancher/mirrored-submariner-lighthouse-coredns:0.20.2
+  submariner-nettest: registry.rancher.cn/cnrancher/mirrored-submariner-nettest:0.20.2
+ipsec:
+  psk: ""
+  debug: false
+  forceUDPEncaps: false
+  ikePort: 500
+  natPort: 4500
+leadership:
+  leaseDuration: 10
+  renewDeadline: 5
+  retryPeriod: 2
+operator:
+  image:
+    repository: registry.rancher.cn/cnrancher/mirrored-submariner-submariner-operator
+    tag: "0.20.2"
+    pullPolicy: IfNotPresent
+  resources: {}
+  tolerations: []
+  affinity: {}
