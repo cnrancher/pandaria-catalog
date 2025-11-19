@@ -1,0 +1,44 @@
+# Default values for mcs-ext-chart
+# Global configuration
+global:
+  # Installation type: global, cluster, submariner
+  installationType: global
+  cattle:
+    systemDefaultRegistry: ""
+    provisioningNamespace: "fleet-default"
+# Sub-chart configuration
+mcs-addon-crd:
+  enabled: true # Only enabled for global installationType
+mcs-addon:
+  enabled: true # Enabled for all installationType
+  # Controller configuration
+  controller:
+    replicaCount: 1
+    image:
+      repository: cnrancher/mcs-addon-controller
+      tag: v0.1.0
+      pullPolicy: IfNotPresent
+submariner-operator:
+  enabled: true
+  submariner:
+    clusterId: "clustera"
+    token: ""
+    clusterCidr: "10.100.0.0/16"
+    serviceCidr: "10.101.0.0/16"
+    cableDriver: "libreswan"
+    healthcheckEnabled: true
+    # Override network plugin detection (optional)
+    # Set to "generic" for RKE2 clusters without Calico API server
+    # Valid values: generic, calico, ovnkubernetes, etc.
+    # Leave empty to use auto-detection
+    networkPluginOverride: "generic"
+  broker:
+    server:
+    token:
+    namespace: cs-v2hts
+    insecure: false
+    ca:
+  ipsec:
+    psk: ""
+    ikePort: 500
+    natPort: 4500

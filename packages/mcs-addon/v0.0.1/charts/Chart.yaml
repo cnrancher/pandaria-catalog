@@ -1,0 +1,9 @@
+annotations:
+  catalog.cattle.io/namespace: mcs-addon-system
+  catalog.cattle.io/release-name: mcs-addon-controller
+apiVersion: v2
+appVersion: 0.20.2
+description: A Helm chart for the multi-cluster service extension addon controller
+icon: https://pub-68160d88f4744423960a290fc7a5031d.r2.dev/mcs-icon.png
+name: mcs-addon
+version: 0.0.1

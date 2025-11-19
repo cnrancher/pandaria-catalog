@@ -1,0 +1,131 @@
+{{- if eq .Values.global.installationType "submariner" }}
+{{- if .Values.broker.globalnet }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: submariner-globalnet
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: submariner-globalnet
+rules:
+  - apiGroups:
+      - submariner.io
+    resources:
+      - gateways
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: submariner-globalnet
+subjects:
+  - kind: ServiceAccount
+    name: submariner-globalnet
+roleRef:
+  kind: Role
+  name: submariner-globalnet
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: submariner-globalnet
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - delete
+  - apiGroups:
+      - submariner.io
+    resources:
+      - clusters
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - submariner.io
+    resources:
+      - clusterglobalegressips
+      - clusterglobalegressips/status
+      - globalegressips
+      - globalegressips/status
+      - globalingressips
+      - globalingressips/status
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - delete
+      - deletecollection
+  - apiGroups:
+      - multicluster.x-k8s.io
+    resources:
+      - serviceexports
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - network.openshift.io
+    resources:
+      - service/externalips
+    verbs:
+      - create
+      - get
+      - list
+      - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: submariner-globalnet
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: submariner-globalnet
+roleRef:
+  kind: ClusterRole
+  name: submariner-globalnet
+  apiGroup: rbac.authorization.k8s.io
+{{- end -}}
+{{- end }}

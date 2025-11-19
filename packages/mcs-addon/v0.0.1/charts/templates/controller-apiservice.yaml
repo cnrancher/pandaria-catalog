@@ -1,0 +1,13 @@
+{{- if eq .Values.global.installationType "global" }}
+apiVersion: management.cattle.io/v3
+kind: APIService
+metadata:
+  name: mcs-api-registration
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+spec:
+  paths:
+    - /mcs-api/registration
+  secretName: stv-aggregation
+  secretNamespace: {{ .Release.Namespace }}
+{{- end }}
