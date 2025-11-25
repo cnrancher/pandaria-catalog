@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       VERSION:
-        description: 'Rancher major version (v2.11)'
-        default: 'v2.11'
+        description: 'Rancher major version (v2.13)'
+        default: 'v2.13'
         type: string
         required: true
 jobs:
