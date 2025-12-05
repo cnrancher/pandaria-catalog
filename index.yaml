@@ -235,6 +235,32 @@ entries:
       catalog.cattle.io/namespace: cattle-flat-network
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 0.2.3-beta.1
+    created: "2025-12-05T10:59:28.987144337+08:00"
+    description: Helm chart for managing rancher flat-network pods
+    digest: 49727db635c597866784b4690c5ea867dd181f058653343f151cba880974838f
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-flat-network
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network/rancher-flat-network-108.0.0+up0.2.3-beta.1.tgz
+    version: 108.0.0+up0.2.3-beta.1
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-flat-network-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher FlatNetwork V2
+      catalog.cattle.io/kube-version: '>= 1.30.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
       catalog.cattle.io/rancher-version: '>= 2.12.0-alpha'
       catalog.cattle.io/release-name: rancher-flat-network
       catalog.cattle.io/type: cluster-tool
@@ -254,6 +280,30 @@ entries:
     - assets/rancher-flat-network/rancher-flat-network-107.0.0+up0.2.2.tgz
     version: 107.0.0+up0.2.2
   rancher-flat-network-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.30.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network-crd
+    apiVersion: v2
+    appVersion: 0.2.3-beta.1
+    created: "2025-12-05T10:59:29.380243681+08:00"
+    description: Rancher FlatNetwork CustomResourceDefinitions
+    digest: d86018acdb2d30db89eba260f975a0000451f5694be5c60e5b670cc3c6e05ecb
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-flat-network-crd
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network-crd/rancher-flat-network-crd-108.0.0+up0.2.3-beta.1.tgz
+    version: 108.0.0+up0.2.3-beta.1
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
@@ -358,6 +408,34 @@ entries:
     - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.5.0.tgz
     version: 0.5.0
   rancher-macvlan:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher Macvlan
+      catalog.cattle.io/kube-version: '>= 1.30.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.12.0-0 < 2.13.0-0'
+      catalog.cattle.io/release-name: rancher-macvlan
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 1.0.2
+    created: "2025-12-05T10:59:30.341034894+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: 5536bb75652ca085a0c7e5523296568dfac106019e6573ccc0763b7f9c52dc36
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: '>=1.30.0-0'
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-1.0.3.tgz
+    version: 1.0.3
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher Macvlan
