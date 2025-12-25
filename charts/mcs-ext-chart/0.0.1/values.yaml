@@ -32,9 +32,6 @@ submariner-operator:
     # Valid values: generic, calico, ovnkubernetes, etc.
     # Leave empty to use auto-detection
     networkPluginOverride: "generic"
-    images:
-      repository: cnrancher
-      tag: ""
   broker:
     server:
     token:

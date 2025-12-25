@@ -1,0 +1,73 @@
+{{- if eq .Values.global.installationType "submariner" }}
+apiVersion: submariner.io/v1alpha1
+kind: Submariner
+metadata:
+  name: submariner
+  namespace: {{ .Release.Namespace }}
+spec:
+  broker: k8s
+  brokerK8sApiServer: {{ .Values.broker.server }}
+  brokerK8sApiServerToken: {{ .Values.broker.token }}
+  brokerK8sCA: {{ .Values.broker.ca }}
+  brokerK8sRemoteNamespace: {{ .Values.broker.namespace }}
+  brokerK8sInsecure: {{ .Values.broker.insecure }}
+  ceIPSecDebug: {{ .Values.ipsec.debug }}
+  ceIPSecForceUDPEncaps: {{ .Values.ipsec.forceUDPEncaps }}
+  ceIPSecIKEPort: {{ .Values.ipsec.ikePort }}
+  ceIPSecNATTPort: {{ .Values.ipsec.natPort }}
+  ceIPSecPSK: {{ .Values.ipsec.psk }}
+  clusterCIDR: "{{ .Values.submariner.clusterCidr }}"
+  clusterID: {{ .Values.submariner.clusterId }}
+  colorCodes: {{ .Values.submariner.colorCodes }}
+  debug: {{ .Values.submariner.debug }}
+  loadBalancerEnabled: {{ .Values.submariner.loadBalancerEnabled }}
+  namespace: {{ .Release.Namespace }}
+  natEnabled: {{ .Values.submariner.natEnabled }}
+  repository: {{ .Values.submariner.images.repository }}
+  version: {{ default .Chart.AppVersion .Values.submariner.images.tag }}
+{{- with .Values.images }}
+{{- if . }}
+  imageOverrides:
+    {{- if index . "submariner-operator" }}
+    submariner-operator: {{ index . "submariner-operator" }}
+    {{- end }}
+    {{- if index . "submariner-gateway" }}
+    submariner-gateway: {{ index . "submariner-gateway" }}
+    {{- end }}
+    {{- if index . "submariner-route-agent" }}
+    submariner-routeagent: {{ index . "submariner-route-agent" }}
+    {{- end }}
+    {{- if index . "submariner-globalnet" }}
+    submariner-globalnet: {{ index . "submariner-globalnet" }}
+    {{- end }}
+    {{- if index . "submariner-networkplugin-syncer" }}
+    submariner-networkplugin-syncer: {{ index . "submariner-networkplugin-syncer" }}
+    {{- end }}
+    {{- if index . "lighthouse-agent" }}
+    submariner-lighthouse-agent: {{ index . "lighthouse-agent" }}
+    {{- end }}
+    {{- if index . "lighthouse-coredns" }}
+    submariner-lighthouse-coredns: {{ index . "lighthouse-coredns" }}
+    {{- end }}
+    {{- if index . "submariner-nettest" }}
+    submariner-nettest: {{ index . "submariner-nettest" }}
+    submariner-metrics-proxy: {{ index . "submariner-nettest" }}
+    {{- end }}
+{{- end }}
+{{- end }}
+  serviceCIDR: "{{ .Values.submariner.serviceCidr }}"
+  globalCIDR: "{{ .Values.submariner.globalCidr }}"
+  clustersetIPCIDR: "{{ .Values.submariner.clustersetIpCidr }}"
+  clustersetIPEnabled: {{ .Values.submariner.clustersetIpEnabled }}
+  serviceDiscoveryEnabled: {{ .Values.submariner.serviceDiscovery }}
+  cableDriver: {{ .Values.submariner.cableDriver }}
+  connectionHealthCheck:
+    enabled: {{ .Values.submariner.healthcheckEnabled }}
+    intervalSeconds: 1
+    maxPacketLossCount: 5
+{{- with .Values.submariner.coreDNSCustomConfig }}
+  coreDNSCustomConfig:
+    configMapName: {{ .configMapName }}
+    namespace: {{ .namespace }}
+{{- end }}
+{{- end }}

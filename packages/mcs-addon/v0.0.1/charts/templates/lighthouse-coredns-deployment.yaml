@@ -1,0 +1,66 @@
+{{- if eq .Values.global.installationType "cluster" }}
+{{- $_ :=required "clusterID is required" .Values.clusterID }}
+{{- $componentName := "lighthouse-coredns" }}
+{{- $context := dict "Chart" .Chart "componentName" $componentName }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mcs-addon.component_name" $context }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: {{ $componentName }}
+spec:
+  replicas: {{ .Values.lighthouseCoredns.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mcs-addon.chart_labels" . | nindent 6 }}
+      component: {{ $componentName }}
+  template:
+    metadata:
+      labels:
+        {{- include "mcs-addon.chart_labels" . | nindent 8 }}
+        component: {{ $componentName }}
+    spec:
+      serviceAccountName: {{ template "mcs-addon.component_name" $context }}
+      containers:
+        - name: {{ $componentName }}
+          args:
+            - "-conf"
+            - "/etc/coredns/Corefile"
+          env:
+          - name: SUBMARINER_CLUSTERID
+            value: {{ .Values.clusterID }}
+          image: {{ .Values.lighthouseCoredns.image.repository }}:{{ .Values.lighthouseCoredns.image.tag }}
+          imagePullPolicy: {{ .Values.lighthouseCoredns.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          resources:
+            {{- toYaml .Values.lighthouseCoredns.resources | nindent 12 }}
+          securityContext: 
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - NET_BIND_SERVICE
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: false
+          volumeMounts:
+            - mountPath: /etc/coredns
+              name: config-volume
+      volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+              - key: Corefile
+                path: Corefile
+            name: lighthouse-coredns-config
+          name: config-volume
+      nodeSelector:
+        {{- toYaml .Values.scheduling.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.scheduling.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.scheduling.affinity | nindent 8 }}
+{{- end }}

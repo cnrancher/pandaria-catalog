@@ -11,9 +11,19 @@ entries:
       catalog.cattle.io/ui-component: mcs-ext-chart
     apiVersion: v2
     appVersion: 0.0.1
-    created: "2025-12-25T10:17:23.282413+08:00"
+    created: "2025-12-25T13:32:02.942083+08:00"
+    dependencies:
+    - name: mcs-addon
+      repository: file://./charts/mcs-addon
+      version: 0.0.1
+    - name: mcs-addon-crd
+      repository: file://./charts/mcs-addon-crd
+      version: 0.0.1
+    - name: submariner-operator
+      repository: file://./charts/submariner-operator
+      version: 0.0.1
     description: Multi-cluster Service Extension Chart
-    digest: 2f5465e86519d7a53f4a6c39adee7d0bf1f21c909b36099a14fade5232cc0e80
+    digest: f69ee9263d8e2bd4a5f362bf73a87635e3a6df6914d4c09c1b9844e9875c080c
     icon: https://pub-68160d88f4744423960a290fc7a5031d.r2.dev/mcs-icon.png
     name: mcs-ext-chart
     urls:

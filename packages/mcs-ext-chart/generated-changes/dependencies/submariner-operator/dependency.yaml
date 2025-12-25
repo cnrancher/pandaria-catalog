@@ -1,0 +1,4 @@
+workingDir: ""
+url: packages/submariner-operator/v0.0.1
+doNotRelease: true
+
