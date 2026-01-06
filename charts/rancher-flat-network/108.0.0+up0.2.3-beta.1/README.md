@@ -2,7 +2,7 @@
 
 Manage flat network (Macvlan & IPvlan) workloads in Rancher.
 
-Multus CNI version: `v4.2.2`
+Multus CNI version: `v4.2.3`
 
 It is recommended to install this chart in `System` project.
 

@@ -386,9 +386,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.2.3-beta.1
-    created: "2025-12-16T18:02:37.012811+08:00"
+    created: "2026-01-06T15:01:12.653116229+08:00"
     description: Helm chart for managing rancher flat-network pods
-    digest: 49727db635c597866784b4690c5ea867dd181f058653343f151cba880974838f
+    digest: 190f7b419c26dd14a812cdffeba9da7e3e57d4412e0f68b3a2b96fb0dae34015
     home: https://github.com/cnrancher/rancher-flat-network
     maintainers:
     - email: starry.wang@suse.com

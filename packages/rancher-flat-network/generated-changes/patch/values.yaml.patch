@@ -1,0 +1,11 @@
+--- charts-original/values.yaml
++++ charts/values.yaml
+@@ -46,7 +46,7 @@
+     version: "1.0.0"
+   image:
+     repository: "cnrancher/hardened-multus-cni"
+-    tag: "v4.2.2"
++    tag: "v4.2.3"
+     pullPolicy: IfNotPresent
+ 
+ global:
