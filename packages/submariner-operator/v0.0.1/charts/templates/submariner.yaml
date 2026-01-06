@@ -22,6 +22,7 @@ spec:
   debug: {{ .Values.submariner.debug }}
   loadBalancerEnabled: {{ .Values.submariner.loadBalancerEnabled }}
   namespace: {{ .Release.Namespace }}
+  airGappedDeployment: {{ .Values.submariner.airGappedDeployment }}
   natEnabled: {{ .Values.submariner.natEnabled }}
   repository: {{ template "system_default_registry" . }}{{ .Values.submariner.images.repository }}
   version: {{ default .Chart.AppVersion .Values.submariner.images.tag }}
