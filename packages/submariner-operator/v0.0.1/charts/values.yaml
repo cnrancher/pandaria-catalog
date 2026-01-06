@@ -23,6 +23,7 @@ submariner:
   loadBalancerEnabled: false
   natEnabled: true
   colorCodes: blue
+  airGappedDeployment: false
   debug: false
   serviceDiscovery: true
   cableDriver: "libreswan"

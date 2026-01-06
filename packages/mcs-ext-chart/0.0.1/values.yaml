@@ -27,6 +27,7 @@ submariner-operator:
     serviceCidr: "10.101.0.0/16"
     cableDriver: "libreswan"
     healthcheckEnabled: true
+    airGappedDeployment: false
     # Override network plugin detection (optional)
     # Set to "generic" for RKE2 clusters without Calico API server
     # Valid values: generic, calico, ovnkubernetes, etc.
