@@ -41,6 +41,14 @@ rules:
       - create
       - update
       - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -106,6 +114,13 @@ rules:
       - delete
       - update
       - deletecollection
+  - apiGroups:
+      - operator.tigera.io
+    resources:
+      - installations
+    verbs:
+      - get
+      - update
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

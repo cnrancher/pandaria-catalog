@@ -5,8 +5,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: submariner-lighthouse-agent
-secrets:
-  - name: submariner-broker-secret
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -86,6 +84,33 @@ roleRef:
   name: submariner-lighthouse-agent
   apiGroup: rbac.authorization.k8s.io
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: submariner-lighthouse-agent
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: submariner-lighthouse-agent
+subjects:
+  - kind: ServiceAccount
+    name: submariner-lighthouse-agent
+roleRef:
+  kind: Role
+  name: submariner-lighthouse-agent
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -133,6 +158,33 @@ subjects:
     name: submariner-lighthouse-coredns
 roleRef:
   kind: ClusterRole
+  name: submariner-lighthouse-coredns
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: submariner-lighthouse-coredns
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: submariner-lighthouse-coredns
+subjects:
+  - kind: ServiceAccount
+    name: submariner-lighthouse-coredns
+roleRef:
+  kind: Role
   name: submariner-lighthouse-coredns
   apiGroup: rbac.authorization.k8s.io
 {{- end -}}
