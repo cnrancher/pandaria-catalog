@@ -22,8 +22,8 @@ submariner:
   clustersetIpEnabled: false
   loadBalancerEnabled: false
   natEnabled: true
-  colorCodes: blue
   airGappedDeployment: false
+  colorCodes: blue
   debug: false
   serviceDiscovery: true
   cableDriver: "libreswan"
@@ -45,22 +45,22 @@ broker:
 images:
   submariner-operator:
     repository: cnrancher/mirrored-submariner-submariner-operator
-    tag: "0.20.2"
+    tag: "0.22.0"
   submariner-gateway:
     repository: cnrancher/mirrored-submariner-submariner-gateway
-    tag: "0.20.2"
+    tag: "0.22.0"
   submariner-route-agent:
     repository: cnrancher/mirrored-submariner-submariner-route-agent
-    tag: "0.20.2"
+    tag: "0.22.0"
   lighthouse-agent:
     repository: cnrancher/mirrored-submariner-lighthouse-agent
-    tag: "0.20.2"
+    tag: "0.22.0"
   lighthouse-coredns:
     repository: cnrancher/mirrored-submariner-lighthouse-coredns
-    tag: "0.20.2"
+    tag: "0.22.0"
   submariner-nettest:
     repository: cnrancher/mirrored-submariner-nettest
-    tag: "0.20.2"
+    tag: "0.22.0"
 ipsec:
   psk: ""
   debug: false
@@ -75,7 +75,7 @@ operator:
   image:
     # Note: Relative path, systemDefaultRegistry will be prepended at runtime
     repository: cnrancher/mirrored-submariner-submariner-operator
-    tag: "0.20.2"
+    tag: "0.22.0"
     pullPolicy: IfNotPresent
   resources: {}
   tolerations: []

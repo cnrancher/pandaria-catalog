@@ -13,6 +13,14 @@ metadata:
   name: submariner-globalnet
 rules:
   - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
       - submariner.io
     resources:
       - gateways
