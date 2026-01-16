@@ -53,3 +53,11 @@ global:
   cattle:
     systemDefaultRegistry: ""
     provisioningNamespace: "fleet-default"
+# Cleanup settings for Helm hooks
+cleanupOnUninstall: true
+# Cleanup timeout settings (in seconds)
+cleanupTimeout: 300
+# Kubectl image for cleanup hooks (must have shell and kubectl)
+kubectl:
+  repository: "cnrancher/mirrored-suse-kubectl"
+  tag: "latest"
