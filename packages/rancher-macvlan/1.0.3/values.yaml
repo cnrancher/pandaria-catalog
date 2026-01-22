@@ -24,16 +24,16 @@ image:
     tag: v4.2.3
   networkController:
     repository: cnrancher/network-controller
-    tag: "v1.0.3-beta.1"
+    tag: "v1.0.3"
   admission:
     repository: cnrancher/network-admission-deploy
-    tag: "v1.0.3-beta.1"
+    tag: "v1.0.3"
   nadController:
     repository: cnrancher/k8s-net-attach-def-controller
-    tag: "v1.0.3-beta.1"
+    tag: "v1.0.3"
   staticMacvlan:
     repository: cnrancher/static-macvlan-cni
-    tag: "v1.0.3-beta.1"
+    tag: "v1.0.3"
 
 global:
   cattle:
