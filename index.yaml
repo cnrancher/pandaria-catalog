@@ -164,6 +164,30 @@ entries:
       catalog.cattle.io/release-name: rancher-cce-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
+    appVersion: 0.9.0
+    created: "2026-01-22T11:18:07.934304981+08:00"
+    description: A Helm chart for provisioning CCE clusters
+    digest: 83d6f5e3aaf59cc8306faa571d1906bdf22dd8117da26692a5092428249b7982
+    home: https://github.com/cnrancher/cce-operator
+    name: rancher-cce-operator
+    sources:
+    - https://github.com/cnrancher/cce-operator
+    urls:
+    - assets/rancher-cce-operator/rancher-cce-operator-108.0.0+up0.9.0.tgz
+    version: 108.0.0+up0.9.0
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-cce-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.30.0-0 < 1.35.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/provides-gvr: cceclusterconfigs.cce.pandaria.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'
+      catalog.cattle.io/release-name: rancher-cce-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
     appVersion: 0.9.0-beta.3
     created: "2025-12-16T18:02:37.009773+08:00"
     description: A Helm chart for provisioning CCE clusters
@@ -200,6 +224,24 @@ entries:
     - assets/rancher-cce-operator/rancher-cce-operator-107.0.0+up0.8.0.tgz
     version: 107.0.0+up0.8.0
   rancher-cce-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.30.0-0 < 1.35.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'
+      catalog.cattle.io/release-name: rancher-cce-operator-crd
+    apiVersion: v2
+    appVersion: 0.9.0
+    created: "2026-01-22T11:18:08.548519164+08:00"
+    description: CCE Operator CustomResourceDefinitions
+    digest: dbc739fd7b16031836f03a836d13fe335777d23e2f9b2277b243c5d23296fa3b
+    name: rancher-cce-operator-crd
+    urls:
+    - assets/rancher-cce-operator-crd/rancher-cce-operator-crd-108.0.0+up0.9.0.tgz
+    version: 108.0.0+up0.9.0
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
@@ -385,6 +427,32 @@ entries:
       catalog.cattle.io/release-name: rancher-flat-network
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
+    appVersion: 0.2.3
+    created: "2026-01-22T11:18:09.952993124+08:00"
+    description: Helm chart for managing rancher flat-network pods
+    digest: f6cb7ee3cf5e3fa884e8a89a7b14c38ac1d9c460a4f119a80cfe9253838252a1
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-flat-network
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network/rancher-flat-network-108.0.0+up0.2.3.tgz
+    version: 108.0.0+up0.2.3
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-flat-network-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher FlatNetwork V2
+      catalog.cattle.io/kube-version: '>= 1.30.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
     appVersion: 0.2.3-beta.1
     created: "2026-01-06T15:01:12.653116229+08:00"
     description: Helm chart for managing rancher flat-network pods
@@ -426,6 +494,30 @@ entries:
     - assets/rancher-flat-network/rancher-flat-network-107.0.0+up0.2.2.tgz
     version: 107.0.0+up0.2.2
   rancher-flat-network-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.30.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.13.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network-crd
+    apiVersion: v2
+    appVersion: 0.2.3
+    created: "2026-01-22T11:18:10.566291817+08:00"
+    description: Rancher FlatNetwork CustomResourceDefinitions
+    digest: 0fa08bf6cd60804357ec7ad89a943ef04f1484ee377d1b40826473d70814e2d2
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: starry.wang@suse.com
+      name: StarryWang
+    name: rancher-flat-network-crd
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network-crd/rancher-flat-network-crd-108.0.0+up0.2.3.tgz
+    version: 108.0.0+up0.2.3
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
@@ -612,9 +704,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 1.0.2
-    created: "2026-01-06T15:53:45.986460859+08:00"
+    created: "2026-01-22T11:18:11.940219336+08:00"
     description: The Macvlan Networking For Rancher2.x
-    digest: 500db38436588cd48e44967f7b46c1277c67b37c3cc1b04d44b43ee1368164bc
+    digest: 9116af37968cf2824d72afa9d0111da4b9f777d5d1f061dcd06ec1d2c27ff518
     home: https://github.com/cnrancher
     keywords:
     - networking

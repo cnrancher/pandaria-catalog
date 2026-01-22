@@ -1,0 +1,3 @@
+successfully installed the Rancher FlatNetwork Operator
+Version: {{ .Chart.AppVersion }}
+Description: Helm chart for managing Rancher flat-network (Macvlan/IPvlan) pods.
