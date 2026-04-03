@@ -307,6 +307,9 @@ spec:
                           type: string
                         nullable: true
                         type: array
+                      userScript:
+                        nullable: true
+                        type: string
                     type: object
                   nullable: true
                   type: array
@@ -376,6 +379,87 @@ spec:
                 tkeCredentialSecret:
                   nullable: true
                   type: string
+                virtualNodePoolList:
+                  items:
+                    properties:
+                      deletionProtection:
+                        nullable: true
+                        type: boolean
+                      labels:
+                        items:
+                          properties:
+                            name:
+                              nullable: true
+                              type: string
+                            value:
+                              nullable: true
+                              type: string
+                          type: object
+                        nullable: true
+                        type: array
+                      name:
+                        nullable: true
+                        type: string
+                      nodePoolId:
+                        nullable: true
+                        type: string
+                      os:
+                        nullable: true
+                        type: string
+                      securityGroupIds:
+                        items:
+                          nullable: true
+                          type: string
+                        nullable: true
+                        type: array
+                      subnetIds:
+                        items:
+                          nullable: true
+                          type: string
+                        nullable: true
+                        type: array
+                      taints:
+                        items:
+                          properties:
+                            effect:
+                              nullable: true
+                              type: string
+                            key:
+                              nullable: true
+                              type: string
+                            value:
+                              nullable: true
+                              type: string
+                          type: object
+                        nullable: true
+                        type: array
+                      virtualNodes:
+                        items:
+                          properties:
+                            displayName:
+                              nullable: true
+                              type: string
+                            subnetId:
+                              nullable: true
+                              type: string
+                            tags:
+                              items:
+                                properties:
+                                  key:
+                                    nullable: true
+                                    type: string
+                                  value:
+                                    nullable: true
+                                    type: string
+                                type: object
+                              nullable: true
+                              type: array
+                          type: object
+                        nullable: true
+                        type: array
+                    type: object
+                  nullable: true
+                  type: array
               type: object
             status:
               properties:
