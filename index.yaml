@@ -377,6 +377,32 @@ entries:
       catalog.cattle.io/auto-install: rancher-flat-network-crd=match
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher FlatNetwork V2
+      catalog.cattle.io/kube-version: '>= 1.33.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.14.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 0.2.4
+    created: "2026-05-11T12:19:09.813198+08:00"
+    description: Helm chart for managing rancher flat-network pods
+    digest: 15eb991b3577f183e5a5a42b8546b22192e35b498d4e147416f347dc80cdcc5b
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: xin.wang@suse.com
+      name: SinghWang
+    name: rancher-flat-network
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network/rancher-flat-network-109.0.0+up0.2.4.tgz
+    version: 109.0.0+up0.2.4
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-flat-network-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher FlatNetwork V2
       catalog.cattle.io/kube-version: '>= 1.30.0-0'
       catalog.cattle.io/namespace: cattle-flat-network
       catalog.cattle.io/os: linux
@@ -426,6 +452,30 @@ entries:
     - assets/rancher-flat-network/rancher-flat-network-107.0.0+up0.2.2.tgz
     version: 107.0.0+up0.2.2
   rancher-flat-network-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.33.0-0'
+      catalog.cattle.io/namespace: cattle-flat-network
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.14.0-alpha'
+      catalog.cattle.io/release-name: rancher-flat-network-crd
+    apiVersion: v2
+    appVersion: 0.2.4
+    created: "2026-05-11T12:14:30.896303+08:00"
+    description: Rancher FlatNetwork CustomResourceDefinitions
+    digest: 1e8ab818d9c69e294e5e066d41fc971ad5cf6798941078373c7b52bb8b408489
+    home: https://github.com/cnrancher/rancher-flat-network
+    maintainers:
+    - email: xin.wang@suse.com
+      name: SinghWang
+    name: rancher-flat-network-crd
+    sources:
+    - https://github.com/cnrancher/rancher-flat-network
+    urls:
+    - assets/rancher-flat-network-crd/rancher-flat-network-crd-109.0.0+up0.2.4.tgz
+    version: 109.0.0+up0.2.4
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
@@ -600,6 +650,34 @@ entries:
     - assets/rancher-k8s-auditlog-collector/rancher-k8s-auditlog-collector-0.5.0.tgz
     version: 0.5.0
   rancher-macvlan:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/display-name: Rancher Macvlan
+      catalog.cattle.io/kube-version: '>=1.33.0-0'
+      catalog.cattle.io/namespace: kube-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
+      catalog.cattle.io/release-name: rancher-macvlan
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    appVersion: 1.0.4
+    created: "2026-05-11T11:34:56.244188+08:00"
+    description: The Macvlan Networking For Rancher2.x
+    digest: 1f85a73bdd91e7dfec31cc05d1a710a6fd443d8db93b70cba0930cb2da0a58a8
+    home: https://github.com/cnrancher
+    keywords:
+    - networking
+    kubeVersion: '>=1.33.0-0'
+    maintainers:
+    - email: xin.wang@suse.com
+      name: SinghWang
+    name: rancher-macvlan
+    sources:
+    - https://github.com/cnrancher
+    urls:
+    - assets/rancher-macvlan/rancher-macvlan-1.0.4.tgz
+    version: 1.0.4
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/display-name: Rancher Macvlan
