@@ -1,0 +1,22 @@
+annotations:
+  catalog.cattle.io/auto-install: rancher-flat-network-crd=match
+  catalog.cattle.io/certified: rancher
+  catalog.cattle.io/display-name: Rancher FlatNetwork V2
+  catalog.cattle.io/kube-version: '>= 1.33.0-0'
+  catalog.cattle.io/namespace: cattle-flat-network
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/rancher-version: '>= 2.14.0-alpha'
+  catalog.cattle.io/release-name: rancher-flat-network
+  catalog.cattle.io/type: cluster-tool
+apiVersion: v2
+appVersion: 0.2.4
+description: Helm chart for managing rancher flat-network pods
+home: https://github.com/cnrancher/rancher-flat-network
+maintainers:
+- email: xin.wang@suse.com
+  name: SinghWang
+name: rancher-flat-network
+sources:
+- https://github.com/cnrancher/rancher-flat-network
+version: 109.0.0+up0.2.4
