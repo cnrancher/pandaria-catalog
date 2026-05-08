@@ -1,0 +1,227 @@
+{{- if eq .Values.global.installationType "submariner" }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: submariner-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: submariner-operator
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      # For metrics
+      - services
+    verbs:
+      - get
+      - create
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      # For syncing Secrets from the broker
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      # Needed for openshift monitoring
+      - servicemonitors
+    verbs:
+      - get
+      - create
+  - apiGroups:
+      - apps
+    resourceNames:
+      - submariner-operator
+    resources:
+      - deployments/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - submariner.io
+    resources:
+      - submariners
+      - submariners/status
+      - servicediscoveries
+      - servicediscoveries/status
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - submariner.io
+    resources:
+      - gateways
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - submariner.io
+    resources:
+      - submariners/finalizers
+      - servicediscoveries/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: submariner-operator
+subjects:
+  - kind: ServiceAccount
+    name: submariner-operator
+roleRef:
+  kind: Role
+  name: submariner-operator
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: submariner-operator
+rules:
+  - apiGroups:
+      - submariner.io
+    resources:
+      - brokers
+      - brokers/status
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+  # submariner-operator updates the config map of core-dns to forward requests to
+  # clusterset.local to Lighthouse DNS, also looks at existing configmaps
+  # to figure out network settings
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      # Needed for network settings discovery
+      - pods
+      - services
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - operator.openshift.io
+    resources:
+      - dnses
+    verbs:
+      - get
+      - update
+  - apiGroups:
+      - config.openshift.io
+    resources:
+      # Needed for network settings discovery
+      - networks
+    resourceNames:
+      - cluster
+    verbs:
+      - get
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      # Needed for openshift monitoring
+      - servicemonitors
+    verbs:
+      - get
+      - create
+  - apiGroups:
+      - apps
+    resources:
+      # Needed for Flannel CNI discovery
+      - daemonsets
+    verbs:
+      - list
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      # Needed for service CIDR discovery
+      - servicecidrs
+    verbs:
+      - get
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: submariner-operator
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: submariner-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: submariner-operator
+{{- end }}

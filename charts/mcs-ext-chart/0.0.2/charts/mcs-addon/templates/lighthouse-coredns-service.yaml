@@ -1,0 +1,25 @@
+{{- if eq .Values.global.installationType "cluster" }}
+{{- $componentName := "lighthouse-coredns" }}
+{{- $context := dict "Chart" .Chart "componentName" $componentName }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "mcs-addon.component_name" $context }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: {{ $componentName }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: udp53
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: tcp53
+      port: 53
+      protocol: TCP
+      targetPort: 53
+  selector:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: {{ $componentName }}
+{{- end }}

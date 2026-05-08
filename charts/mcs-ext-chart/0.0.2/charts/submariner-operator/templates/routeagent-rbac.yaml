@@ -1,0 +1,137 @@
+{{- if eq .Values.global.installationType "submariner" }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: submariner-routeagent
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: submariner-routeagent
+rules:
+  - apiGroups:
+      - submariner.io
+    resources:
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - submariner.io
+    resources:
+      - gatewayroutes
+      - nongatewayroutes
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - submariner.io
+    resources:
+      - routeagents
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: submariner-routeagent
+subjects:
+  - kind: ServiceAccount
+    name: submariner-routeagent
+roleRef:
+  kind: Role
+  name: submariner-routeagent
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: submariner-routeagent
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - configmaps
+      - endpoints
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      # the route agent needs access to the ovn secret
+      - ovn-cert
+    verbs:
+      - get
+  - apiGroups:
+      - config.openshift.io
+    resources:
+      - networks
+    resourceNames:
+      - cluster
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+      # route agent needs to annotate nodes to prevent OVNK SNAT
+      - update
+  - apiGroups:
+      - projectcalico.org
+    resources:
+      - ippools
+    verbs:
+      - get
+      - create
+      - delete
+      - update
+      - deletecollection
+  - apiGroups:
+      - operator.tigera.io
+    resources:
+      - installations
+    verbs:
+      - get
+      - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: submariner-routeagent
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: submariner-routeagent
+roleRef:
+  kind: ClusterRole
+  name: submariner-routeagent
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}

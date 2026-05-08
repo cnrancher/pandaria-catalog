@@ -1,0 +1,176 @@
+{{- if eq .Values.global.installationType "cluster" }}
+{{- with dict "Chart" .Chart "componentName" "lighthouse-coredns" "Release" .Release }}
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "mcs-addon.component_name" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "mcs-addon.component_name" . }}
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+rules:
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - submariner.io
+    resources:
+      - gateways
+      - submariners
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - multicluster.x-k8s.io
+    resources:
+      - serviceimports
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+{{- end -}}
+
+{{- with dict "Chart" .Chart "componentName" "lighthouse-agent" "Release" .Release }}
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "mcs-addon.component_name" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "mcs-addon.component_name" . }}
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - namespaces
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+      - endpointslices/restricted
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - delete
+      - deletecollection
+  - apiGroups:
+      - submariner.io
+    resources:
+      - gateways
+      - globalingressips
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - multicluster.x-k8s.io
+    resources:
+      - serviceimports
+      - serviceimports/status
+    verbs:
+      - create
+      - get
+      - list
+      - watch
+      - update
+      - delete
+  - apiGroups:
+      - multicluster.x-k8s.io
+    resources:
+      - serviceexports
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - multicluster.x-k8s.io
+    resources:
+      - serviceexports/status
+    verbs:
+      - update
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+secrets:
+  - name: {{ template "mcs-addon.component_name" . }}
+  - name: broker-secret
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["broker-secret"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ template "mcs-addon.component_name" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "mcs-addon.component_name" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ template "mcs-addon.component_name" . }}
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end }}
