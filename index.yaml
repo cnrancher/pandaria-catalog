@@ -32,6 +32,25 @@ entries:
   pandaria-alerting-drivers:
   - annotations:
       catalog.cattle.io/display-name: Pandaria Alerting Drivers
+      catalog.cattle.io/kube-version: '>= 1.33.0-0 < 1.36.0-0'
+      catalog.cattle.io/namespace: cattle-monitoring-system
+      catalog.cattle.io/permits-os: linux,windows
+      catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
+      catalog.cattle.io/release-name: pandaria-alerting-drivers
+      catalog.cattle.io/type: cluster-tool
+    apiVersion: v2
+    created: "2026-05-08T14:15:50.276895+08:00"
+    description: Pandaria alerting drivers for Prometheus
+    digest: 08a534c7377644c7fa7678f1e687fbe4605f190b6e4e38c32d8fdabba793fe00
+    keywords:
+    - alert
+    - prometheus
+    name: pandaria-alerting-drivers
+    urls:
+    - assets/pandaria-alerting-drivers/pandaria-alerting-drivers-1.0.3.tgz
+    version: 1.0.3
+  - annotations:
+      catalog.cattle.io/display-name: Pandaria Alerting Drivers
       catalog.cattle.io/kube-version: '>= 1.30.0-0 < 1.35.0-0'
       catalog.cattle.io/namespace: cattle-monitoring-system
       catalog.cattle.io/permits-os: linux,windows
@@ -657,6 +676,34 @@ entries:
     - assets/rancher-macvlan/rancher-macvlan-1.0.2.tgz
     version: 1.0.2
   rancher-thanos:
+  - annotations:
+      catalog.cattle.io/kube-version: '>= 1.33.0-0 < 1.36.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
+    apiVersion: v2
+    created: "2026-05-08T14:16:00.649276+08:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: file://./charts/grafana
+      version: 0.0.5
+    - condition: thanos.enabled
+      name: thanos
+      repository: file://./charts/thanos
+      version: 0.0.5
+    - condition: ui.enabled
+      name: ui
+      repository: file://./charts/ui
+      version: 0.0.4
+    description: A Helm chart for Rancher v2 global monitoring
+    digest: 88772b13b5ead3103e551920cf950ee1d625919cfdc8c12a33580c51a100d3d4
+    icon: https://pandaria-catalog.oss-cn-hangzhou.aliyuncs.com/assets/logo/rancher-thanos.png
+    keywords:
+    - thanos
+    - prometheus
+    name: rancher-thanos
+    urls:
+    - assets/rancher-thanos/rancher-thanos-1.0.7.tgz
+    version: 1.0.7
   - annotations:
       catalog.cattle.io/kube-version: '>= 1.30.0-0 < 1.35.0-0'
       catalog.cattle.io/rancher-version: '>= 2.13.0-0 < 2.14.0-0'

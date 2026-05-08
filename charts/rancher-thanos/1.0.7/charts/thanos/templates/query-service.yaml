@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: access-thanos
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    component: query
+spec:
+  type: {{ .Values.query.service.type }}
+  ports:
+    - port: {{ .Values.query.service.port }}
+      targetPort: 8081
+      protocol: TCP
+      name: http
+  selector:
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    component: query
