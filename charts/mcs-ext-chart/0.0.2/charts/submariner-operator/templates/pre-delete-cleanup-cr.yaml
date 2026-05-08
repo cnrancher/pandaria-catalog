@@ -1,0 +1,151 @@
+{{- if eq .Values.global.installationType "submariner" }}
+{{- if .Values.cleanupOnUninstall }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: submariner-pre-delete-cleanup-cr
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+  labels:
+    app.kubernetes.io/managed-by: Helm
+spec:
+  activeDeadlineSeconds: {{ .Values.cleanupTimeout }}
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: submariner-operator
+      restartPolicy: Never
+      containers:
+      - name: cleanup-submariner-cr
+        image: "{{ template "system_default_registry" . }}{{ .Values.kubectl.repository }}:{{ .Values.kubectl.tag }}"
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - |
+          set -e
+          NAMESPACE="{{ .Release.Namespace }}"
+          SUBMARINER_CR_NAME="submariner"
+          DELETE_TIMEOUT={{ .Values.cleanupTimeout }}
+          
+          echo "===================================================================="
+          echo "Submariner Pre-Delete Cleanup Hook"
+          echo "===================================================================="
+          echo "Namespace: $NAMESPACE"
+          echo "Delete Timeout: ${DELETE_TIMEOUT}s"
+          echo ""
+          echo "NOTE: Deleting Submariner CR"
+          echo "===================================================================="
+          
+          # Function to delete CR with retries and force deletion if needed
+          delete_cr_with_retry() {
+            local cr_type="$1"
+            local cr_name="$2"
+            local timeout="$3"
+            local namespace="$4"
+            
+            echo ""
+            echo "--- Deleting ${cr_type} CR: ${cr_name} ---"
+            
+            # Check if CR exists
+            if ! kubectl get ${cr_type} ${cr_name} -n ${namespace} &>/dev/null; then
+              echo "${cr_type} CR '${cr_name}' not found, skipping deletion."
+              return 0
+            fi
+            
+            echo "${cr_type} CR '${cr_name}' exists, initiating deletion..."
+            
+            # Start graceful deletion in background
+            kubectl delete ${cr_type} ${cr_name} -n ${namespace} --ignore-not-found=true &
+            DELETE_PID=$!
+            
+            # Wait for graceful deletion with timeout
+            local elapsed=0
+            local check_interval=10
+            
+            while [ $elapsed -lt $timeout ]; do
+              # Check if the delete command is still running
+              if ! kill -0 $DELETE_PID 2>/dev/null; then
+                # Delete command finished
+                wait $DELETE_PID
+                DELETE_EXIT_CODE=$?
+                
+                if [ $DELETE_EXIT_CODE -eq 0 ]; then
+                  echo "${cr_type} CR '${cr_name}' deleted gracefully."
+                  return 0
+                else
+                  echo "Warning: kubectl delete command exited with code $DELETE_EXIT_CODE"
+                  break
+                fi
+              fi
+              
+              # Check if CR still exists
+              if ! kubectl get ${cr_type} ${cr_name} -n ${namespace} &>/dev/null; then
+                echo "${cr_type} CR '${cr_name}' deleted successfully."
+                kill $DELETE_PID 2>/dev/null || true
+                return 0
+              fi
+              
+              echo "  Waiting for ${cr_type} CR to be deleted... (${elapsed}s / ${timeout}s)"
+              sleep $check_interval
+              elapsed=$((elapsed + check_interval))
+            done
+            
+            # If we reach here, graceful deletion timed out
+            echo ""
+            echo "WARNING: ${cr_type} CR '${cr_name}' did not delete gracefully within ${timeout}s."
+            echo "Attempting force cleanup..."
+            
+            # Kill the background delete process if still running
+            kill $DELETE_PID 2>/dev/null || true
+            
+            # Force remove finalizers
+            echo "Removing finalizers from ${cr_type} CR..."
+            kubectl patch ${cr_type} ${cr_name} -n ${namespace} \
+              -p '{"metadata":{"finalizers":[]}}' \
+              --type=merge \
+              --ignore-not-found=true 2>&1 || {
+                echo "Warning: Failed to remove finalizers (CR may already be deleted)"
+              }
+            
+            # Force delete the CR
+            echo "Force deleting ${cr_type} CR..."
+            kubectl delete ${cr_type} ${cr_name} -n ${namespace} \
+              --force \
+              --grace-period=0 \
+              --ignore-not-found=true 2>&1 || {
+                echo "Warning: Force delete failed (CR may already be deleted)"
+              }
+            
+            # Final check
+            sleep 5
+            if kubectl get ${cr_type} ${cr_name} -n ${namespace} &>/dev/null; then
+              echo "ERROR: ${cr_type} CR '${cr_name}' still exists after force deletion!"
+              echo "Manual intervention may be required."
+              # Don't fail the hook - allow Helm to proceed
+              return 0
+            else
+              echo "${cr_type} CR '${cr_name}' force deletion completed."
+              return 0
+            fi
+          }
+          
+          # Delete Submariner CR
+          # Note: Submariner's finalizer will automatically delete ServiceDiscovery CR if enabled
+          delete_cr_with_retry "submariner" "$SUBMARINER_CR_NAME" "$DELETE_TIMEOUT" "$NAMESPACE"
+          
+          echo ""
+          echo "===================================================================="
+          echo "Pre-delete cleanup hook completed successfully"
+          echo "===================================================================="
+          
+          # Always exit 0 to allow Helm uninstall to proceed
+          exit 0
+{{- end }}
+{{- end }}

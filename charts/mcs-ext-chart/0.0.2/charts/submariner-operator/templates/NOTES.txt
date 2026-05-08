@@ -1,0 +1,3 @@
+Submariner is now installed.
+
+By default, Submariner runs with 1 replica. If you have more than one Gateway host, you can scale Submariner to N replicas, and the other Submariner pods will simply join the leader election pool.
