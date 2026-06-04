@@ -130,9 +130,9 @@ entries:
       catalog.cattle.io/scope: management
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2026-05-11T15:24:15.103479+08:00"
+    created: "2026-06-04T13:16:50.393229+08:00"
     description: A Helm chart for provisioning ACK clusters
-    digest: 6a1705c4f6a71866f88d6af4e24920afb4388b59504f3b47479dae650c724ec3
+    digest: 547c5012841c58b4656ee70679185853437b4aa9e243d859fdf3d1a7cc6ed2e0
     home: https://github.com/cnrancher/ack-operator
     name: rancher-ack-operator
     sources:
