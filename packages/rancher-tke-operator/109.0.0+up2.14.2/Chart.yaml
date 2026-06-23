@@ -10,10 +10,10 @@ annotations:
   catalog.cattle.io/release-name: rancher-tke-operator
   catalog.cattle.io/scope: management
 apiVersion: v2
-appVersion: 2.14.1
+appVersion: 2.14.2
 description: A Helm chart for provisioning TKE clusters
 home: https://github.com/cnrancher/tke-operator
 name: rancher-tke-operator
 sources:
 - https://github.com/cnrancher/tke-operator
-version: 109.0.0+up2.14.1
+version: 109.0.0+up2.14.2
