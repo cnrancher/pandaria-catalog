@@ -1067,6 +1067,29 @@ entries:
       catalog.cattle.io/release-name: rancher-tke-operator
       catalog.cattle.io/scope: management
     apiVersion: v2
+    appVersion: 2.14.2
+    created: "2026-06-23T17:22:51.012363+08:00"
+    description: A Helm chart for provisioning TKE clusters
+    digest: 00dfd8608d3c87e5c5d3bdeff60715777d9344d739c5a15ac3ca475e0a81babb
+    home: https://github.com/cnrancher/tke-operator
+    name: rancher-tke-operator
+    sources:
+    - https://github.com/cnrancher/tke-operator
+    urls:
+    - assets/rancher-tke-operator/rancher-tke-operator-109.0.0+up2.14.2.tgz
+    version: 109.0.0+up2.14.2
+  - annotations:
+      catalog.cattle.io/auto-install: rancher-tke-operator-crd=match
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.33.0-0 < 1.36.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/provides-gvr: tkeclusterconfigs.tke.cattle.io/v1
+      catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
+      catalog.cattle.io/release-name: rancher-tke-operator
+      catalog.cattle.io/scope: management
+    apiVersion: v2
     appVersion: 2.14.1
     created: "2026-05-07T10:28:40.577644+08:00"
     description: A Helm chart for provisioning TKE clusters
@@ -1148,6 +1171,23 @@ entries:
     - assets/rancher-tke-operator/rancher-tke-operator-107.0.0+up2.12.1.tgz
     version: 107.0.0+up2.12.1
   rancher-tke-operator-crd:
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/kube-version: '>= 1.33.0-0 < 1.36.0-0'
+      catalog.cattle.io/namespace: cattle-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
+      catalog.cattle.io/release-name: rancher-tke-operator-crd
+    apiVersion: v2
+    appVersion: 2.14.2
+    created: "2026-06-23T17:22:52.083604+08:00"
+    description: TKE Operator CustomResourceDefinitions
+    digest: 49fc2294eb7688b99eb39e9a417bd6910705976988a3e7541f1c72214d9b6a1a
+    name: rancher-tke-operator-crd
+    urls:
+    - assets/rancher-tke-operator-crd/rancher-tke-operator-crd-109.0.0+up2.14.2.tgz
+    version: 109.0.0+up2.14.2
   - annotations:
       catalog.cattle.io/certified: rancher
       catalog.cattle.io/hidden: "true"
