@@ -1,0 +1,5 @@
+workingDir: ""
+url: https://github.com/Project-HAMi/HAMi-DRA/releases/download/hami-dra-0.2.0/hami-dra-0.2.0.tgz
+ignoreDependencies: []
+replacePaths: []
+doNotRelease: true
