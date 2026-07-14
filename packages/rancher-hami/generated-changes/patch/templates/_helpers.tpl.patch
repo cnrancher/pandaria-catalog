@@ -1,20 +1,10 @@
 --- charts-original/templates/_helpers.tpl
 +++ charts/templates/_helpers.tpl
-@@ -100,8 +100,8 @@
-     Resolve the tag for kubeScheduler.
- */}}
- {{- define "resolvedKubeSchedulerTag" -}}
--{{- if .Values.scheduler.kubeScheduler.imageTag }}
--{{- .Values.scheduler.kubeScheduler.imageTag | trim -}}
-+{{- if .Values.scheduler.kubeScheduler.image.tag }}
-+{{- .Values.scheduler.kubeScheduler.image.tag | trim -}}
- {{- else }}
- {{- include "strippedKubeVersion" . | trim -}}
- {{- end }}
-@@ -117,3 +117,14 @@
- {{- define "strippedKubeVersion" -}}
- {{ regexReplaceAll "^(v[0-9]+\\.[0-9]+\\.[0-9]+)(.*)$" .Capabilities.KubeVersion.Version "$1" }}
+@@ -257,3 +257,15 @@
  {{- end -}}
+ {{- toYaml $resources -}}
+ {{- end -}}
++
 +
 +{{/*
 +Get Rancher system-default-registry
