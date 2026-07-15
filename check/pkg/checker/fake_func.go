@@ -26,6 +26,10 @@ var fakeFuncsMap = template.FuncMap{
 	"trim":            fakeFunction,
 	"split":           fakeFunction,
 	"regexReplaceAll": fakeFunction,
+	"toString":        fakeFunction,
+	"dict":            fakeFunction,
+	"int":             fakeFunction,
+	"append":          fakeFunction,
 }
 
 func fakeFunction() string {
