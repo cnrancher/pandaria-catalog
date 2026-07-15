@@ -1,14 +1,15 @@
 --- charts-original/templates/scheduler/job-patch/job-patchWebhook.yaml
 +++ charts/templates/scheduler/job-patch/job-patchWebhook.yaml
-@@ -33,9 +33,9 @@
+@@ -38,10 +38,10 @@
        containers:
          - name: patch
            {{- if ge (regexReplaceAll "[^0-9]" .Capabilities.KubeVersion.Minor "" | int) 22 }}
--          image: {{ .Values.scheduler.patch.imageNew }}
-+          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.patch.imageNew.repository }}:{{ .Values.scheduler.patch.imageNew.tag }}"
+-          image: {{ include "hami.scheduler.patch.new.image" . }}
++          image: "{{ template "system_default_registry" . }}{{ include "hami.scheduler.patch.new.image" . }}"
+           imagePullPolicy: {{ .Values.scheduler.patch.imageNew.pullPolicy }}
            {{- else }}
--          image: {{ .Values.scheduler.patch.image }}
-+          image: "{{ template "system_default_registry" . }}{{ .Values.scheduler.patch.image.repository }}:{{ .Values.scheduler.patch.image.tag }}"
+-          image: {{ include "hami.scheduler.patch.image" . }}
++          image: "{{ template "system_default_registry" . }}{{ include "hami.scheduler.patch.image" . }}"
+           imagePullPolicy: {{ .Values.scheduler.patch.image.pullPolicy }}
            {{- end }}
-           imagePullPolicy: {{ .Values.scheduler.patch.imagePullPolicy }}
            args:

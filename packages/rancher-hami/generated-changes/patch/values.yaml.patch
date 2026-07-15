@@ -1,79 +1,142 @@
 --- charts-original/values.yaml
 +++ charts/values.yaml
-@@ -45,6 +45,7 @@
+@@ -16,6 +16,7 @@
    managedNodeSelectorEnable: false
    managedNodeSelector:
      usage: "gpu"
 +  systemDefaultRegistry: ""
  
- 
- scheduler:
-@@ -66,8 +67,9 @@
-   kubeScheduler:
-     # @param enabled indicate whether to run kube-scheduler container in the scheduler pod, it's true by default.
-     enabled: true
--    image: registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler
--    imageTag: ""
+ nameOverride: ""
+ fullnameOverride: ""
+@@ -87,9 +88,8 @@
+     ## @param image.tag kube scheduler image tag (immutable tags are recommended)
+     ## @param image.pullPolicy kube scheduler image pull policy
+     ## @param image.pullSecrets Specify docker-registry secret names as an array
+-    image:
+-      registry: "registry.cn-hangzhou.aliyuncs.com"
+-      repository: "google_containers/kube-scheduler"
 +    image: 
 +      repository: cnrancher/mirrored-projecthami-kube-scheduler
-+      tag: ""
-     imagePullPolicy: IfNotPresent
-     resources: {}
-       # If you do want to specify resources, uncomment the following lines, adjust them as necessary.
-@@ -85,7 +87,9 @@
-       - --policy-config-file=/config/config.json
-       - -v=4
-   extender:
--    image: "projecthami/hami"
+       tag: ""
+       ## Specify a imagePullPolicy
+       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+@@ -124,10 +124,9 @@
+     ## @param image.tag scheduler extender image tag (immutable tags are recommended)
+     ## @param image.pullPolicy scheduler extender image pull policy
+     ## @param image.pullSecrets Specify docker-registry secret names as an array
+-    image:
+-      registry: "docker.io"
+-      repository: "projecthami/hami"
+-      tag: ""
 +    image: 
 +      repository: cnrancher/mirrored-projecthami-hami
-+      tag: "v2.6.1"
-     imagePullPolicy: IfNotPresent
-     resources: {}
-       # If you do want to specify resources, uncomment the following lines, adjust them as necessary,
-@@ -125,8 +129,12 @@
-   ## If true and certManager.enabled is false, Helm will automatically create a self-signed cert and secret for you.
-   patch:
-     enabled: true
--    image: docker.io/jettech/kube-webhook-certgen:v1.5.2
--    imageNew: liangjw/kube-webhook-certgen:v1.1.1
++      tag: "v2.9.0"
+       ## Specify a imagePullPolicy
+       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+@@ -212,10 +211,9 @@
+     ## @param image.tag scheduler extender image tag (immutable tags are recommended)
+     ## @param image.pullPolicy scheduler extender image pull policy
+     ## @param image.pullSecrets Specify docker-registry secret names as an array
+-    image:
+-      registry: "docker.io"
+-      repository: "jettech/kube-webhook-certgen"
+-      tag: "v1.5.2"
 +    image: 
 +      repository: cnrancher/mirrored-jettech-kube-webhook-certgen
 +      tag: v1.5.2
-+    imageNew: 
+       ## Specify a imagePullPolicy
+       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+@@ -234,9 +232,8 @@
+     ## @param image.pullPolicy scheduler extender image pull policy
+     ## @param image.pullSecrets Specify docker-registry secret names as an array
+     imageNew: 
+-      registry: "docker.io"
+-      repository: "liangjw/kube-webhook-certgen"
+-      tag: "v1.1.1"
 +      repository: cnrancher/mirrored-liangjw-kube-webhook-certgen
 +      tag: v1.1.1
-     imagePullPolicy: IfNotPresent
-     priorityClassName: ""
-     podAnnotations: {}
-@@ -143,8 +151,12 @@
-     annotations: {}
+       ## Specify a imagePullPolicy
+       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+@@ -275,9 +272,8 @@
+   ## @param image.pullPolicy devicePlugin image pull policy
+   ## @param image.pullSecrets Specify docker-registry secret names as an array
+   image:
+-    registry: "docker.io"
+-    repository: "projecthami/hami"
+-    tag: ""
++    repository: cnrancher/mirrored-projecthami-hami
++    tag: "v2.9.0"
+     ## Specify a imagePullPolicy
+     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+@@ -297,9 +293,8 @@
+     ## @param image.pullPolicy monitor image pull policy
+     ## @param image.pullSecrets Specify docker-registry secret names as an array
+     image:
+-      registry: "docker.io"
+-      repository: "projecthami/hami"
+-      tag: ""
++      repository: cnrancher/mirrored-projecthami-hami
++      tag: "v2.9.0"
+       ## Specify a imagePullPolicy
+       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+@@ -406,39 +401,6 @@
  
- devicePlugin:
--  image: "projecthami/hami"
--  monitorimage: "projecthami/hami"
-+  image: 
-+    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.6.1"
-+  monitorimage: 
-+    repository: cnrancher/mirrored-projecthami-hami
-+    tag: "v2.6.1"
-   monitorctrPath: /usr/local/vgpu/containers
-   imagePullPolicy: IfNotPresent
-   deviceSplitCount: 10
-@@ -235,3 +247,20 @@
-       - huawei.com/Ascend910B4-memory
-       - huawei.com/Ascend310P
-       - huawei.com/Ascend310P-memory
+ mockDevicePlugin:
+   enabled: false
+-  image:
+-    registry: "docker.io"
+-    repository: "projecthami/mock-device-plugin"
+-    tag: "1.0.1"
+-    ## Specify a imagePullPolicy
+-    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+-    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+-    ##
+-    pullPolicy: IfNotPresent
+-    ## Optionally specify an array of imagePullSecrets.
+-    ## Secrets must be manually created in the namespace.
+-    ## Example:
+-    ## pullSecrets:
+-    ##   - myRegistryKeySecretName
+-    ##
+-    pullSecrets: []
+-# If this option is enabled, the DRA will be installed and the scheduler extender will not be installed.
+-dra:
+-  enabled: false
+-
+-# Configuration for the hami-dra subchart, which includes DRA drivers.
+-# This is part of config for DRA, please refer to the DRA documentation for more details.
+-hami-dra:
+-  monitor:
+-    enabled: true
+-  drivers:
+-    nvidia:
+-      enabled: true
+-      # If you are using gpu driver on host, you need to set this to false
+-      containerDriver: true
+-      image:
+-        repository: ghcr.io/project-hami/k8s-dra-driver
+-        tag: "main"
+ 
+ devices:
+   amd:
+@@ -524,3 +486,20 @@
+ 
+ prometheus:
+   enabled: false
 +
 +hami-webui:
 +  image:
 +    frontend:
 +      repository: cnrancher/hami-webui-fe-oss
-+      tag: "v1.0.5-fix"
++      tag: "v1.2.0-fix"
 +    backend:
-+      repository: cnrancher/hami-webui-be-oss
-+      tag: "v1.0.5-fix"
++      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
++      tag: "v1.2.0"
 +  externalPrometheus:
 +    enabled: true # only support rancher monitoring, this must be true
 +    address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
