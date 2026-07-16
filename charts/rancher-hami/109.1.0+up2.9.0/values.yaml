@@ -401,6 +401,15 @@ devicePlugin:
 
 mockDevicePlugin:
   enabled: false
+# If this option is enabled, the DRA will be installed and the scheduler extender will not be installed.
+dra:
+  enabled: false
+
+# Configuration for the hami-dra subchart, which includes DRA drivers.
+# This is part of config for DRA, please refer to the DRA documentation for more details.
+hami-dra:
+  monitor:
+    enabled: false
 
 devices:
   amd:
