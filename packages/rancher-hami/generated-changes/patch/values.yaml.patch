@@ -84,7 +84,7 @@
        ## Specify a imagePullPolicy
        ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
        ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-@@ -406,39 +401,6 @@
+@@ -406,22 +401,6 @@
  
  mockDevicePlugin:
    enabled: false
@@ -104,14 +104,13 @@
 -    ##   - myRegistryKeySecretName
 -    ##
 -    pullSecrets: []
--# If this option is enabled, the DRA will be installed and the scheduler extender will not be installed.
--dra:
--  enabled: false
--
--# Configuration for the hami-dra subchart, which includes DRA drivers.
--# This is part of config for DRA, please refer to the DRA documentation for more details.
--hami-dra:
--  monitor:
+ # If this option is enabled, the DRA will be installed and the scheduler extender will not be installed.
+ dra:
+   enabled: false
+@@ -430,15 +409,7 @@
+ # This is part of config for DRA, please refer to the DRA documentation for more details.
+ hami-dra:
+   monitor:
 -    enabled: true
 -  drivers:
 -    nvidia:
@@ -121,10 +120,11 @@
 -      image:
 -        repository: ghcr.io/project-hami/k8s-dra-driver
 -        tag: "main"
++    enabled: false
  
  devices:
    amd:
-@@ -524,3 +486,20 @@
+@@ -524,3 +495,20 @@
  
  prometheus:
    enabled: false
