@@ -7,7 +7,7 @@ annotations:
   catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
   catalog.cattle.io/release-name: rancher-tke-operator-crd
 apiVersion: v2
-appVersion: 2.14.2
+appVersion: 2.14.4
 description: TKE Operator CustomResourceDefinitions
 name: rancher-tke-operator-crd
-version: 109.0.0+up2.14.2
+version: 109.0.0+up2.14.4
