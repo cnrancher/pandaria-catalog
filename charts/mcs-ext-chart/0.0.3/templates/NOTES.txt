@@ -1,0 +1,8 @@
+{{- $installationType := .Values.global.installationType -}}
+{{- $mcsAddonCrdEnabled := index .Values "mcs-addon-crd" "enabled" -}}
+{{- $mcsAddonEnabled := index .Values "mcs-addon" "enabled" -}}
+{{- $submarinerOperatorEnabled := index .Values "submariner-operator" "enabled" -}}
+
+Installing Type: {{ $installationType }}
+
+Installing Multi-cluster Service Extension Chart Finished！
