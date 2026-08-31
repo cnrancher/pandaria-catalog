@@ -1,0 +1,82 @@
+---
+# Cleanup settings for Helm hooks
+cleanupOnUninstall: true
+deleteCRDsOnUninstall: true
+
+# Cleanup timeout settings (in seconds)
+cleanupTimeout: 900                    # Submariner CR deletion timeout: 15 minutes
+
+# Kubectl image for cleanup hooks (must have shell and kubectl)
+# Note: Relative path, systemDefaultRegistry will be prepended at runtime
+kubectl:
+  repository: "cnrancher/mirrored-suse-kubectl"
+  tag: "latest"
+
+submariner:
+  clusterId: ""
+  token: ""
+  clusterCidr: ""
+  serviceCidr: ""
+  globalCidr: ""
+  clustersetIpCidr: ""
+  clustersetIpEnabled: false
+  loadBalancerEnabled: false
+  natEnabled: true
+  airGappedDeployment: false
+  colorCodes: blue
+  debug: false
+  serviceDiscovery: true
+  cableDriver: "libreswan"
+  healthcheckEnabled: true
+  coreDNSCustomConfig: {}
+  images:
+    repository: cnrancher
+    tag: ""
+broker:
+  server: example.k8s.apiserver
+  token: test
+  namespace: xyz
+  insecure: false
+  ca: ""
+  globalnet: false
+# Images configuration
+# Override specific component images with custom repository paths
+# Note: These are relative paths, systemDefaultRegistry will be prepended at runtime
+images:
+  submariner-operator:
+    repository: cnrancher/mirrored-submariner-submariner-operator
+    tag: "0.22.0"
+  submariner-gateway:
+    repository: cnrancher/mirrored-submariner-submariner-gateway
+    tag: "0.22.0"
+  submariner-route-agent:
+    repository: cnrancher/mirrored-submariner-submariner-route-agent
+    tag: "0.22.0"
+  lighthouse-agent:
+    repository: cnrancher/mirrored-submariner-lighthouse-agent
+    tag: "0.22.0"
+  lighthouse-coredns:
+    repository: cnrancher/mirrored-submariner-lighthouse-coredns
+    tag: "0.22.0"
+  submariner-nettest:
+    repository: cnrancher/mirrored-submariner-nettest
+    tag: "0.22.0"
+ipsec:
+  psk: ""
+  debug: false
+  forceUDPEncaps: false
+  ikePort: 500
+  natPort: 4500
+leadership:
+  leaseDuration: 10
+  renewDeadline: 5
+  retryPeriod: 2
+operator:
+  image:
+    # Note: Relative path, systemDefaultRegistry will be prepended at runtime
+    repository: cnrancher/mirrored-submariner-submariner-operator
+    tag: "0.22.0"
+    pullPolicy: IfNotPresent
+  resources: {}
+  tolerations: []
+  affinity: {}

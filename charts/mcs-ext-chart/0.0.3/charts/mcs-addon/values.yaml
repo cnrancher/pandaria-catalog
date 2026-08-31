@@ -1,0 +1,63 @@
+# Default values for mcs-addon
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Installation type is now available via .Values.global.installationType
+
+# Debug mode
+debug: false
+# Cluster ID
+clusterID: "clustera"
+# Enable API service
+enableAPIService: true
+# Data plane configuration
+dataPlane:
+  namespace: "cs-hnz7w"
+  caCert: "caCert"
+  apiServer: "apiserver"
+  token: "token"
+  insecure: false
+# Multi-cluster service configuration
+mcs:
+  # Enable automatic CIDR detection for custom clusters
+  autoDetectCIDR: true
+  # Default cluster CIDR (used when auto-detection fails)
+  defaultClusterCIDR: "10.42.0.0/16"
+  # Default service CIDR (used when auto-detection fails)
+  defaultServiceCIDR: "10.43.0.0/16"
+  # Enable ServiceCIDR routing
+  enableServiceCIDRRouting: false
+# Controller configuration
+controller:
+  resources: {}
+  replicaCount: 1
+  image:
+    repository: cnrancher/mcs-addon-controller
+    tag: v0.1.0
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 443
+# Scheduling configuration
+scheduling:
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: cattle.io/os
+      operator: "Equal"
+      value: "linux"
+      effect: NoSchedule
+  affinity: {}
+# Global configuration
+global:
+  cattle:
+    systemDefaultRegistry: ""
+    provisioningNamespace: "fleet-default"
+# Cleanup settings for Helm hooks
+cleanupOnUninstall: true
+# Cleanup timeout settings (in seconds)
+cleanupTimeout: 300
+# Kubectl image for cleanup hooks (must have shell and kubectl)
+kubectl:
+  repository: "cnrancher/mirrored-suse-kubectl"
+  tag: "latest"

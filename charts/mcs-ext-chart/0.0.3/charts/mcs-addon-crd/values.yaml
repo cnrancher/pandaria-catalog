@@ -1,0 +1,3 @@
+
+# mcs-addon-crd values.yaml
+# This chart only contains CRD definitions and uses global.installationType for conditional rendering

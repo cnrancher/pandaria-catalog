@@ -1,0 +1,96 @@
+{{- if eq .Values.global.installationType "global" }}
+{{- if .Values.cleanupOnUninstall | default true }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mcs-addon-pre-delete-cleanup-clusterset
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: cleanup
+spec:
+  activeDeadlineSeconds: {{ .Values.cleanupTimeout | default 300 }}
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        {{- include "mcs-addon.chart_labels" . | nindent 8 }}
+        component: cleanup
+    spec:
+      serviceAccountName: {{ template "mcs-addon.component_name" (dict "Chart" .Chart "componentName" "controller" "Release" .Release "Values" .Values) }}
+      restartPolicy: Never
+      containers:
+      - name: cleanup-clusterset-crd
+        image: "{{ template "system_default_registry" . }}{{ .Values.kubectl.repository }}:{{ .Values.kubectl.tag }}"
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - |
+          set -e
+          CRD_NAME="clustersets.multicluster.pandaria.io"
+          DELETE_TIMEOUT={{ .Values.cleanupTimeout | default 300 }}
+          
+          echo "===================================================================="
+          echo "NOTE: Deleting ClusterSet CRD will automatically delete all ClusterSet resources"
+          echo "Delete Timeout: ${DELETE_TIMEOUT}s"
+          echo "===================================================================="
+          
+          # Check if CRD exists
+          if ! kubectl get crd "$CRD_NAME" &>/dev/null; then
+            echo "CRD '$CRD_NAME' not found, nothing to clean up."
+            exit 0
+          fi
+          
+          echo ""
+          echo "CRD '$CRD_NAME' exists, listing ClusterSet resources..."
+          CLUSTERSETS=$(kubectl get clustersets -o jsonpath='{.items[*].metadata.name}' 2>/dev/null || echo "")
+          if [ -n "$CLUSTERSETS" ]; then
+            echo "Found ClusterSet resources: $CLUSTERSETS"
+            echo "These will be automatically deleted when CRD is removed."
+          else
+            echo "No ClusterSet resources found."
+          fi
+          
+          echo ""
+          echo "--- Deleting CRD: $CRD_NAME ---"
+          echo "NOTE: ClusterSet resources do not use finalizers, deletion will be immediate."
+          
+          # Delete CRD with timeout
+          echo "Deleting CRD..."
+          if kubectl delete crd "$CRD_NAME" --timeout=60s --ignore-not-found=true 2>&1; then
+            echo "CRD '$CRD_NAME' deleted successfully."
+          else
+            echo "WARNING: CRD deletion failed or timed out, attempting force cleanup..."
+            kubectl delete crd "$CRD_NAME" \
+              --force \
+              --grace-period=0 \
+              --ignore-not-found=true 2>&1 || echo "Warning: Force delete failed"
+          fi
+          
+          # Give controller a few seconds to process OnRemove handlers
+          echo ""
+          echo "Waiting 5 seconds for controller to process cleanup handlers..."
+          sleep 5
+          
+          # Verify CRD is deleted
+          if kubectl get crd "$CRD_NAME" &>/dev/null; then
+            echo "WARNING: CRD '$CRD_NAME' still exists!"
+            echo "Manual cleanup may be required: kubectl delete crd $CRD_NAME"
+          else
+            echo "CRD '$CRD_NAME' successfully removed."
+          fi
+          
+          echo ""
+          echo "===================================================================="
+          echo "Pre-delete cleanup hook completed"
+          echo "===================================================================="
+          
+          # Always exit 0 to allow Helm uninstall to proceed
+          exit 0
+{{- end }}
+{{- end }}

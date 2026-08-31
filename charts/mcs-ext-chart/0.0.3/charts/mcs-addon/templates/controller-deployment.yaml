@@ -1,0 +1,88 @@
+{{- $componentName := "controller"}}
+{{- $context := dict "Chart" .Chart "componentName" $componentName }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "mcs-addon.component_name" $context }}
+  labels:
+    {{- include "mcs-addon.chart_labels" . | nindent 4 }}
+    component: {{ $componentName }}
+spec:
+  replicas: {{ .Values.controller.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mcs-addon.chart_labels" . | nindent 6 }}
+      component: {{ $componentName }}
+  template:
+    metadata:
+      labels:
+        {{- include "mcs-addon.chart_labels" . | nindent 8 }}
+        component: {{ $componentName }}
+    spec:
+      serviceAccountName: {{ template "mcs-addon.component_name" $context }}
+      containers:
+        - name: {{ $componentName }}
+          image: {{ template "system_default_registry" . }}{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag }}
+          imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+          env:
+            - name: CONTROLLER_INSTALLATION_TYPE
+              value: {{ .Values.global.installationType }}
+            - name: DEBUG
+              value: {{ .Values.debug | quote }}
+            - name: CONTROLLER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+{{- if eq .Values.global.installationType "global" }}
+            - name: CONTROLLER_ROLE_NAME
+              value: {{ template "mcs-addon.broker_role_name" . }}
+            - name: CONTROLLER_FLEET_NAMESPACE
+              value: {{ .Values.global.cattle.provisioningNamespace }}
+{{- else }}
+            - name: CONTROLLER_CLUSTERID
+              value: {{ .Values.clusterID }}
+            - name: BROKER_K8S_APISERVER
+              valueFrom:
+                secretKeyRef:
+                  name: broker-secret
+                  key: apiServer
+            - name: BROKER_K8S_REMOTENAMESPACE
+              valueFrom:
+                secretKeyRef:
+                  name: broker-secret
+                  key: namespace
+            - name: BROKER_K8S_INSECURE
+              value: {{ .Values.dataPlane.insecure | quote }}
+            - name: BROKER_K8S_SECRET
+              value: broker-secret
+{{- end }}
+          ports:
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+{{- if ne .Values.global.installationType "global" }}
+          volumeMounts:
+            - mountPath: /run/secrets/submariner.io/broker-secret
+              name: agent-secret
+{{- end }}
+      nodeSelector:
+        {{- toYaml .Values.scheduling.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.scheduling.tolerations | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.scheduling.affinity | nindent 8 }}
+{{- if ne .Values.global.installationType "global" }}
+      volumes:
+        - secret:
+            defaultMode: 420
+            items:
+              - key: ca.crt
+                path: ca.crt
+              - key: token
+                path: token
+            secretName: broker-secret
+          name: agent-secret
+{{- end }}
