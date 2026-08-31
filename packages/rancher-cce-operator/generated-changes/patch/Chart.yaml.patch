@@ -5,13 +5,13 @@
    catalog.cattle.io/certified: rancher
    catalog.cattle.io/hidden: "true"
 -  catalog.cattle.io/kube-version: '>= 1.18.0-0'
-+  catalog.cattle.io/kube-version: '>= 1.33.0-0 < 1.36.0-0'
++  catalog.cattle.io/kube-version: '>= 1.34.0-0 < 1.37.0-0'
    catalog.cattle.io/namespace: cattle-system
    catalog.cattle.io/os: linux
    catalog.cattle.io/permits-os: linux
    catalog.cattle.io/provides-gvr: cceclusterconfigs.cce.pandaria.io/v1
 -  catalog.cattle.io/rancher-version: '>= 2.6.0-alpha'
-+  catalog.cattle.io/rancher-version: '>= 2.14.0-0 < 2.15.0-0'
++  catalog.cattle.io/rancher-version: '>= 2.15.0-0 < 2.16.0-0'
    catalog.cattle.io/release-name: rancher-cce-operator
    catalog.cattle.io/scope: management
  apiVersion: v2
