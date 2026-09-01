@@ -1,0 +1,11 @@
+{{- if eq .Values.tls "ingress" -}}
+  {{- if ne .Values.privateCA true -}}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  ca:
+    secretName: tls-kopilot
+  {{- end -}}
+{{- end -}}

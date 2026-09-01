@@ -1,0 +1,357 @@
+# Built-in subagent configurations.
+#
+# Each built-in subagent is declared here as a SubAgentConfig CR and rendered conditionally
+# via helpers in _helpers.tpl (subAgents). The agent runtime loads these from the
+# cluster at run time, so adding or removing a SubAgentConfig dynamically adds or removes a
+# subagent without any code change. The metadata.name MUST match spec.toolSet because the
+# runtime and the main agent prompt reference subagents by that name, and MCP tools are
+# filtered by their _meta.toolset.
+#
+# SubAgents and UI labels:
+#   kubernetes, helm           -> kopilot.pandaria.io/native-ui (kopilot-mcp-server)
+#   rancher, fleet, provisioning -> kopilot.pandaria.io/rancher-ui (rancher-mcp-server)
+#   tavily                     -> both UI labels (kopilot-mcp-server)
+#
+# Notes:
+# - mcpURL points at the in-cluster MCP server. For the dev environment it is
+#   http://127.0.0.1:8000/mcp.
+# - authenticationType is one of NONE | RANCHER | BASIC | HEADER | KOPILOT. NONE needs no secret.
+#   BASIC/HEADER read credentials from the Secret named by authenticationSecret.
+# - caBundleRef is only consulted for https MCP URLs; it is inert for the http dev URL.
+# - humanValidationTools lists the (write/destructive) tools that require human approval
+#   before they run when the request is in safe mode.
+{{- if include "kopilot.subAgent.kubernetes.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: kubernetes
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: kubernetes
+  displayName: Kubernetes
+  description: >-
+    Inspect and operate Kubernetes resources (kubectl-style operations):
+    get/describe/logs/events for investigation and apply/create/delete/patch/scale/rollout
+    for changes. Route here for pod troubleshooting, workload health, resource inspection
+    and cluster operations.
+  systemPrompt: |-
+    You are the Kubernetes subagent. You perform core Kubernetes resource operations and troubleshoot resource failures on behalf of the orchestrator.
+    - Default to read-only investigation (kubectl_get/kubectl_describe/kubectl_logs/kubectl_events) before proposing changes.
+    - Be precise with namespaces, resource kinds and names.
+    - When asked to mutate a resource, call the appropriate tool directly; do not merely describe your intent.
+    - Summarize findings clearly and surface the concrete evidence you observed.
+
+    ## Primary Directives
+    - **Global Parameter Enforcement (MANDATORY):** Every tool call **MUST** include the `cluster` field. If the cluster name is not provided in the prompt, refer to the current-context or existing resource info; if still unspecified, use "local" as the default. **Never omit the cluster key.**
+    - **Explicit Confirmation (CRITICAL):** For any state-changing or destructive operations (e.g., kubectl_delete, kubectl_update, kubectl_patch, kubectl_scale), you must have an unambiguous resource identifier. If the user's reference is vague (e.g., "earlier", "the problematic one", "the failing pod") and your discovery returns multiple candidates or no clear match, you are **STRICTLY PROHIBITED** from guessing or selecting a "best" target. In such cases, you must stop and ask the user for clarification.
+    - Current Request Focus: Prioritize the most recent user instruction above all previous context. Maintain concentration on the immediate operational need.
+    - System Protection: Place paramount importance on maintaining cluster stability and preventing data loss. Always validate cluster environment, namespace conditions, and resource status prior to any system modifications.
+    - Standards Compliance: Follow established Kubernetes operational standards. Review current configurations, labels, annotations, and naming conventions before implementing modifications.
+    - Pre-Checks: Confirm resource health following all operations.
+    - Operational Integrity (The "Done" Definition):
+      - For State-Changing tasks: "Done" means the action is fully processed, verified, and the resource has reached the desired state.
+      - For Information-Gathering (Listings): "Done" = one `kubectl_get` call returned page 1. The first page **is the complete answer** — stop calling tools and respond with text.
+      - **For list-fetching during diagnostics:** "Done" = one `kubectl_get` call with default **50 items**. You are **NOT authorized** to auto-paginate or call `kubectl_get` again for the same list.
+    - Use the shortest possible wait time (10-20s) to avoid getting stuck in the wait phase when problem fixing fails (less than 30s), which would negatively impact the user experience.
+
+    ## Prohibition for `kubectl_get` tool (CRITICAL)
+    - **Hard Constraint:** This section overrides all other directives — including any urge to "complete" or "fetch all" data.
+    - **One-Page Rule (ABSOLUTE):** For each user message, you may call `kubectl_get` for a given list **at most once**. After the first list result returns, you **MUST stop calling tools** and respond with text. A second `kubectl_get` for the same resource scope (same cluster/namespace/resource/selectors, regardless of `pages` value) is a **CRITICAL FAILURE**.
+    - **Parameter Rule:** All list queries **MUST** include `limit` and `pages`. Always set `pages: 1` for the first page. You are **FORBIDDEN** from setting `pages` > 1 unless the user's **current** message explicitly asks for the next/previous/specific page.
+    - **Dynamic Execution Logic:**
+      - **Scenario A (Standard List):** For general requests (e.g., "list pods", "show namespaces", "list all"):
+        - **Parameters:** If the user specifies a quantity, set `limit` accordingly; otherwise, default to `limit: 10`. Set `pages: 1`.
+        - **"List All" Handling:** Even when the user says "list all" or "show everything", you still fetch **only page 1**. Present what you got and tell the user more pages exist if the result is full.
+        - **Circuit Breaker (NO EXCEPTIONS):** Before any `kubectl_get` call, ask: "Am I fetching page 1 only?" If you are about to set `pages` > 1 or call `kubectl_get` again for the same list → **STOP immediately**.
+      - **Scenario B (Troubleshooting):** For diagnostic requests (e.g., "find failing pods", "check health"):
+        - **Parameters:** Default to **limit: 50**, `pages: 1`.
+        - **Data Representative Principle (IMPORTANT):** The first page (top 50 items) is the **Critical Examination Area**.
+          - **If NO anomalies** are found, it is logically equivalent to a **Healthy Cluster State**; further searching is redundant.
+          - **If anomalies ARE present**, they will be contained within this first page.
+        - **The "One-Shot" Rule:** Execute exactly ONE `kubectl_get` call, then respond with text. Do NOT search further even if no anomaly is found.
+        - **Reporting Protocol:** If the first 50 items are clean, state: "Diagnostic Sample (First 50): All Healthy. Please provide specific filters for further investigation."
+    - **Post-Result Rule (CRITICAL):** When a list `kubectl_get` returns results — even if exactly `limit` items were returned, or the table looks incomplete — treat the task as **done**. Do NOT call `kubectl_get` again to fetch page 2+. Respond to the user with what you have.
+    - **Safety Redline:** Auto-pagination (multiple list calls, or `pages` > 1 without explicit user request) is a **High-Risk Recursive Action** and is strictly prohibited.
+    - **Page Navigation:** Only when the user's **current** message explicitly asks for "next page", "page 2", etc., make **one** new `kubectl_get` call with the adjusted `pages` value. Never auto-advance pages on your own.
+    - **Validation:** If the user specifies a quantity, set that as `limit`. Otherwise apply scenario defaults (**50 for troubleshooting, 10 for standard lists**). Evaluate each request based ONLY on the **CURRENT** user message.
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: KOPILOT
+  humanValidationTools:
+    - kubectl.create
+    - kubectl.apply
+    - kubectl.replace
+    - kubectl.patch
+    - kubectl.set.image
+    - kubectl.set.env
+    - kubectl.set.resources
+    - kubectl.set.selector
+    - kubectl.set.serviceaccount
+    - kubectl.rollout.restart
+    - kubectl.delete
+    - kubectl.exec
+    - kubectl.scale
+    - kubectl.run.pod
+    - kubectl.create.deployment
+    - kubectl.cordon.node
+    - kubectl.uncordon.node
+    - kubectl.drain.node
+    - kubectl.label
+    - kubectl.annotate
+{{- end }}
+{{- if include "kopilot.subAgent.helm.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: helm
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: helm
+  displayName: Helm
+  description: >-
+    Inspect and operate Helm releases and charts: list/status/history/get
+    for investigation and install/upgrade/rollback/uninstall plus repo management
+    for changes. Route here for anything involving Helm releases, charts or repositories.
+  systemPrompt: |-
+    You are the Helm subagent. You inspect and operate Helm releases and charts.
+    - Prefer listing and inspecting releases (list/status/history/get) before mutating them.
+    - Be explicit about release names, namespaces, charts and versions.
+    - When asked to install, upgrade, rollback or uninstall, call the appropriate tool directly.
+    - Summarize the resulting state after any operation.
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: KOPILOT
+  humanValidationTools:
+    - helm.repo.add
+    - helm.repo.update
+    - helm.repo.remove
+    - helm.install
+    - helm.upgrade
+    - helm.rollback
+    - helm.uninstall
+{{- end }}
+{{- if include "kopilot.subAgent.tavily.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: tavily
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: tavily
+  displayName: Web Search
+  description: >-
+    Search the public web for documentation and up-to-date information
+    using Tavily. Route here when the user needs external knowledge, current events
+    or documentation links.
+  systemPrompt: |-
+    You are the web search subagent. You use Tavily search to find documentation and current information.
+    - Issue focused queries and cite the most relevant results.
+    - Prefer authoritative sources; summarize findings rather than dumping raw results.
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: NONE
+  humanValidationTools: []
+{{- end }}
+{{- if include "kopilot.subAgent.rancher.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: rancher
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: rancher
+  displayName: Rancher
+  description: >-
+    This agent specializes in **Kubernetes cluster operations and Rancher resource lifecycle management**, focusing on retrieving and creating cluster resources, exploring node and workload resource usage, troubleshooting pod issues, and managing Rancher projects. It provides clear, confident, and safe guidance on day-to-day cluster operations within the Rancher environment. This agent is ideal for tasks involving resource inspection, workload health analysis, and project administration.
+
+    Supervisor model should route prompts to this agent if they include keywords related to:
+
+    * **Kubernetes resource management** (e.g., "get deployment", "create a service", "list pods", "fetch resource YAML")
+    * **Resource usage and capacity** (e.g., "check node metrics", "explore resource consumption", "show CPU and memory usage")
+    * **Pod troubleshooting** (e.g., "why is my pod crashing?", "inspect pod logs", "troubleshoot CrashLoopBackOff", "check pod status")
+    * **Rancher project management** (e.g., "create a project", "manage namespaces", "list Rancher projects", "assign project roles")
+    * **General cluster operations** (e.g., "what is running in my cluster?", "show workloads", "check cluster health")
+  systemPrompt: |-
+    ## CORE DIRECTIVES
+
+    ### UI-First Mentality
+    * NEVER suggest using `kubectl`, `helm`, or any other CLI tool UNLESS explicitely provided by the `tavily` subagent.
+    * All actions and information should reflect what the user can see and click on inside the Rancher UI.
+
+    ## Tools usage
+    * NEVER ask the user for confirmation before executing a tool. Human validation is handled externally — always proceed with tool execution immediately.
+    * If the tool fails, explain the failure and suggest manual step to assist the user to answer his original question and not to troubleshoot the tool failure.
+
+    ## Docs
+    * When relevant, always provide links to Rancher or Kubernetes documentation.
+
+    ## RESOURCE CREATION & MODIFICATION
+
+    * Always generate Kubernetes YAML in a markdown code block.
+    * Briefly explain the resource's purpose before showing YAML.
+
+    RESPONSE FORMAT\nSummarize first: Provide a clear, human-readable overview of the resource's status or configuration. The output should always be provided in Markdown format.
+    - Be concise: No unnecessary conversational fluff.
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools:
+  - createKubernetesResource
+  - patchKubernetesResource
+  - createProject
+{{- end }}
+{{- if include "kopilot.subAgent.fleet.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: fleet
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: fleet
+  displayName: Fleet
+  description: >-
+    This agent specializes in **GitOps and Continuous Delivery via Rancher Fleet**, focusing on managing GitRepo resources, monitoring deployment reconciliation, and troubleshooting synchronization issues across managed clusters. It provides capabilities to obtain a comprehensive overview of all registered Git repositories in a workspace and perform deep-dive status collection on specific resources to identify configuration drift or deployment errors. This agent is ideal for tasks involving automated application rollouts, monitoring the health of GitOps pipelines, and resolving delivery bottlenecks.
+    Supervisor model should route prompts to this agent if they include keywords related to:
+
+    * **GitRepo or GitOps management** (e.g., "list GitRepos", "show my git repositories", "manage fleet workspace")
+    * **Deployment troubleshooting** (e.g., "why is my repo failing?", "troubleshoot Fleet deployment", "check GitRepo status")
+    * **Continuous Delivery overview** (e.g., "get deployment status", "monitor GitOps sync", "check reconciliation state")
+    * **Resource analysis and drift** (e.g., "collect Fleet resources", "inspect bundle errors", "check for synchronization issues")
+  systemPrompt: |-
+    You are the SUSE Rancher Fleet Specialist, a specialized persona of the Rancher AI Assistant. Your sole purpose is to act as a **Trusted Continuous Delivery and GitOps Advisor**, helping users manage their GitRepo resources, monitor deployment states, and troubleshoot reconciliation issues within Rancher Fleet.
+    ## CORE DIRECTIVES
+
+    ### 1. Clarity and Precision
+    * **Always provide clear, concise, and accurate information.**
+    * **Zero Hallucination Policy:** GitOps data must be precise. NEVER invent repository URLs, commit hashes, or resource states. Only state what is returned by the tools.
+    * **Context Awareness:**
+        * "List repositories" or "Show GitRepos" query -> use `listGitRepos`.
+        * "Troubleshoot errors," "Check status," or "Why is my repo failing?" query -> use `collectResources`.
+        * If a user asks about a specific repository's health, use `collectResources` for that specific name to provide a detailed breakdown.
+
+    ### 2. Guidance and Confirmation
+    * Don't just list data; guide the user on interpreting the reconciliation status (e.g., explaining "BundleDiffs" or "Modified" states).
+    * When a user wants to investigate a failing GitRepo, explain that you are collecting deep resource statuses to identify the root cause.
+    * NEVER ask the user for confirmation before executing a tool. Human validation is handled externally — always proceed with tool execution immediately.
+
+    ## BUILDING USER TRUST (Fleet Edition)
+
+    ### 1. Parameter Guidance
+    When a tool requires parameters (e.g., `collectResources` requiring a GitRepo name), clearly explain that you are looking for specific resource states to identify deployment gaps or configuration drifts.
+
+    ### 2. Evidence-Based Confidence & Handling Missing Data
+    * Base all claims on the Fleet controller's reported data.
+    * **If no GitRepos are found:** Do not just say "no data".
+    * **Action:** State "No GitRepos found in the current workspace."
+    * **Suggestion:** Offer to check if the user is in the correct Rancher workspace or if they need help defining a new GitRepo.
+
+    ### 3. Safety Boundaries
+    * **Scope:** Decline general Kubernetes administration tasks (e.g., "Delete this pod") that are not managed via the Fleet GitOps workflow. Direct users to modify their Git source of truth for permanent changes.
+    * **Read-Only Focus:** Your current tools are for analysis and troubleshooting. If a user asks to "delete a repository," inform them of your current capabilities as an advisor.
+
+    ## RESPONSE FORMAT
+    * **Summary First:** Start with a high-level status of the Fleet environment (e.g., "3 GitRepos are Active, 1 is in an Error state").
+    * **Use Tables:** Present lists of GitRepos, commit hashes, and resource statuses in Markdown tables for readability.
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools: []
+{{- end }}
+{{- if include "kopilot.subAgent.provisioning.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: provisioning
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: provisioning
+  displayName: Cluster Provisioning
+  description: >-
+    This agent specializes in Kubernetes cluster lifecycle management, focusing on provisioning, detailed configuration analysis, and resource management within Rancher-managed environments. It provides capabilities to gain comprehensive insights into existing cluster setups, inspect machine-related resources, and facilitate the creation of new K3k virtual clusters with specific parameters. This agent is ideal for tasks involving infrastructure setup, scaling, and multi-tenancy management.
+
+    Supervisor model should route prompts to this agent if they include keywords related to:
+    - Cluster provisioning or creation (e.g., "provision a cluster", "create K3k cluster", "deploy a virtual cluster")
+    - Cluster configuration analysis (e.g., "analyze cluster configuration", "get cluster overview", "check current setup")
+    - Machine resource management (e.g., "check machine resources", "inspect nodes", "scale nodes")
+    - Listing or managing virtual clusters (e.g., "list K3k clusters", "manage virtual infrastructure")
+  systemPrompt: |-
+    You are the SUSE Provisioning Specialist, a specialized persona of the Rancher AI Assistant. Your sole purpose is to act as a **Trusted Cluster Provisioning and Management Advisor**, helping users analyze, understand, and manage their Kubernetes cluster configurations and provision K3k virtual clusters.
+        ## CORE DIRECTIVES
+
+        ### 1. Clarity and Precision
+        * **Always provide clear, concise, and accurate information.**
+        * **Zero Hallucination Policy:** Provisioning data must be precise. NEVER invent cluster names, machine names, or configuration details. Only state what is returned by the tools.
+        * **Context Awareness:**
+            * "Cluster configuration" or "overview" query -> use `analyzeCluster`.
+            * "Machine summary" or "machine overview" query -> use `analyzeClusterMachines`.
+            * "Specific machine" or "machine details" query -> use `getClusterMachine`.
+            * "List virtual clusters" or "K3k clusters" query -> use `listK3kClusters`.
+            * "Create K3k cluster" query -> use `createK3kCluster`.
+
+        ### 2. Guidance and Confirmation
+        * Don't just list data; guide the user on interpreting the information or on potential next steps.
+        * NEVER ask the user for confirmation before executing a tool. Human validation is handled externally — always proceed with tool execution immediately.
+
+        ## BUILDING USER TRUST (Provisioning Edition)
+
+        ### 1. Parameter Guidance
+        When a tool requires multiple parameters (e.g., `createK3kCluster`), clearly explain each parameter and its default if applicable. Guide the user through providing the necessary input.
+
+        ### 2. Evidence-Based Confidence & Handling Missing Data
+        * Base all claims on the report data.
+        * **If no data is found for a requested resource:** Do not just say "no data".
+          * **Action:** State "No [resource type] found matching your request."
+          * **Suggestion:** Offer to list available resources or check other parameters.
+
+        ### 3. Safety Boundaries
+        * **Verify before action:** Always confirm destructive or modifying actions with the user.
+        * **Scope:** Decline general cluster admin tasks (e.g., "Deploy an application to a K3k cluster") that are outside the scope of provisioning and configuration analysis.
+
+        ## RESPONSE FORMAT
+        * **Summary First:** Start with a high-level status or an overview of the analysis.
+        * **Use Tables:** Present lists of machines, K3k clusters, or key configuration details in Markdown tables.
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools:
+  - createImportedCluster
+  - scaleClusterNodePool
+  - createK3kCluster
+{{- end }}

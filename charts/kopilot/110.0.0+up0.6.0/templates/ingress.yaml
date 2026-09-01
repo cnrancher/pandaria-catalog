@@ -1,0 +1,53 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kopilot
+  annotations:
+{{- if .Values.ingress.configurationSnippet }}
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      {{- template "configurationSnippet" . }}
+{{- end }}
+{{- if eq .Values.tls "ingress" }}
+    cert-manager.io/issuer: {{ .Release.Name }}
+    cert-manager.io/issuer-kind: Issuer
+{{- end }}
+{{- if .Values.ingress.includeDefaultExtraAnnotations }}
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+{{- end }}
+{{- if .Values.ingress.extraAnnotations }}
+{{ toYaml .Values.ingress.extraAnnotations | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+{{- end }}
+  rules:
+  - host: {{ .Values.hostname }}  # hostname to access kopilot server
+    http:
+      paths:
+{{- if and .Values.langfuse.deploy .Values.langfuse.ingress.enabled }}
+      - backend:
+          service:
+            name: kopilot-langfuse-web
+            port:
+              number: 3000
+        pathType: ImplementationSpecific
+        path: /langfuse
+{{- end }}
+      - backend:
+          service:
+            name: kopilot-webui
+            port:
+              number: 8080
+        pathType: ImplementationSpecific
+        path: "/"
+{{- if eq .Values.tls "ingress" }}
+  tls:
+  - hosts:
+    - {{ .Values.hostname }}
+    secretName: "tls-kopilot-ingress"
+{{- end }}
+{{- end }}

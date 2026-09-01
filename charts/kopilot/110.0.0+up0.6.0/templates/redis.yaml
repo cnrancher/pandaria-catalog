@@ -1,0 +1,91 @@
+{{- if not .Values.redis.externalURL -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kopilot.redis.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.redis.name" . }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ include "kopilot.redis.name" . }}
+  ports:
+    - port: 6379
+      targetPort: 6379
+      name: redis
+---
+{{ if .Values.redis.persistentVolume.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "kopilot.redis.pvc.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.redis.name" . }}
+  annotations:
+spec:
+{{- if .Values.redis.persistentVolume.storageClassName }}
+  storageClassName: {{ .Values.redis.persistentVolume.storageClassName | quote }}
+{{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistentVolume.size | quote }}
+{{ end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "kopilot.redis.name" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceName: {{ include "kopilot.redis.name" . }}
+  replicas: {{ .Values.redis.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ include "kopilot.redis.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "kopilot.redis.name" . }}
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.redis.securityContext.fsGroup }}
+      {{- with .Values.redis.podScheduling.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.podScheduling.tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: redis
+          image: {{ template "kopilot.registry.default" . }}{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+          securityContext:
+            runAsUser: {{ .Values.redis.securityContext.runAsUser }}
+          ports:
+            - containerPort: 6379
+          resources:
+            limits:
+            {{- if .Values.redis.limits.memory }}
+              memory: {{ .Values.redis.limits.memory }}
+            {{- end }}
+            {{- if .Values.redis.limits.cpu }}
+              cpu: {{ .Values.redis.limits.cpu }}
+            {{- end }}
+          env: []
+      {{ if .Values.redis.persistentVolume.enabled }}
+          volumeMounts:
+            - mountPath: /data
+              name: redis
+              subPath: {{ .Values.redis.persistentVolume.subPath | quote }}
+      volumes:
+        - name: redis
+          persistentVolumeClaim:
+            claimName: {{ include "kopilot.redis.pvc.name" . }}
+      {{ end }}
+{{- end -}}

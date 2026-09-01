@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ include "kopilot.postgres.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.postgres.name" . }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/resource-policy": keep
+data:
+  POSTGRES_PASSWORD: {{ include "kopilot.postgres.password" . | b64enc }}
+{{ if not .Values.postgres.externalURL -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kopilot.postgres.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.postgres.name" . }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ include "kopilot.postgres.name" . }}
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+---
+{{ if .Values.postgres.persistentVolume.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "kopilot.postgres.pvc.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.postgres.name" . }}
+  annotations:
+spec:
+{{- if .Values.postgres.persistentVolume.storageClassName }}
+  storageClassName: {{ .Values.postgres.persistentVolume.storageClassName | quote }}
+{{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistentVolume.size | quote }}
+{{ end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kopilot.postgres.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "kopilot.postgres.name" . }}
+data:
+  POSTGRES_DB: kopilot
+  POSTGRES_USER: {{ .Values.postgres.username | quote }}
+  POSTGRES_INITDB_ARGS: '--encoding=UTF8 --data-checksums'
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "kopilot.postgres.name" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  serviceName: {{ include "kopilot.postgres.name" . }}
+  replicas: {{ .Values.postgres.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ include "kopilot.postgres.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "kopilot.postgres.name" . }}
+    spec:
+      securityContext:
+        fsGroup: {{ .Values.postgres.securityContext.fsGroup }}
+      {{- with .Values.postgres.podScheduling.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.postgres.podScheduling.tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: postgres
+          image: {{ template "kopilot.registry.default" . }}{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+          imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+          securityContext:
+            runAsUser: {{ .Values.postgres.securityContext.runAsUser }}
+          ports:
+            - containerPort: 5432
+          resources:
+            limits:
+            {{- if .Values.postgres.limits.memory }}
+              memory: {{ .Values.postgres.limits.memory }}
+            {{- end }}
+            {{- if .Values.postgres.limits.cpu }}
+              cpu: {{ .Values.postgres.limits.cpu }}
+            {{- end }}
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "kopilot.postgres.name" . }}
+                  key: POSTGRES_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: {{ include "kopilot.postgres.name" . }}
+      {{ if .Values.postgres.persistentVolume.enabled }}
+          volumeMounts:
+            - mountPath: /var/lib/pgsql/data
+              name: postgredb
+              subPath: {{ .Values.postgres.persistentVolume.subPath | quote }}
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: {{ include "kopilot.postgres.pvc.name" . }}
+      {{ end }}
+{{- end -}}

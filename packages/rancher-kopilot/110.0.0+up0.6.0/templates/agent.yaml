@@ -1,0 +1,191 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kopilot-agent
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-agent
+spec:
+  replicas: {{ .Values.agent.replicas | default 1 }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kopilot-agent
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") $ | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") $ | sha256sum }}
+      labels:
+        app: kopilot-agent
+    spec:
+      serviceAccountName: kopilot
+      {{- with .Values.agent.podScheduling.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.agent.podScheduling.tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: kopilot-operator
+        image: {{ template "kopilot.bundle.image" . }}
+        imagePullPolicy: {{ .Values.bundle.image.pullPolicy }}
+        command: [
+          'kopilot',
+          'operator',
+          '--debug={{ .Values.agent.operator.debug }}',
+        ]
+        env:
+          - name: KOPILOT_DEV_MODE
+            value: {{ .Values.agent.operator.devMode | quote }}
+{{ include "kopilot.bootstrap.env" . | nindent 10 }}
+        resources:
+          limits:
+          {{- if .Values.agent.operator.limits.memory }}
+            memory: {{ .Values.agent.operator.limits.memory }}
+          {{- end }}
+          {{- if .Values.agent.operator.limits.cpu }}
+            cpu: {{ .Values.agent.operator.limits.cpu }}
+          {{- end }}
+      - name: kopilot-gateway
+        image: {{ template "kopilot.bundle.image" . }}
+        imagePullPolicy: {{ .Values.bundle.image.pullPolicy }}
+        command: [
+          'kopilot',
+          'gateway',
+          '--listen-address=0.0.0.0',
+          '--http-port=8080',
+          '--https-port=8443',
+          '--db-url={{ template "kopilot.postgres.url" . }}',
+          '--db-port={{ template "kopilot.postgres.port" . }}',
+          '--db-user={{ .Values.postgres.username }}',
+          '--db-name=kopilot',
+          '--debug={{ .Values.agent.gateway.debug }}',
+        ]
+        env:
+          - name: KOPILOT_DEV_MODE
+            value: {{ .Values.agent.gateway.devMode | quote }}
+          - name: KOPILOT_UI_MODE
+            value: {{ .Values.agent.gateway.uiMode | quote }}
+          - name: KOPILOT_REDIS_SERVER
+            value: {{ template "kopilot.redis.url" . }}
+          - name: KOPILOT_REDIS_DB
+            value: {{ .Values.redis.db | quote }}
+          - name: KOPILOT_ENGINE_SERVER
+            value: "http://127.0.0.1:8060"
+          - name: RANCHER_DEPLOYMENT_NAME
+            value: {{ .Values.rancherDeploymentName | quote }}
+{{ include "kopilot.postgres.env" . | nindent 10 }}
+{{ include "kopilot.rancher.sso.env" . | nindent 10 }}
+{{ include "kopilot.bootstrap.env" . | nindent 10 }}
+{{ if .Values.extraEnv }}
+{{ toYaml .Values.extraEnv | indent 10}}
+{{ end }}
+        ports:
+          - containerPort: 8080
+            name: http
+          - containerPort: 8443
+            name: https
+        resources:
+          limits:
+          {{- if .Values.agent.gateway.limits.memory }}
+            memory: {{ .Values.agent.gateway.limits.memory }}
+          {{- end }}
+          {{- if .Values.agent.gateway.limits.cpu }}
+            cpu: {{ .Values.agent.gateway.limits.cpu }}
+          {{- end }}
+        volumeMounts:
+{{ include "kopilot.privateCA.volume.mounts" . | nindent 8 }}
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          failureThreshold: 60
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          failureThreshold: 10
+          periodSeconds: 10
+      - name: kopilot-runtime
+        image: {{ template "kopilot.runtime.image" . }}
+        imagePullPolicy: {{ .Values.runtime.image.pullPolicy }}
+        command: [ 'uv', 'run', 'kopilot-runtime' ]
+        env: []
+        envFrom:
+          - configMapRef:
+              name: kopilot-global-config
+          - secretRef:
+              name: kopilot-agent-secret
+          - secretRef:
+              name: kopilot-llm-config
+        resources:
+          limits:
+          {{- if .Values.agent.runtime.limits.memory }}
+            memory: {{ .Values.agent.runtime.limits.memory }}
+          {{- end }}
+          {{- if .Values.agent.runtime.limits.cpu }}
+            cpu: {{ .Values.agent.runtime.limits.cpu }}
+          {{- end }}
+        volumeMounts:
+          - name: agent-env
+            mountPath: /app/python/.env
+            subPath: .env
+        readinessProbe:
+          exec:
+            command:
+            - curl
+            - --fail
+            - --connect-timeout
+            - "5"
+            - http://127.0.0.1:8060/api/v1/health/
+          initialDelaySeconds: 5
+          failureThreshold: 300
+          periodSeconds: 1
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - --fail
+            - --connect-timeout
+            - "5"
+            - http://127.0.0.1:8060/api/v1/health/
+          initialDelaySeconds: 5
+          failureThreshold: 10
+          periodSeconds: 10
+      volumes:
+        - name: agent-env
+          configMap:
+            name: kopilot-agent-config
+            items:
+              - key: env
+                path: .env
+{{ include "kopilot.privateCA.volumes" . | nindent 8 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kopilot-webui
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-webui
+spec:
+  type: ClusterIP
+  selector:
+    app: kopilot-agent
+  ports:
+    - port: 8443
+      targetPort: 8443
+      name: https
+    - port: 8080
+      targetPort: 8080
+      name: http
