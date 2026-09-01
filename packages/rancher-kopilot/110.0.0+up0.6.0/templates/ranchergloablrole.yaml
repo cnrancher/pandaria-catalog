@@ -1,0 +1,42 @@
+{{- if .Values.rancher_sso.enabled -}}
+apiVersion: management.cattle.io/v3
+displayName: Kopilot User(AI Assistant)
+kind: GlobalRole
+metadata:
+  name: kopilot-user
+namespacedRules:
+  {{ .Release.Namespace }}:
+    - apiGroups:
+        - ''
+      resourceNames:
+        - http:kopilot-webui:8080
+        - https://kopilot-webui:8443
+      resources:
+        - services/proxy
+      verbs:
+        - get
+        - create
+    - apiGroups:
+        - ''
+      resourceNames:
+        - kopilot-llm-config
+      resources:
+        - secrets
+      verbs:
+        - get
+    - apiGroups:
+        - ''
+      resourceNames:
+        - kopilot-rancher-ui-tools
+      resources:
+        - configmaps
+      verbs:
+        - get
+    - apiGroups:
+        - kopilot.pandaria.io
+      resources:
+        - subagentconfigs
+      verbs:
+        - watch
+        - list
+{{- end -}}

@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kopilot-pre-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      name: kopilot-pre-upgrade
+    spec:
+      serviceAccountName: kopilot
+      restartPolicy: Never
+      containers:
+        - name: kopilot-pre-upgrade
+          image: {{ template "kopilot.bundle.image" . }}
+          imagePullPolicy: {{ .Values.bundle.image.pullPolicy }}
+          command: [
+            'kopilot',
+            'migrate',
+            '--db-url={{ template "kopilot.postgres.url" . }}',
+            '--db-port={{ template "kopilot.postgres.port" . }}',
+            '--db-user={{ .Values.postgres.username }}',
+            '--db-name=kopilot',
+            '--db-reset={{ .Values.preUpgrade.reset }}',
+            '--debug={{ .Values.preUpgrade.debug }}',
+          ]
+          env:
+{{ include "kopilot.postgres.env" . | nindent 12 }}
+          resources:
+            limits:
+            {{- if .Values.preUpgrade.limits.memory }}
+              memory: {{ .Values.preUpgrade.limits.memory }}
+            {{- end }}
+            {{- if .Values.preUpgrade.limits.cpu }}
+              cpu: {{ .Values.preUpgrade.limits.cpu }}
+            {{- end }}

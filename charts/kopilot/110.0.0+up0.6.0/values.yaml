@@ -1,0 +1,391 @@
+bootstrapPassword: ""
+hostname: "kopilot-demo.example.com"
+
+# Fine-grained control over which built-in SubAgents and MCP servers are installed.
+# MCP servers are deployed when at least one dependent SubAgent is installed:
+#   kopilot-mcp-server  <- kubernetes, helm, tavily
+#   rancher-mcp-server  <- rancher, fleet, provisioning, tavily
+# tavily is shared by both UIs.
+subAgents:
+  kubernetes:
+    enabled: false
+  helm:
+    enabled: false
+  rancher:
+    enabled: true
+  fleet:
+    enabled: true
+  provisioning:
+    enabled: true
+  tavily:
+    enabled: false
+
+# MCP Lazy Loading to reduce token usage
+mcpLazyLoading: false
+
+# It represents the name of the Rancher deployment in the local cluster.
+# https://github.com/cnrancher/kopilot/issues/195#issuecomment-4107617995
+rancherDeploymentName: ""
+
+extraEnv:
+  # - name: KOPILOT_UI_INDEX
+  #   value: "https://cn-kopilot-ui.s3.ap-east-1.amazonaws.com/static-v1/index.html"
+  # - name: KOPILOT_FRAME_ANCESTOR # KOPILOT_FRAME_ANCESTOR
+  #   value: "*"
+  - name: KOPILOT_PROXY_TIMEOUT # KOPILOT_PROXY_TIMEOUT 0.5.1 added support
+    value: "90"
+
+llm:
+  # When false (default), helm upgrade keeps an existing kopilot-llm-config Secret
+  # (e.g. after UI edits). Set true to overwrite it from these values.
+  forceUpdate: false
+
+  # OPENAI: openai
+  # GEMINI: google_genai or openai
+  # QWEN: openai
+  # DEEPSEEK: openai
+  # MIMO: openai
+  # KIMI: openai
+  # GLM: openai
+  provider: "google_genai"
+
+  # OPENAI: No settings required or https://test-openai-qa-01.openai.azure.com/openai/v1/
+  # GEMINI: No settings required or https://generativelanguage.googleapis.com/v1beta/openai
+  # QWEN: https://dashscope.aliyuncs.com/compatible-mode/v1
+  # DEEPSEEK: https://api.deepseek.com
+  # MIMO: https://api.xiaomimimo.com/v1
+  # KIMI: https://api.moonshot.cn/v1
+  # GLM: https://open.bigmodel.cn/api/paas/v4
+  baseURL: ""
+
+  # LLM API credentials
+  # Replace with your actual API key
+  apiKey: "ChangeMe"
+
+  # OPENAI: gpt-4.1-mini gpt-5.2 gpt-5.4-mini gpt-5.4
+  # GEMINI: gemini-2.5-pro gemini-2.5-flash gemini-3-flash-preview gemini-3.1-pro-preview gemini-3.1-flash-lite gemini-3.5-flash gemini-3.6-flash
+  # QWEN: qwen-plus qwen3-max qwen3.6-flash qwen3.6-max-preview qwen3.6-plus qwen3.7-max qwen3.7-plus
+  # DEEPSEEK: deepseek-v4-flash deepseek-v4-pro
+  # MIMO: mimo-v2.5 mimo-v2.5-pro
+  # KIMI: kimi-k2.6 kimi-k2.7-code kimi-k2.7-code-highspeed kimi-k3
+  # GLM: glm-5.1 glm-5.2
+  model: gemini-3-flash-preview
+
+  # DEFAULT only these model set to 1.0
+  # Gemini 3: gemini-3-flash-preview, gemini-3.1-pro-preview, gemini-3.1-flash-lite, gemini-3.5-flash and gemini-3.6-flash
+  # MIMO: mimo-v2.5 and mimo-v2.5-pro
+  # KIMI: kimi-k2.6, kimi-k2.7-code, kimi-k2.7-code-highspeed and kimi-k3
+  # DEFAULT others model set to 0.2
+  temperature: 1.0
+
+  # Applicable to QWEN/DEEPSEEK/MIMO/GLM/KIMI
+  enableThinking: false
+
+  # OPENAI: openai mimo glm kimi
+  # QWEN: qwen
+  # GEMINI: gemini
+  # DEEPSEEK: deepseek
+  active: gemini
+
+# Used Kopilot Go binary image (operator, gateway, mcp-server)
+bundle:
+  image:
+    repository: "cnrancher/kopilot-bundle"
+    tag: "v0.6.0"
+    pullPolicy: IfNotPresent
+
+# Used Kopilot Python image (runtime)
+runtime:
+  image:
+    repository: "cnrancher/kopilot-runtime"
+    tag: "v0.6.0"
+    pullPolicy: IfNotPresent
+
+# Kopilot Agent: kopilot-operator + kopilot-gateway + kopilot-runtime
+agent:
+  replicas: 1
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+  operator:
+    debug: false
+    devMode: ""
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+  gateway:
+    debug: false
+    # devMode: "true"
+    # uiMode: "dev"
+    devMode: ""
+    uiMode: ""
+    securityMode: "false"
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+  runtime:
+    logLevel: INFO
+    # Extra keys to mask in tool results (appended to defaults: password, apikey).
+    # Comma-separated; matching is case-insensitive and ignores -/_ separators.
+    # Example: "token,secret,credential"
+    toolResult:
+      maskExtraKeys: "token,secret,credential"
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+
+kopilotMCPServer:
+  replicas: 1
+  debug: false
+  limits:
+    # memory: 2048Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+
+rancherMCPServer:
+  image:
+    # Official Image: registry.suse.com/rancher/rancher-ai-mcp:v1.0.2
+    repository: "rancher/rancher-ai-mcp"
+    tag: v1.0.2
+    pullPolicy: IfNotPresent
+  logLevel: info
+  limits:
+    # memory: 2048Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+
+redis:
+  # Setting externalURL will disable the Chart's built-in redis database.
+  # externalURL: "kopilot-redis.kopilot-system.svc.cluster.local:6379"
+  name: kopilot-redis
+  db: 0
+  persistentVolume:
+    enabled: true
+    # NOTE: Redis needs to store data with UID 999 GID 999.
+    # Please ensure that your volume have permission for this user group.
+    # Set to the existing PVC name to keep data across upgrades.
+    name: kopilot-redis
+    # storageClassName: "ebs-sc"
+    # subPath: "kopilot/data"
+    storageClassName: ""
+    size: 10Gi
+    subPath: ""
+  image:
+    repository: "cnrancher/kopilot-redis"
+    tag: "v0.6.0"
+    pullPolicy: IfNotPresent
+  securityContext:
+    # runAsUser: 999
+    # fsGroup: 1001
+    runAsUser:
+    fsGroup:
+  limits:
+    # memory: 500Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    # nodeSelector:
+    #   migration.node.kubernetes.io/arch: arm64
+    # tolerations:
+    #   - key: migration.node.kubernetes.io/arch
+    #     effect: NoSchedule
+    #     operator: Equal
+    #     value: arm64
+    nodeSelector: {}
+    tolerations: []
+
+postgres:
+  # Setting externalURL will disable the Chart's built-in postgre database.
+  # You need to ensure that the kopilot database already exists when using external database.
+  # externalURL: "kopilot-postgres.kopilot-system.svc.cluster.local:5432"
+  name: kopilot-postgres
+  username: "kopilot"
+  password: "ChangeMe"
+  persistentVolume:
+    enabled: true
+    # NOTE: PostgreSQL needs to store data with UID 499 GID 486.
+    # Please ensure that your volume have permission for this user group.
+    # Set to the existing PVC name to keep data across upgrades.
+    name: kopilot-postgres
+    # storageClassName: "ebs-sc"
+    # subPath: "kopilot/data"
+    storageClassName: ""
+    size: 10Gi
+    subPath: ""
+  image:
+    # registry.suse.com/suse/postgres:17
+    repository: "cnrancher/mirrored-suse-postgres"
+    tag: '17'
+    pullPolicy: IfNotPresent
+  securityContext:
+    # runAsUser: 499
+    # fsGroup: 1001
+    runAsUser:
+    fsGroup:
+  limits:
+    # memory: 500Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    # nodeSelector:
+    #   migration.node.kubernetes.io/arch: arm64
+    # tolerations:
+    #   - key: migration.node.kubernetes.io/arch
+    #     effect: NoSchedule
+    #     operator: Equal
+    #     value: arm64
+    nodeSelector: {}
+    tolerations: []
+
+tavily:
+  # Injects Tavily API credentials into kopilot-mcp-server. Separate from subAgents.tavily.enabled
+  # (SubAgent CR). Both must be enabled for web search to work end-to-end.
+  enabled: false
+  apiKey: "tvly-YOUR_API_KEY"
+
+langfuse:
+  enabled: false
+  deploy: false
+  baseURL: "http://kopilot-langfuse-web:3000/langfuse"
+  publicKey: "lf_pk_1234567890"
+  secretKey: "lf_sk_1234567890"
+  ingress:
+    enabled: true
+  postgresql:
+    nameOverride: "langfuse-postgresql"
+    deploy: false
+    host: "kopilot-postgres"
+    port: 5432
+    auth:
+      username: kopilot
+      database: postgres_langfuse
+      password: "ChangeMe"
+  redis:
+    nameOverride: "langfuse-redis"
+    deploy: false
+    host: "kopilot-redis"
+    port: 6379
+    auth:
+      database: 1
+  clickhouse:
+    nameOverride: "langfuse-clickhouse"
+    image:
+      repository: cnrancher/mirrored-bitnamilegacy-clickhouse
+      tag: 25.2.1-debian-12-r0
+    auth:
+      username: langfuse
+      password: "rancher123456"
+    zookeeper:
+      nameOverride: "langfuse-zookeeper"
+      image:
+        repository: cnrancher/mirrored-bitnamilegacy-zookeeper
+        tag: 3.9.3-debian-12-r8
+  s3:
+    nameOverride: "langfuse-minio"
+    image:
+      repository: cnrancher/mirrored-bitnamilegacy-minio
+      tag: 2024.12.18-debian-12-r1
+    auth:
+      rootPassword: "rancher123456"
+  langfuse:
+    salt:
+      value: "secureSalt"
+    web:
+      image:
+        repository: cnrancher/mirrored-langfuse-langfuse
+        tag: 3.155.1
+      livenessProbe:
+        path: "/langfuse/api/public/health"
+      readinessProbe:
+        path: "/langfuse/api/public/ready"
+    worker:
+      image:
+        repository: cnrancher/mirrored-langfuse-langfuse-worker
+        tag: 3.155.1
+    nextauth:
+      url: https://kopilot-demo.example.com/langfuse/api/auth
+      secret:
+        value: "rancher123456"
+    # auth:
+    #   disableUsernamePassword: false
+    #   providers:
+    #     custom:
+    #       clientId: "<YOUR CLIENT ID>"
+    #       clientSecret: "<YOUR CLIENT SECRET>"
+    #       issuer: "<YOUR ISSUER>"
+    #       name: "Rancher SSO"
+    #       scope: "openid profile offline_access"
+    additionalEnv:
+    - name: LANGFUSE_INIT_ORG_ID
+      value: default-org
+    - name: LANGFUSE_INIT_ORG_NAME
+      value: Default Org
+    - name: LANGFUSE_INIT_PROJECT_ID
+      value: default-project
+    - name: LANGFUSE_INIT_PROJECT_NAME
+      value: Default Project
+    - name: LANGFUSE_INIT_PROJECT_PUBLIC_KEY
+      value: lf_pk_1234567890
+    - name: LANGFUSE_INIT_PROJECT_SECRET_KEY
+      value: lf_sk_1234567890
+    - name: LANGFUSE_INIT_USER_EMAIL
+      value: admin@default.com
+    - name: LANGFUSE_INIT_USER_NAME
+      value: Admin
+    - name: LANGFUSE_INIT_USER_PASSWORD
+      value: rancher123456
+    - name: REDIS_PORT
+      value: "6379"
+    - name: NEXT_PUBLIC_BASE_PATH
+      value: /langfuse
+    - name: NODE_TLS_REJECT_UNAUTHORIZED
+      value: "0"
+
+tls: "" # ingress or empty, default is empty
+privateCA: false
+
+ingress:
+  enabled: true
+  includeDefaultExtraAnnotations: true
+  extraAnnotations: {}
+  ingressClassName: ""
+  servicePort: 80
+
+  # Add additional Nginx configuration. This example statically sets a header on the ingress.
+  # configurationSnippet: |
+  #   more_set_input_headers "X-Forwarded-Host: {{ .Values.hostname }}";
+
+http_proxy: ""
+https_proxy: ""
+no_proxy: "localhost,127.0.0.1,localaddress,.localdomain,.local,10.43.0.1,10.43.0.10,kopilot-redis,kopilot-postgres,.svc,.svc.cluster.local"
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+rancher_sso:
+  enabled: false
+  url: "" # The URL of the Rancher server, e.g., https://rancher.mycompany.com. This is required when rancher_sso.enabled is true.
+
+preUpgrade:
+  debug: false
+  reset: false # all tables will be removed if set this value to true
+  limits:
+    memory:
+    cpu:

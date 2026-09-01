@@ -1,0 +1,918 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: authconfigs.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: AuthConfig
+    listKind: AuthConfigList
+    plural: authconfigs
+    singular: authconfig
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            enabled:
+              type: boolean
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            type:
+              type: string
+          required:
+            - type
+          type: object
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: globalroles.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: GlobalRole
+    listKind: GlobalRoleList
+    plural: globalroles
+    singular: globalrole
+  scope: Cluster
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .spec.displayName
+          name: Display Name
+          type: string
+        - jsonPath: .spec.builtin
+          name: Builtin
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            builtin:
+              type: boolean
+            description:
+              nullable: true
+              type: string
+            displayName:
+              type: string
+            inheritedClusterRoles:
+              description: InheritedClusterRoles are the names of cluster roles whose permissions are granted by this GlobalRole in every cluster.
+              items:
+                type: string
+              type: array
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: globalrolebindings.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: GlobalRoleBinding
+    listKind: GlobalRoleBindingList
+    plural: globalrolebindings
+    singular: globalrolebinding
+  scope: Cluster
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .spec.globalRoleName
+          name: Role Name
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            clusterSelectors:
+              additionalProperties:
+                type: string
+              description: ClusterSelectors used for filter out clusters whose permissions will be inherited by this global role.
+              type: object
+            globalRoleName:
+              type: string
+            groupNames:
+              items:
+                type: string
+              type: array
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            userNames:
+              items:
+                type: string
+              type: array
+          required:
+            - globalRoleName
+          type: object
+      served: true
+      storage: true
+      subresources: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: oidcclients.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: OIDCClient
+    listKind: OIDCClientList
+    plural: oidcclients
+    singular: oidcclient
+  scope: Cluster
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .status.clientID
+          name: Client ID
+          type: string
+        - jsonPath: .spec.tokenExpirationSeconds
+          name: Token Expiration
+          type: integer
+        - jsonPath: .spec.refreshTokenExpirationSeconds
+          name: RefreshToken Expiration
+          type: integer
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: Spec is the specification of the desired configuration for the oidc client.
+              properties:
+                description:
+                  description: Description provides additional context about the OIDC client.
+                  type: string
+                redirectURIs:
+                  description: |-
+                    RedirectURIs defines the allowed redirect URIs for the OIDC client.
+                    These URIs must be registered and used during the authentication flow.
+                  items:
+                    type: string
+                  type: array
+                refreshTokenExpirationSeconds:
+                  description: |-
+                    RefreshTokenExpirationSeconds defines how long (in seconds)
+                    a refresh token remains valid before expiration.
+                  format: int64
+                  minimum: 1
+                  type: integer
+                tokenExpirationSeconds:
+                  description: |-
+                    TokenExpirationSeconds specifies the duration (in seconds) before
+                    an access token and ID token expire.
+                  format: int64
+                  minimum: 1
+                  type: integer
+              required:
+                - refreshTokenExpirationSeconds
+                - tokenExpirationSeconds
+              type: object
+            status:
+              description: Status is the most recently observed status of the oidc client.
+              properties:
+                clientID:
+                  description: ClientID represents the ID of the client
+                  type: string
+                clientSecrets:
+                  additionalProperties:
+                    description: OIDCClientSecretStatus represent the observed status of a client secret.
+                    properties:
+                      createdAt:
+                        description: CreatedAt represents when this client secret was created.
+                        type: string
+                      lastFiveCharacters:
+                        description: LastFiveCharacters are the 5 last characters of the client secret
+                        type: string
+                      lastUsedAt:
+                        description: LastUsedAt represent when this client secret was used.
+                        type: string
+                    type: object
+                  description: ClientSecrets represents the observed status of the client secrets
+                  type: object
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: oidcconfigs.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: OIDCConfig
+    listKind: OIDCConfigList
+    plural: oidcconfigs
+    singular: oidcconfig
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            acrValue:
+              description: AcrValue is expected to be string containing the required ACR value
+              type: string
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            authEndpoint:
+              type: string
+            certificate:
+              type: string
+            clientId:
+              type: string
+            clientSecret:
+              type: string
+            endSessionEndpoint:
+              description: |-
+                This is provided by the OIDC Provider - it is the `end_session_uri` from
+                the discovery data.
+              type: string
+            issuer:
+              type: string
+            jwksUrl:
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            logoutAllEnabled:
+              description: |-
+                Flag. True when the auth provider is configured to accept a `Logout All`
+                operation. Can be set if and only if the provider supports `Logout All`
+                (see AuthConfig.LogoutAllSupported).
+              type: boolean
+            logoutAllForced:
+              description: |-
+                Flag. Can be set if and only if `LogoutAllEnabled` (above) is set.
+                When set `Logout All` is the only kind of logout accepted. A regular
+                logout request will be rejected.
+              type: boolean
+            metadata:
+              type: object
+            privateKey:
+              type: string
+            scope:
+              description: Scopes is expected to be a space delimited list of scopes
+              type: string
+            serverUrl:
+              type: string
+            tokenEndpoint:
+              type: string
+            userInfoEndpoint:
+              type: string
+          required:
+            - serverUrl
+          type: object
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: roletemplates.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: RoleTemplate
+    listKind: RoleTemplateList
+    plural: roletemplates
+    singular: roletemplate
+  scope: Cluster
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .spec.displayName
+          name: Display Name
+          type: string
+        - jsonPath: .spec.builtin
+          name: Builtin
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            builtin:
+              type: boolean
+            description:
+              nullable: true
+              type: string
+            displayName:
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            rules:
+              description: Rules hold all the PolicyRules for this RoleTemplate.
+              items:
+                description: |-
+                  PolicyRule holds information that describes a policy rule, but does not contain information
+                  about who the rule applies to or which namespace the rule applies to.
+                properties:
+                  apiGroups:
+                    description: |-
+                      APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of
+                      the enumerated resources in any API group will be allowed. "" represents the core API group and "*" represents all API groups.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: atomic
+                  nonResourceURLs:
+                    description: |-
+                      NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path
+                      Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding.
+                      Rules can either apply to API resources (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: atomic
+                  resourceNames:
+                    description: ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: atomic
+                  resources:
+                    description: Resources is a list of resources this rule applies to. '*' represents all resources.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: atomic
+                  verbs:
+                    description: Verbs is a list of Verbs that apply to ALL the ResourceKinds contained in this rule. '*' represents all verbs.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: atomic
+                required:
+                  - verbs
+                type: object
+              type: array
+          type: object
+      served: true
+      storage: true
+      subresources: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: roletemplatebindings.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: RoleTemplateBinding
+    listKind: RoleTemplateBindingList
+    plural: roletemplatebindings
+    singular: roletemplatebinding
+  scope: Cluster
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .spec.roleTemplateName
+          name: Role Name
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            clusterNames:
+              items:
+                type: string
+              type: array
+            groupNames:
+              items:
+                type: string
+              type: array
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            namespaceSelectors:
+              additionalProperties:
+                type: string
+              description: NamespaceSelectors used for filter out namespaces whose permissions will be inherited by this role template.
+              type: object
+            roleTemplateName:
+              type: string
+            status:
+              description: Status is the most recently observed status of the RoleTemplateBinding.
+              properties:
+                syncedClusters:
+                  items:
+                    type: string
+                  type: array
+                syncedNamespaces:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            userNames:
+              items:
+                type: string
+              type: array
+          required:
+            - roleTemplateName
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: settings.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: Setting
+    listKind: SettingList
+    plural: settings
+    singular: setting
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            default:
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            value:
+              type: string
+          type: object
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: subagentconfigs.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: SubAgentConfig
+    listKind: SubAgentConfigList
+    plural: subagentconfigs
+    shortNames:
+      - subac
+    singular: subagentconfig
+  scope: Namespaced
+  versions:
+    - additionalPrinterColumns:
+        - jsonPath: .spec.displayName
+          name: Display Name
+          type: string
+        - jsonPath: .status.phase
+          name: Phase
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          description: SubAgentConfig is the Schema for the subagentconfigs API
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            metadata:
+              type: object
+            spec:
+              properties:
+                authenticationSecret:
+                  description: AuthenticationSecret specifies the authentication secret
+                  type: string
+                authenticationType:
+                  description: AuthenticationType specifies the authentication method
+                  enum:
+                    - RANCHER
+                    - NONE
+                    - BASIC
+                    - HEADER
+                    - OAUTH2
+                    - KOPILOT
+                  type: string
+                builtIn:
+                  description: BuiltIn indicates if this is a built-in agent configuration
+                  type: boolean
+                caBundleRef:
+                  description: |-
+                    CABundleRef references a secret key containing a PEM-encoded CA
+                    certificate bundle to trust when connecting to this agent's MCP server.
+                    The CA is scoped to this agent's connection only.
+                  properties:
+                    key:
+                      default: ca.crt
+                      description: |-
+                        Key is the key inside the secret that holds the data.
+                        Defaults to "ca.crt".
+                      type: string
+                    name:
+                      description: Name is the name of the secret in the agent namespace.
+                      type: string
+                  required:
+                    - name
+                  type: object
+                description:
+                  description: Description provides details about the agent's purpose
+                  type: string
+                displayName:
+                  description: DisplayName is the name of the AI agent
+                  type: string
+                enabled:
+                  description: Enabled indicates if this agent configuration is enabled
+                  type: boolean
+                humanValidationTools:
+                  description: HumanValidationTools lists tools requiring human validation
+                  items:
+                    type: string
+                  type: array
+                mcpURL:
+                  description: MCPURL is the Model Context Protocol server URL
+                  type: string
+                systemPrompt:
+                  description: SystemPrompt is the initial system-level instructions for the agent
+                  type: string
+                toolSet:
+                  description: ToolSet specifies a predefined set of tools for the agent
+                  type: string
+              required:
+                - displayName
+              type: object
+            status:
+              description: SubAgentConfigStatus defines the observed state of SubAgentConfig
+              properties:
+                conditions:
+                  description: Conditions represent the latest available observations of the SubAgentConfig's state
+                  items:
+                    description: Condition contains details for one aspect of the current state of this API Resource.
+                    properties:
+                      lastTransitionTime:
+                        description: |-
+                          lastTransitionTime is the last time the condition transitioned from one status to another.
+                          This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                        format: date-time
+                        type: string
+                      message:
+                        description: |-
+                          message is a human readable message indicating details about the transition.
+                          This may be an empty string.
+                        maxLength: 32768
+                        type: string
+                      observedGeneration:
+                        description: |-
+                          observedGeneration represents the .metadata.generation that the condition was set based upon.
+                          For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                          with respect to the current state of the instance.
+                        format: int64
+                        minimum: 0
+                        type: integer
+                      reason:
+                        description: |-
+                          reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                          Producers of specific condition types may define expected values and meanings for this field,
+                          and whether the values are considered a guaranteed API.
+                          The value should be a CamelCase string.
+                          This field may not be empty.
+                        maxLength: 1024
+                        minLength: 1
+                        pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                        type: string
+                      status:
+                        description: status of the condition, one of True, False, Unknown.
+                        enum:
+                          - "True"
+                          - "False"
+                          - Unknown
+                        type: string
+                      type:
+                        description: type of condition in CamelCase or in foo.example.com/CamelCase.
+                        maxLength: 316
+                        pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                        type: string
+                    required:
+                      - lastTransitionTime
+                      - message
+                      - reason
+                      - status
+                      - type
+                    type: object
+                  type: array
+                phase:
+                  description: Phase represents the current phase of the agent configuration
+                  type: string
+              type: object
+          type: object
+      selectableFields:
+        - jsonPath: .spec.authenticationSecret
+        - jsonPath: .spec.authenticationType
+        - jsonPath: .spec.enabled
+      served: true
+      storage: true
+      subresources:
+        status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: tokens.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: Token
+    listKind: TokenList
+    plural: tokens
+    singular: token
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            authProvider:
+              type: string
+            enabled:
+              type: boolean
+            expired:
+              type: boolean
+            expiresAt:
+              type: string
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            lastUpdateTime:
+              type: string
+            metadata:
+              type: object
+            providerInfo:
+              additionalProperties:
+                type: string
+              type: object
+            token:
+              type: string
+            ttl:
+              format: int64
+              type: integer
+            userId:
+              type: string
+          required:
+            - authProvider
+            - expired
+            - expiresAt
+            - lastUpdateTime
+            - token
+            - ttl
+            - userId
+          type: object
+      served: true
+      storage: true
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+    helm.sh/resource-policy: keep
+  name: users.kopilot.pandaria.io
+spec:
+  group: kopilot.pandaria.io
+  names:
+    kind: User
+    listKind: UserList
+    plural: users
+    singular: user
+  scope: Cluster
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          properties:
+            apiVersion:
+              description: |-
+                APIVersion defines the versioned schema of this representation of an object.
+                Servers should convert recognized schemas to the latest internal value, and
+                may reject unrecognized values.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+              type: string
+            attribute:
+              type: string
+            displayName:
+              type: string
+            email:
+              type: string
+            enabled:
+              type: boolean
+            internal:
+              type: boolean
+            kind:
+              description: |-
+                Kind is a string value representing the REST resource this object represents.
+                Servers may infer this from the endpoint the client submits requests to.
+                Cannot be updated.
+                In CamelCase.
+                More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+              type: string
+            lastLogin:
+              format: date-time
+              type: string
+            metadata:
+              type: object
+            password:
+              type: string
+            provider:
+              type: string
+            username:
+              type: string
+          type: object
+      served: true
+      storage: true

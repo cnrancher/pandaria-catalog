@@ -1,0 +1,76 @@
+{{- if include "kopilot.deploy.kopilotMCPServer" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kopilot-mcp-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-mcp-server
+spec:
+  replicas: {{ .Values.kopilotMCPServer.replicas | default 1 }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kopilot-mcp-server
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      labels:
+        app: kopilot-mcp-server
+    spec:
+      serviceAccountName: kopilot
+      {{- with .Values.kopilotMCPServer.podScheduling.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.kopilotMCPServer.podScheduling.tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: kopilot-mcp-server
+        image: {{ template "kopilot.bundle.image" . }}
+        imagePullPolicy: {{ .Values.bundle.image.pullPolicy }}
+        command: [
+          'kopilot',
+          'mcp-server',
+          '--mcp-protocol=http',
+          '--mcp-listen=0.0.0.0',
+          '--mcp-port=8000',
+          '--debug={{ .Values.kopilotMCPServer.debug }}',
+        ]
+        env:
+          - name: KOPILOT_MCP_LAZY_LOADING
+            value: {{ .Values.mcpLazyLoading | quote }}
+          - name: RANCHER_DEPLOYMENT_NAME
+            value: {{ .Values.rancherDeploymentName | quote }}
+{{ include "kopilot.tavily.env.from" . | nindent 8 }}
+        ports:
+          - containerPort: 8000
+            name: mcp
+        resources:
+          limits:
+          {{- if .Values.kopilotMCPServer.limits.memory }}
+            memory: {{ .Values.kopilotMCPServer.limits.memory }}
+          {{- end }}
+          {{- if .Values.kopilotMCPServer.limits.cpu }}
+            cpu: {{ .Values.kopilotMCPServer.limits.cpu }}
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kopilot-mcp-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-mcp-server
+spec:
+  type: ClusterIP
+  selector:
+    app: kopilot-mcp-server
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: mcp
+{{- end }}

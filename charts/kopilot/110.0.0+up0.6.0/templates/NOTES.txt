@@ -1,0 +1,2 @@
+Successfully installed the Kopilot AI Agent.
+Version: {{ .Chart.AppVersion }}

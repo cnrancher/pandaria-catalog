@@ -1,0 +1,58 @@
+categories:
+- Tools
+namespace: kopilot-system
+questions:
+- variable: agents.logLevel
+  description: ""
+  default: "INFO"
+  type: string
+  label: "Agent LogLevel"
+  group: "Agent"
+- variable: llm.forceUpdate
+  description: "Overwrite existing kopilot-llm-config Secret from chart values on upgrade"
+  default: false
+  type: boolean
+  label: "Force Update LLM Config"
+  group: "Agent"
+- variable: llm.provider
+  description: "LLM API Provider"
+  default: "openai"
+  type: string
+  label: "LLM API Provider"
+  group: "Agent"
+- variable: llm.baseURL
+  description: "LLM API Base URL"
+  default: ""
+  type: string
+  label: "LLM API Base URL"
+  group: "Agent"
+- variable: llm.apiKey
+  description: "LLM API Key"
+  default: "ChangeMe"
+  type: password
+  label: "LLM API Key"
+  group: "Agent"
+- variable: llm.model
+  description: "LLM Model"
+  default: "gpt-4.1-mini"
+  type: string
+  label: "LLM Model"
+  group: "Agent"
+- variable: postgres.storageClassName
+  description: "PostgreSQL Database StorageClass"
+  default: ""
+  type: string
+  label: "PostgreSQL Database StorageClass"
+  group: "Database"
+- variable: postgres.password
+  description: "PostgreSQL Database Password"
+  default: "ChangeMe"
+  type: password
+  label: "PostgreSQL Password"
+  group: "Database"
+- variable: redis.storageClassName
+  description: "Redis Database StorageClass"
+  default: ""
+  type: string
+  label: "Redis Database StorageClass"
+  group: "Database"

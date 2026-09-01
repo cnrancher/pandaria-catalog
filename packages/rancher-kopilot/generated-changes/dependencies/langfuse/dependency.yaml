@@ -1,0 +1,3 @@
+workingDir: charts
+url: local
+doNotRelease: true
