@@ -30,9 +30,21 @@
 {{- if or (include "kopilot.subAgent.rancher.enabled" .) (include "kopilot.subAgent.fleet.enabled" .) (include "kopilot.subAgent.provisioning.enabled" .) -}}true{{- end -}}
 {{- end -}}
 
-{{- define "kopilot.registry.default" -}}
+{{/*
+Get Rancher system-default-registry
+*/}}
+{{- define "system_default_registry" -}}
 {{- if .Values.global.cattle.systemDefaultRegistry -}}
 {{- printf "%s/" .Values.global.cattle.systemDefaultRegistry -}}
+{{- else -}}
+{{- "" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "kopilot.registry.default" -}}
+{{- $reg := include "system_default_registry" . -}}
+{{- if $reg -}}
+{{- $reg -}}
 {{- else -}}
 {{- "registry.rancher.cn/" -}}
 {{- end -}}
