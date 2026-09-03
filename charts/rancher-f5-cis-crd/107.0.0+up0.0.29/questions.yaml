@@ -1,3 +1,0 @@
-rancher_min_version: 2.12.0
-labels:
-  catalog.cattle.io/hidden: "true"
