@@ -13,7 +13,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-var ChartPath = utils.MustGetPathFromModuleRoot("/charts/rancher-k8s-auditlog-collector/0.5.0")
+var ChartPath = utils.MustGetPathFromModuleRoot("/charts/rancher-k8s-auditlog-collector/0.8.0")
 
 var (
 	DefaultReleaseName = "rancher-k8s-auditlog-collector-test-1"
