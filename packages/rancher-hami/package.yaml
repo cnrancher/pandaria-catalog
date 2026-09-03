@@ -1,5 +1,5 @@
 url: https://Project-HAMi.github.io/HAMi/charts/hami-2.9.0.tgz
-version: 109.1.0
+version: 110.0.0
 doNotRelease: false
 ignoreDependencies:
 - hami-dra
