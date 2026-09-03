@@ -30,6 +30,11 @@ var fakeFuncsMap = template.FuncMap{
 	"dict":            fakeFunction,
 	"int":             fakeFunction,
 	"append":          fakeFunction,
+	"lookup":          fakeFunction,
+	"b64dec":          fakeFunction,
+	"splitList":       fakeFunction,
+	"first":           fakeFunction,
+	"b64enc":          fakeFunction,
 }
 
 func fakeFunction() string {
