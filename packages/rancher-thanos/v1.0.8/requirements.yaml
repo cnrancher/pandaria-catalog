@@ -1,0 +1,10 @@
+dependencies:
+- condition: grafana.enabled
+  name: grafana
+  repository: file://./charts/grafana
+- condition: thanos.enabled
+  name: thanos
+  repository: file://./charts/thanos
+- condition: ui.enabled
+  name: ui
+  repository: file://./charts/ui
