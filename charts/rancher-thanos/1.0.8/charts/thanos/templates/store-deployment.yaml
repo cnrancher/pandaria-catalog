@@ -1,0 +1,92 @@
+{{- if .Values.store.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-store-{{ .Release.Name }}
+  labels:
+    chart: {{ .Chart.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    component: store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      chart: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+      component: store
+  template:
+    metadata:
+      labels:
+        chart: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+        component: store
+    spec:
+      containers:
+        - name: thanos
+          image: "{{ template "system_default_registry" . }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+          - store
+          {{- if .Values.tls.enabled }}
+          - --grpc-server-tls-key
+          - /etc/tls/grpc/tls.key
+          - --grpc-server-tls-cert
+          - /etc/tls/grpc/tls.cert
+          - --grpc-server-tls-ca
+          - /etc/tls/grpc/tls.ca
+          {{- end }}
+          - --objstore.config-file
+          - /etc/thanos/config.yaml
+          - --grpc-address
+          - 0.0.0.0:10901
+          - --http-address
+          - 0.0.0.0:10902
+        {{- range .Values.store.extraArgs }}
+          - {{ . }}
+        {{- end }}
+          ports:
+            - name: grpc
+              containerPort: 10901
+              protocol: TCP
+            - name: http
+              containerPort: 10902
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.store.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.tls.enabled }}  
+          - mountPath: /etc/tls/grpc
+            name: thanos-sidecar-tls
+          {{- end }}
+          - mountPath: /etc/thanos/config.yaml
+            name: objstore-config
+            subPath: config.yaml
+      nodeSelector:
+      {{- include "linux-node-selector" . | nindent 8 }}
+      {{- with .Values.store.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.store.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      tolerations:
+      {{- include "linux-node-tolerations" . | nindent 8 }}
+      {{- with .Values.store.tolerations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- if .Values.tls.enabled }}
+      - name: thanos-sidecar-tls
+        secret:
+          defaultMode: 420
+          secretName: thanos-sidecar-tls
+      {{- end }}
+      - secret:
+          items:
+          - key: config.yaml
+            path: config.yaml
+          secretName: objstore-config-{{ .Release.Name }}
+        name: objstore-config
+{{- end }}
