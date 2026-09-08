@@ -14,14 +14,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.6.0
-    created: "2026-09-03T16:34:29.597046+08:00"
-    dependencies:
-    - condition: langfuse.deploy
-      name: langfuse
-      repository: file://./charts/langfuse
-      version: 1.5.22
+    created: "2026-09-08T13:51:25.350325+08:00"
     description: Helm chart for managing Kopilot AI Agent resources
-    digest: 957804372ff9b7a30c40e72d519c7e54f50afcff63715871f03f188716114cd3
+    digest: 21751ecd4ae23ab523d80ad0ae25c58562c9cdae0e68b55eb9ac01bbe223f2b3
     home: https://github.com/cnrancher/kopilot
     maintainers:
     - email: Zhenyang.Zhao@suse.com
@@ -45,9 +40,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.6.0
-    created: "2026-09-01T13:36:52.137315+08:00"
+    created: "2026-09-08T13:51:26.613832+08:00"
     description: Helm chart for Kopilot CRDs
-    digest: 88d3a4e8cd7251e5b3cf430e1f0324f55e87f985eb643d6aad6fce7ef6d83385
+    digest: 99cbd8886acca6c59ee2f0b3f9166adb4b42144b40740ce485b6bec63a54163a
     home: https://github.com/cnrancher/kopilot
     maintainers:
     - email: Zhenyang.Zhao@suse.com

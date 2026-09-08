@@ -25,10 +25,6 @@ data:
     MCP_LAZY_LOADING={{ .Values.mcpLazyLoading }}
     TOOL_RESULT_MASK_EXTRA_KEYS={{ .Values.agent.runtime.toolResult.maskExtraKeys | quote }}
 
-    LANGFUSE_ENABLE={{ .Values.langfuse.enabled | quote }}
-    LANGFUSE_BASE_URL={{ .Values.langfuse.baseURL | quote }}
-    # LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY are defined in secrets
-
 ---
 apiVersion: v1
 kind: ConfigMap

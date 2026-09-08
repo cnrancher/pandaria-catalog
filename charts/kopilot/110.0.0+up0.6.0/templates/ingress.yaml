@@ -28,15 +28,6 @@ spec:
   - host: {{ .Values.hostname }}  # hostname to access kopilot server
     http:
       paths:
-{{- if and .Values.langfuse.deploy .Values.langfuse.ingress.enabled }}
-      - backend:
-          service:
-            name: kopilot-langfuse-web
-            port:
-              number: 3000
-        pathType: ImplementationSpecific
-        path: /langfuse
-{{- end }}
       - backend:
           service:
             name: kopilot-webui

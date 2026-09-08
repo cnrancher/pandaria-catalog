@@ -11,11 +11,6 @@ annotations:
   catalog.cattle.io/type: cluster-tool
 apiVersion: v2
 appVersion: 0.6.0
-dependencies:
-- condition: langfuse.deploy
-  name: langfuse
-  repository: file://./charts/langfuse
-  version: 1.5.22
 description: Helm chart for managing Kopilot AI Agent resources
 home: https://github.com/cnrancher/kopilot
 maintainers:
