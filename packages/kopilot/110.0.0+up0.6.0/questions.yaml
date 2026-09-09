@@ -2,8 +2,14 @@ categories:
 - Tools
 namespace: kopilot-system
 questions:
+- variable: rancher_sso.enabled
+  label: "Enable Rancher SSO"
+  description: "Enable on the local cluster; disable on downstream clusters"
+  default: true
+  type: boolean
 - variable: rancher_sso.url
+  label: "Rancher Server URL"
   description: "Rancher Server URL"
   default: "Please Input Rancher Server URL"
   type: string
-  label: "Rancher Server URL"
+  show_if: "rancher_sso.enabled=true"
