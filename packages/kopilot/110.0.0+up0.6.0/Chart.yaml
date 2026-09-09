@@ -11,7 +11,7 @@ annotations:
   catalog.cattle.io/type: cluster-tool
 apiVersion: v2
 appVersion: 0.6.0
-description: Helm chart for managing Kopilot AI Agent resources
+description: Helm chart for managing Liz GC resources
 home: https://github.com/cnrancher/kopilot
 maintainers:
 - email: Zhenyang.Zhao@suse.com

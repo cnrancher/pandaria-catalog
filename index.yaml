@@ -14,9 +14,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.6.0
-    created: "2026-09-09T11:40:07.246835+08:00"
-    description: Helm chart for managing Kopilot AI Agent resources
-    digest: ae5d53d44000eae9ca050c5a1186c51e0c03ff455e9cf846fad53fa23df3601a
+    created: "2026-09-09T13:10:37.593389+08:00"
+    description: Helm chart for managing Liz GC resources
+    digest: 6b2a692642bd92f2a1e8b6f2ca07a9aec9c824c8a5ba32b3a737f6c587a6db69
     home: https://github.com/cnrancher/kopilot
     maintainers:
     - email: Zhenyang.Zhao@suse.com

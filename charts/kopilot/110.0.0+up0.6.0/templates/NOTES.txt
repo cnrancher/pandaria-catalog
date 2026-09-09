@@ -1,2 +1,2 @@
-Successfully installed the Kopilot AI Agent.
+Successfully installed the Liz GC.
 Version: {{ .Chart.AppVersion }}

@@ -1,3 +1,3 @@
-# Kopilot AI Agent
+# Liz GC
 
 <https://github.com/cnrancher/kopilot>
