@@ -282,8 +282,8 @@ global:
     systemDefaultRegistry: ""
 
 rancher_sso:
-  enabled: false
-  url: "" # The URL of the Rancher server, e.g., https://rancher.mycompany.com. This is required when rancher_sso.enabled is true.
+  enabled: true
+  url: ""
 
 preUpgrade:
   debug: false

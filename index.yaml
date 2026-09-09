@@ -4,7 +4,7 @@ entries:
   - annotations:
       catalog.cattle.io/auto-install: kopilot-crd=match
       catalog.cattle.io/certified: rancher
-      catalog.cattle.io/display-name: Kopilot
+      catalog.cattle.io/display-name: Liz GC
       catalog.cattle.io/kube-version: '>= 1.34.0-0 < 1.37.0-0'
       catalog.cattle.io/namespace: kopilot-system
       catalog.cattle.io/os: linux
@@ -14,9 +14,9 @@ entries:
       catalog.cattle.io/type: cluster-tool
     apiVersion: v2
     appVersion: 0.6.0
-    created: "2026-09-08T13:51:25.350325+08:00"
+    created: "2026-09-09T11:40:07.246835+08:00"
     description: Helm chart for managing Kopilot AI Agent resources
-    digest: 21751ecd4ae23ab523d80ad0ae25c58562c9cdae0e68b55eb9ac01bbe223f2b3
+    digest: ae5d53d44000eae9ca050c5a1186c51e0c03ff455e9cf846fad53fa23df3601a
     home: https://github.com/cnrancher/kopilot
     maintainers:
     - email: Zhenyang.Zhao@suse.com
