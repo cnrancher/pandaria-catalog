@@ -138,8 +138,8 @@
 +      repository: cnrancher/mirrored-projecthami-hami-webui-be-oss
 +      tag: "v1.2.0"
 +  externalPrometheus:
-+    enabled: true # only support rancher monitoring, this must be true
-+    address: "http://rancher-monitoring-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
++    enabled: true # rancher hami ui extension only support external prometheus, this must be true
++    address: "http://kube-prometheus-stack-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
 +  dcgm-exporter:
 +    image:
 +      repository: cnrancher/mirrored-nvidia-dcgm-exporter
