@@ -50,6 +50,14 @@ questions:
     required: true
     group: "HAMi WebUI"
 
+- variable: hami-webui.externalPrometheus.address
+  description: "HAMi webui external prometheus server address"
+  default: "http://kube-prometheus-stack-prometheus.cattle-monitoring-system.svc.cluster.local:9090"
+  type: string
+  label: External Prometheus Server Address
+  required: true
+  group: "HAMi WebUI"
+
 - variable: hami-webui.image.frontend.repository
   description: "HAMi webui frontend image repository"
   type: string
