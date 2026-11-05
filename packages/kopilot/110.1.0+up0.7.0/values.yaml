@@ -1,0 +1,423 @@
+bootstrapPassword: ""
+hostname: "kopilot-demo.example.com"
+
+# Fine-grained control over which built-in SubAgents and MCP servers are installed.
+# MCP servers are deployed when at least one dependent SubAgent is installed:
+#   kopilot-mcp-server  <- kubernetes, helm, tavily
+#   rancher-mcp-server  <- rancher, fleet, provisioning, tavily
+# tavily is shared by both UIs.
+subAgents:
+  kubernetes:
+    enabled: false
+  helm:
+    enabled: false
+  rancher:
+    enabled: true
+  fleet:
+    enabled: true
+  provisioning:
+    enabled: true
+  tavily:
+    enabled: false
+
+# MCP Lazy Loading to reduce token usage
+mcpLazyLoading: false
+
+# It represents the name of the Rancher deployment in the local cluster.
+# https://github.com/cnrancher/kopilot/issues/195#issuecomment-4107617995
+rancherDeploymentName: ""
+
+extraEnv:
+  # - name: KOPILOT_UI_INDEX
+  #   value: "https://cn-kopilot-ui.s3.ap-east-1.amazonaws.com/static-v1/index.html"
+  # - name: KOPILOT_FRAME_ANCESTOR # KOPILOT_FRAME_ANCESTOR
+  #   value: "*"
+  - name: KOPILOT_PROXY_TIMEOUT # KOPILOT_PROXY_TIMEOUT 0.5.1 added support
+    value: "90"
+  # Enable when Rancher uses an untrusted certificate.
+  # - name: KOPILOT_RANCHER_SKIP_TLS
+  #   value: "true"
+
+llm:
+  # When false (default), helm upgrade keeps an existing kopilot-llm-config Secret
+  # (e.g. after UI edits). Set true to overwrite it from these values.
+  forceUpdate: false
+
+  # OPENAI: openai
+  # GEMINI: google_genai or openai
+  # QWEN: openai
+  # DEEPSEEK: openai
+  # MIMO: openai
+  # KIMI: openai
+  # GLM: openai
+  # MINI MAX: openai
+  # OLLAMA: ollama
+  # BEDROCK: bedrock_converse
+  # CUSTOM: openai
+  provider: "google_genai"
+
+  # OPENAI: No settings required or https://test-openai-qa-01.openai.azure.com/openai/v1/
+  # GEMINI: No settings required or https://generativelanguage.googleapis.com/v1beta/openai
+  # QWEN: https://dashscope.aliyuncs.com/compatible-mode/v1
+  # DEEPSEEK: https://api.deepseek.com
+  # MIMO: https://api.xiaomimimo.com/v1
+  # KIMI: https://api.moonshot.cn/v1
+  # GLM: https://open.bigmodel.cn/api/paas/v4
+  # MINI MAX: https://api.minimaxi.com/v1
+  # OLLAMA: http://<YOUR_OLLAMA_HOST>:<YOUR_OLLAMA_PORT>
+  # BEDROCK: not used, set bedrockURL instead
+  # CUSTOM: <YOUR_CUSTOM_BASE_URL>
+  baseURL: ""
+
+  # LLM API credentials
+  # Replace with your actual API key
+  # OLLAMA: not needed, no key to pass
+  # BEDROCK: not the AWS credential chain. It maps to bedrock_api_key (Bedrock API
+  # key auth); leave ChangeMe, or set it to your Bedrock API key if you use one.
+  # Without it, credentials come from the pod IAM role or AWS_* env vars.
+  apiKey: "ChangeMe"
+
+  # Bedrock region. Credentials come from the pod IAM role or AWS_* env vars.
+  # BEDROCK: us-west-2
+  awsRegion: ""
+
+  # Optional custom Bedrock Runtime endpoint (PrivateLink / VPC).
+  # Empty uses the regional public endpoint.
+  # BEDROCK: empty, uses the regional public endpoint
+  bedrockURL: ""
+
+  # Optional Secret containing a PEM CA for an OpenAI-compatible endpoint
+  # (provider: openai). Read from the runtime namespace (default kopilot-system)
+  # and trusted in addition to the system CAs. Empty name disables the custom CA.
+  openaiCaSecret:
+    name: ""
+    key: ca.crt
+
+  # OPENAI: gpt-4.1-mini gpt-5.2 gpt-5.4-mini gpt-5.4 gpt-5.5
+  # GEMINI: gemini-2.5-pro gemini-2.5-flash gemini-3-flash gemini-3.1-flash-lite gemini-3.5-flash gemini-3.5-flash-lite gemini-3.6-flash gemini-3.8-flash
+  # QWEN: qwen-plus qwen3.6-flash qwen3.6-plus qwen3.7-flash qwen3.7-max qwen3.7-plus qwen3.8-flash qwen3.8-max
+  # DEEPSEEK: deepseek-flash deepseek-v4-pro
+  # MIMO: mimo-v2.6-flash mimo-v2.6-pro mimo-v2.6-pro-ultraspeed
+  # KIMI: kimi-k2.6 kimi-k2.7-code kimi-k2.7-code-highspeed kimi-k3
+  # GLM: glm-5.1 glm-5.2 glm-5.3 glm-5.3-flash
+  # MINI MAX: MiniMax-M3 MiniMax-M3.1-Flash
+  # OLLAMA: gpt-oss:120b
+  # BEDROCK: openai.gpt-oss-120b-1:0 (cross-region inference profile IDs work too)
+  # CUSTOM: <YOUR_CUSTOM_MODEL_NAME>
+  model: gemini-3-flash
+
+  # These models set temperature to 1.0
+  # Gemini 3: gemini-3-flash, gemini-3.1-flash-lite, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-3.6-flash and gemini-3.8-flash
+  # Gemini 2.5: gemini-2.5-pro and gemini-2.5-flash
+  # MIMO: mimo-v2.6-flash, mimo-v2.6-pro and mimo-v2.6-pro-ultraspeed
+  # KIMI: kimi-k2.7-code, kimi-k2.7-code-highspeed and kimi-k3
+  # GLM: glm-5.1, glm-5.2, glm-5.3 and glm-5.3-flash
+  # DEEPSEEK: deepseek-flash and deepseek-v4-pro
+  # MINI MAX: MiniMax-M3 and MiniMax-M3.1-Flash
+  # OPENAI: gpt-5.5 accepts 1.0 with no effect. Other values raise an error.
+  # These models set temperature to 0.7
+  # QWEN: qwen-plus, qwen3.6-flash, qwen3.6-plus, qwen3.7-flash, qwen3.7-max, qwen3.7-plus, qwen3.8-flash and qwen3.8-max
+  # These models set temperature to 0.6
+  # KIMI: kimi-k2.6
+  # These models accept temperature from 0 to 2
+  # OPENAI: gpt-4.1-mini
+  # These models set temperature to 1.0 when reasoning effort is none
+  # OPENAI: gpt-5.2, gpt-5.4-mini and gpt-5.4
+  # CUSTOM: <YOUR_CUSTOM_TEMPERATURE>
+  temperature: 1.0
+
+  # Applicable to QWEN/DEEPSEEK/MIMO/GLM/KIMI
+  enableThinking: false
+
+  # OPENAI: openai
+  # GEMINI: gemini
+  # QWEN: qwen
+  # DEEPSEEK: deepseek
+  # MIMO: mimo
+  # KIMI: kimi
+  # GLM: glm
+  # MINI MAX: minimaxi
+  # OLLAMA: local
+  # BEDROCK: bedrock
+  # CUSTOM: custom
+  active: gemini
+
+# Used Kopilot Go binary image (operator, gateway, mcp-server)
+bundle:
+  image:
+    repository: "cnrancher/kopilot-bundle"
+    tag: "v0.7.0"
+    pullPolicy: IfNotPresent
+
+# Used Kopilot Python image (runtime)
+runtime:
+  image:
+    repository: "cnrancher/kopilot-runtime"
+    tag: "v0.7.0"
+    pullPolicy: IfNotPresent
+
+# Kopilot Agent: kopilot-operator + kopilot-gateway + kopilot-runtime
+agent:
+  replicas: 1
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+  operator:
+    debug: false
+    devMode: ""
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+  gateway:
+    debug: false
+    # devMode: "true"
+    # uiMode: "dev"
+    devMode: ""
+    uiMode: ""
+    securityMode: "false"
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+  runtime:
+    logLevel: INFO
+    # Skip TLS verification for the Kubernetes API client.
+    k8sInsecureSkipTls: false
+    # Skip TLS verification for MCP HTTPS. Prefer SubAgentConfig.caBundleRef in production.
+    mcpInsecureSkipTls: false
+    # Extra keys to mask in tool results (appended to defaults: password, apikey).
+    # Comma-separated; matching is case-insensitive and ignores -/_ separators.
+    # Example: "token,secret,credential"
+    toolResult:
+      maskExtraKeys: "token,secret,credential"
+    limits:
+      # memory: 1024Mi
+      # cpu: 200m
+      memory:
+      cpu:
+
+kopilotMCPServer:
+  replicas: 1
+  debug: false
+  limits:
+    # memory: 2048Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+
+rancherMCPServer:
+  # Skip TLS verification for MCP HTTPS.
+  insecureSkipTls: true
+  # Read only mode for MCP server.
+  readOnly: false
+  image:
+    # Official Image: registry.suse.com/rancher/rancher-ai-mcp:v1.1.1
+    repository: "rancher/rancher-ai-mcp"
+    tag: v1.1.1
+    pullPolicy: IfNotPresent
+  replicas: 1
+  logLevel: info
+  limits:
+    # memory: 2048Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    nodeSelector: {}
+    tolerations: []
+
+redis:
+  # Setting externalURL will disable the Chart's built-in redis database.
+  # externalURL: "kopilot-redis.kopilot-system.svc.cluster.local:6379"
+  externalURL: ""
+  username: ""
+  password: ""
+  name: kopilot-redis
+  db: 0
+  persistentVolume:
+    enabled: true
+    # NOTE: Redis needs to store data with UID 999 GID 999.
+    # Please ensure that your volume have permission for this user group.
+    # Set to the existing PVC name to keep data across upgrades.
+    name: kopilot-redis
+    # storageClassName: "ebs-sc"
+    # subPath: "kopilot/data"
+    storageClassName: ""
+    size: 10Gi
+    subPath: ""
+  image:
+    repository: "cnrancher/kopilot-redis"
+    tag: "v0.7.0"
+    pullPolicy: IfNotPresent
+  securityContext:
+    # runAsUser: 999
+    # fsGroup: 1001
+    runAsUser: 999
+    fsGroup:
+  limits:
+    # memory: 500Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    # nodeSelector:
+    #   migration.node.kubernetes.io/arch: arm64
+    # tolerations:
+    #   - key: migration.node.kubernetes.io/arch
+    #     effect: NoSchedule
+    #     operator: Equal
+    #     value: arm64
+    nodeSelector: {}
+    tolerations: []
+
+postgres:
+  # Setting externalURL will disable the Chart's built-in postgre database.
+  # You need to ensure that the kopilot database already exists when using external database.
+  # externalURL: "kopilot-postgres.kopilot-system.svc.cluster.local:5432"
+  externalURL: ""
+  name: kopilot-postgres
+  username: "kopilot"
+  password: "ChangeMe"
+  persistentVolume:
+    enabled: true
+    # NOTE: PostgreSQL needs to store data with UID 499 GID 486.
+    # Please ensure that your volume have permission for this user group.
+    # Set to the existing PVC name to keep data across upgrades.
+    name: kopilot-postgres
+    # storageClassName: "ebs-sc"
+    # subPath: "kopilot/data"
+    storageClassName: ""
+    size: 10Gi
+    subPath: ""
+  image:
+    # registry.suse.com/suse/postgres:17
+    repository: "cnrancher/mirrored-suse-postgres"
+    tag: '17'
+    pullPolicy: IfNotPresent
+  # PGDATA subdirectory under the volume mount point ("/var/lib/pgsql/data").
+  #
+  # persistentVolume.enabled=true (default):
+  #   Fresh install                -> keep "kopilot" (or any name you like)
+  #                                   unless the volume root is already owned
+  #                                   by 499:486, then set "" instead
+  #   Upgrade existing environment -> keep the current value:
+  #                                   - from a release before v0.7.0: keep ""
+  #                                     (the database is directly on the mount
+  #                                     point)
+  #                                   - from v0.7.0 or a later release that
+  #                                     already used the subdirectory: keep
+  #                                     "kopilot"
+  # persistentVolume.enabled=false:
+  #   Always set it, never leave it empty.
+  #
+  # Why this is needed:
+  #
+  #   Rule. Every directory has one owner, identified by a UID, and only that
+  #   owner or root (UID 0) may chmod it.
+  #
+  #   Trigger. initdb chmods $PGDATA to 0700 before creating the cluster, so it
+  #   has to own $PGDATA or run as root.
+  #
+  #   Runtime. The container runs as UID 499, the postgres user, and never as
+  #   root. Two things follow:
+  #     - UID 499 cannot chmod a directory it does not own.
+  #     - The entrypoint only chowns $PGDATA when running as root, so here it
+  #       skips that step and ownership is never transferred to 499.
+  #
+  #   Outcome, not set: $PGDATA is the mount point, created by the storage
+  #   provisioner as root. Its owner is root, so UID 499 cannot chmod it and
+  #   initdb aborts with "could not change permissions of directory". Being
+  #   writable does not help: 0777 lets UID 499 create files inside, but chmod
+  #   needs ownership.
+  #
+  #   Outcome, set: $PGDATA is a subdirectory that does not exist yet, so the
+  #   entrypoint creates it as UID 499. Its owner is 499, so the chmod succeeds.
+  #
+  #   Consequence, existing database: keep the current value. Adding or
+  #   removing the level hides the old data, and the entrypoint then silently
+  #   initializes a new empty database. This also applies when
+  #   persistentVolume.subPath is set.
+  #
+  #   Consequence, fresh install on a root-owned volume: set it, as described
+  #   above.
+  #
+  # Storage differences for a fresh install that needs the subdirectory:
+  #   - local-path: the volume root is 0777, so nothing else is needed
+  #   - Alibaba Cloud NAS: the volume root is 0755, so also set
+  #     securityContext.fsGroup to 486 below for group write access. Be aware
+  #     that kubelet then recursively changes the group of the whole volume on
+  #     mount, which can be slow on a large volume.
+  #
+  # With persistentVolume.enabled=false the chart mounts an emptyDir at the
+  # mount point instead. This is required because the container runs with
+  # readOnlyRootFilesystem: true (set to fix the KSV-0014 scan finding), so
+  # nothing can be written to the image filesystem, and the database needs a
+  # writable path. The emptyDir root is created by kubelet as root:root, which
+  # is why this value is required in that case. The database is not persisted
+  # then and is re-initialized whenever the Pod is recreated.
+  pgdataSubdir: "kopilot"
+  securityContext:
+    # runAsUser: 499
+    # fsGroup: 486
+    runAsUser: 499
+    fsGroup:
+  limits:
+    # memory: 500Mi
+    # cpu: 200m
+    memory:
+    cpu:
+  podScheduling:
+    # nodeSelector:
+    #   migration.node.kubernetes.io/arch: arm64
+    # tolerations:
+    #   - key: migration.node.kubernetes.io/arch
+    #     effect: NoSchedule
+    #     operator: Equal
+    #     value: arm64
+    nodeSelector: {}
+    tolerations: []
+
+tavily:
+  # Injects Tavily API credentials into kopilot-mcp-server. Separate from subAgents.tavily.enabled
+  # (SubAgent CR). Both must be enabled for web search to work end-to-end.
+  enabled: false
+  apiKey: "tvly-YOUR_API_KEY"
+
+tls: "" # ingress or empty, default is empty
+privateCA: false
+
+ingress:
+  enabled: true
+  includeDefaultExtraAnnotations: true
+  extraAnnotations: {}
+  ingressClassName: ""
+  servicePort: 80
+
+  # Add additional Nginx configuration. This example statically sets a header on the ingress.
+  # configurationSnippet: |
+  #   more_set_input_headers "X-Forwarded-Host: {{ .Values.hostname }}";
+
+http_proxy: ""
+https_proxy: ""
+no_proxy: "localhost,127.0.0.1,localaddress,.localdomain,.local,10.43.0.0/16,kopilot-redis,kopilot-postgres,.svc,.svc.cluster.local"
+
+global:
+  cattle:
+    systemDefaultRegistry: ""
+
+rancher_sso:
+  enabled: true
+  url: ""
+
+preUpgrade:
+  debug: false
+  reset: false # all tables will be removed if set this value to true
+  limits:
+    memory:
+    cpu:
