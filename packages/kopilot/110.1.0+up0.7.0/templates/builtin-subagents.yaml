@@ -1,0 +1,188 @@
+# Built-in subagent configurations.
+#
+# Each built-in subagent is declared here as a SubAgentConfig CR and rendered conditionally
+# via helpers in _helpers.tpl (subAgents). The agent runtime loads these from the
+# cluster at run time, so adding or removing a SubAgentConfig dynamically adds or removes a
+# subagent without any code change. The metadata.name MUST match spec.toolSet because the
+# runtime and the main agent prompt reference subagents by that name, and MCP tools are
+# filtered by their _meta.toolset.
+#
+# SubAgents and UI labels:
+#   kubernetes, helm           -> kopilot.pandaria.io/native-ui (kopilot-mcp-server)
+#   rancher, fleet, provisioning -> kopilot.pandaria.io/rancher-ui (rancher-mcp-server)
+#   tavily                     -> both UI labels (kopilot-mcp-server)
+#
+# Notes:
+# - mcpURL points at the in-cluster MCP server. For the dev environment it is
+#   http://127.0.0.1:8000/mcp.
+# - authenticationType is one of NONE | RANCHER | BASIC | HEADER | KOPILOT | OAUTH2. NONE needs no secret.
+#   BASIC/HEADER read credentials from the Secret named by authenticationSecret.
+# - caBundleRef is only consulted for https MCP URLs; it is inert for the http dev URL.
+# - humanValidationTools lists the (write/destructive) tools that require human approval
+#   before they run when the request is in safe mode.
+{{- if include "kopilot.subAgent.kubernetes.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: kubernetes
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: kubernetes
+  displayName: Kubernetes
+  description: {{ .Files.Get "files/agents/subagents/kubernetes/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/kubernetes/systemPrompt" | toJson }}
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: KOPILOT
+  humanValidationTools:
+    - kubectl.create
+    - kubectl.apply
+    - kubectl.replace
+    - kubectl.patch
+    - kubectl.set.image
+    - kubectl.set.env
+    - kubectl.set.resources
+    - kubectl.set.selector
+    - kubectl.set.serviceaccount
+    - kubectl.rollout.restart
+    - kubectl.delete
+    - kubectl.exec
+    - kubectl.scale
+    - kubectl.run.pod
+    - kubectl.create.deployment
+    - kubectl.cordon.node
+    - kubectl.uncordon.node
+    - kubectl.drain.node
+    - kubectl.label
+    - kubectl.annotate
+{{- end }}
+{{- if include "kopilot.subAgent.helm.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: helm
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: helm
+  displayName: Helm
+  description: {{ .Files.Get "files/agents/subagents/helm/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/helm/systemPrompt" | toJson }}
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: KOPILOT
+  humanValidationTools:
+    - helm.repo.add
+    - helm.repo.update
+    - helm.repo.remove
+    - helm.install
+    - helm.upgrade
+    - helm.rollback
+    - helm.uninstall
+{{- end }}
+{{- if include "kopilot.subAgent.tavily.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: tavily
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/native-ui: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: tavily
+  displayName: Web Search
+  description: {{ .Files.Get "files/agents/subagents/tavily/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/tavily/systemPrompt" | toJson }}
+  mcpURL: http://kopilot-mcp-server.{{ .Release.Namespace }}.svc:8000/mcp
+  authenticationType: NONE
+  humanValidationTools: []
+{{- end }}
+{{- if include "kopilot.subAgent.rancher.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: rancher
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: rancher
+  displayName: Rancher
+  description: {{ .Files.Get "files/agents/subagents/rancher/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/rancher/systemPrompt" | toJson }}
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools:
+  - createKubernetesResource
+  - patchKubernetesResource
+  - createProject
+{{- end }}
+{{- if include "kopilot.subAgent.fleet.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: fleet
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: fleet
+  displayName: Continuous Delivery
+  description: {{ .Files.Get "files/agents/subagents/fleet/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/fleet/systemPrompt" | toJson }}
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools: []
+{{- end }}
+{{- if include "kopilot.subAgent.provisioning.enabled" . }}
+---
+apiVersion: kopilot.pandaria.io/v1alpha1
+kind: SubAgentConfig
+metadata:
+  name: provisioning
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/builtin: "true"
+    kopilot.pandaria.io/rancher-ui: "true"
+spec:
+  enabled: true
+  builtIn: true
+  toolSet: provisioning
+  displayName: Cluster Provisioning
+  description: {{ .Files.Get "files/agents/subagents/provisioning/description" | toJson }}
+  systemPrompt: {{ .Files.Get "files/agents/subagents/provisioning/systemPrompt" | toJson }}
+  mcpURL: http://rancher-mcp-server.{{ .Release.Namespace }}.svc
+  authenticationType: RANCHER
+  humanValidationTools:
+  - createImportedCluster
+  - scaleClusterNodePool
+  - createK3kCluster
+{{- end }}

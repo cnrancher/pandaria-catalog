@@ -32,6 +32,7 @@ var fakeFuncsMap = template.FuncMap{
 	"append":          fakeFunction,
 	"lookup":          fakeFunction,
 	"b64dec":          fakeFunction,
+	"required":        fakeFunction,
 	"splitList":       fakeFunction,
 	"first":           fakeFunction,
 	"b64enc":          fakeFunction,

@@ -1,0 +1,102 @@
+{{- if include "kopilot.deploy.nativeUI" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kopilot-mcp-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-mcp-server
+spec:
+  replicas: {{ .Values.kopilotMCPServer.replicas | default 1 }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kopilot-mcp-server
+  template:
+    metadata:
+      namespace: {{ .Release.Namespace }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") $ | sha256sum }}
+      labels:
+        app: kopilot-mcp-server
+    spec:
+      serviceAccountName: kopilot
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      {{- with .Values.kopilotMCPServer.podScheduling.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.kopilotMCPServer.podScheduling.tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: kopilot-mcp-server
+        image: {{ template "kopilot.bundle.image" . }}
+        imagePullPolicy: {{ .Values.bundle.image.pullPolicy }}
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        command: [
+          'kopilot',
+          'mcp-server',
+          '--mcp-protocol=http',
+          '--mcp-listen=0.0.0.0',
+          '--mcp-port=8000',
+          '--enable-kubernetes={{ .Values.subAgents.kubernetes.enabled }}',
+          '--enable-helm={{ .Values.subAgents.helm.enabled }}',
+          '--enable-tavily={{ and .Values.subAgents.tavily.enabled .Values.tavily.enabled }}',
+          '--debug={{ .Values.kopilotMCPServer.debug }}',
+        ]
+        env:
+          - name: HOME
+            value: /tmp
+          - name: KOPILOT_MCP_LAZY_LOADING
+            value: {{ .Values.mcpLazyLoading | quote }}
+          - name: RANCHER_DEPLOYMENT_NAME
+            value: {{ .Values.rancherDeploymentName | quote }}
+        envFrom:
+          - configMapRef:
+              name: kopilot-global-config
+          {{- if .Values.tavily.enabled }}
+          - secretRef:
+              name: kopilot-secret
+          {{- end }}
+        ports:
+          - containerPort: 8000
+            name: mcp
+        resources:
+          limits:
+          {{- if .Values.kopilotMCPServer.limits.memory }}
+            memory: {{ .Values.kopilotMCPServer.limits.memory }}
+          {{- end }}
+          {{- if .Values.kopilotMCPServer.limits.cpu }}
+            cpu: {{ .Values.kopilotMCPServer.limits.cpu }}
+          {{- end }}
+        volumeMounts:
+          - name: tmp
+            mountPath: /tmp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kopilot-mcp-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kopilot-mcp-server
+spec:
+  type: ClusterIP
+  selector:
+    app: kopilot-mcp-server
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: mcp
+{{- end }}

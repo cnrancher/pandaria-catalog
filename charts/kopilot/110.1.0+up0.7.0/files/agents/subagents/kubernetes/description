@@ -1,0 +1,1 @@
+Inspect and operate Kubernetes resources (kubectl-style operations): get/describe/logs/events for investigation and apply/create/delete/patch/scale/rollout for changes. Route here for pod troubleshooting, workload health, resource inspection and cluster operations.

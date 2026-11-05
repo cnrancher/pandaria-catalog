@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kopilot-agent-config
+  namespace: {{ .Release.Namespace }}
+data:
+  env: |
+    LOG_LEVEL={{ .Values.agent.runtime.logLevel }}
+    # REDIS_URL is defined in secret
+    REDIS_POOL_MAX_SIZE=100
+    # debug: 300 prod: 3
+    REDIS_POOL_SOCKET_TIMEOUT=3
+    # debug: 5 prod: 3
+    REDIS_POOL_SOCKET_CONNECT_TIMEOUT=3
+    # POSTGRE_URL is defined in secret
+    POSTGRE_POOL_MIN_SIZE=1
+    POSTGRE_POOL_MAX_SIZE=100
+    POSTGRE_POOL_KEEPALIVES=1
+    POSTGRE_POOL_KEEPALIVES_IDLE=300
+    POSTGRE_POOL_KEEPALIVES_INTERVAL=30
+    POSTGRE_POOL_KEEPALIVES_COUNT=5
+    OPERATOR_URL=https://kopilot-webui.{{ .Release.Namespace }}.svc.cluster.local:8443/
+    MCP_CLIENT_CONNECTION='{"transport": "streamable_http", "url": "http://kopilot-mcp-server.{{ .Release.Namespace }}.svc.cluster.local:8000/mcp", "headers": {"Content-Type": "application/json"}, "timeout": 30}'
+    MCP_LAZY_LOADING={{ .Values.mcpLazyLoading }}
+    K8S_INSECURE_SKIP_TLS={{ .Values.agent.runtime.k8sInsecureSkipTls }}
+    MCP_INSECURE_SKIP_TLS={{ .Values.agent.runtime.mcpInsecureSkipTls }}
+    TOOL_RESULT_MASK_EXTRA_KEYS={{ .Values.agent.runtime.toolResult.maskExtraKeys | quote }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kopilot-global-config
+  namespace: {{ .Release.Namespace }}
+data:
+  http_proxy: {{ .Values.http_proxy | quote }}
+  https_proxy: {{ .Values.https_proxy | quote }}
+  no_proxy: {{ .Values.no_proxy | quote }}
+  HTTP_PROXY: {{ .Values.http_proxy | quote }}
+  HTTPS_PROXY: {{ .Values.https_proxy | quote }}
+  NO_PROXY: {{ .Values.no_proxy | quote }}

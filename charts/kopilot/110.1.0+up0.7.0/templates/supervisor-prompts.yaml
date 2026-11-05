@@ -1,0 +1,33 @@
+# Supervisor main-agent prompt fragments, one ConfigMap per UI client.
+# Keys: IDENTITY_PREAMBLE, MAIN_AGENT_PROMPT_BODY, UI_ROUTING_ADDENDUM.
+# The runtime reads these at graph-build time (see python/src/prompt/agent/).
+{{- if include "kopilot.deploy.nativeUI" . }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kopilot-native-ui-prompts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/ui-client: native
+data:
+  IDENTITY_PREAMBLE: {{ .Files.Get "files/agents/supervisor/native/IDENTITY_PREAMBLE" | toJson }}
+  MAIN_AGENT_PROMPT_BODY: {{ .Files.Get "files/agents/supervisor/native/MAIN_AGENT_PROMPT_BODY" | toJson }}
+  UI_ROUTING_ADDENDUM: {{ .Files.Get "files/agents/supervisor/native/UI_ROUTING_ADDENDUM" | toJson }}
+{{- end }}
+{{- if include "kopilot.deploy.rancherUI" . }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kopilot-rancher-ui-prompts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/managed-by: kopilot
+    kopilot.pandaria.io/ui-client: rancher
+data:
+  IDENTITY_PREAMBLE: {{ .Files.Get "files/agents/supervisor/rancher/IDENTITY_PREAMBLE" | toJson }}
+  MAIN_AGENT_PROMPT_BODY: {{ .Files.Get "files/agents/supervisor/rancher/MAIN_AGENT_PROMPT_BODY" | toJson }}
+  UI_ROUTING_ADDENDUM: {{ .Files.Get "files/agents/supervisor/rancher/UI_ROUTING_ADDENDUM" | toJson }}
+{{- end }}
