@@ -104,7 +104,7 @@ llm:
   # OLLAMA: gpt-oss:120b
   # BEDROCK: openai.gpt-oss-120b-1:0 (cross-region inference profile IDs work too)
   # CUSTOM: <YOUR_CUSTOM_MODEL_NAME>
-  model: gemini-3-flash
+  model: gemini-3.8-flash
 
   # These models set temperature to 1.0
   # Gemini 3: gemini-3-flash, gemini-3.1-flash-lite, gemini-3.5-flash, gemini-3.5-flash-lite, gemini-3.6-flash and gemini-3.8-flash
